@@ -1,46 +1,70 @@
 <template>
-  <div id="tabBar">
-    <router-view />
-    <van-tabbar
-      v-model="active"
-      route
-      safe-area-inset-bottom
-      @change="onchange"
-    >
+  <div class="content">
+    <van-tabbar v-model="active">
       <van-tabbar-item
-        icon="wap-home"
+        v-for="(item, index) in tabBars"
+        :key="index"
+        :icon="item.icon"
+        @click="tab(index, item.name)"
       >
-        首页
+        {{item.title}}
       </van-tabbar-item>
-      <van-tabbar-item icon="shopping-cart" info="5">购物车</van-tabbar-item>
-      <van-tabbar-item icon="bag" dot>商城</van-tabbar-item>
-      <van-tabbar-item icon="manager">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
+  import {setStoregeItem, getStoregeItem} from "../utils/utils";
   import { Tabbar, TabbarItem } from 'vant';
   Vue.use(Tabbar).use(TabbarItem);
+
+  const key = 'tabIndex';
   export default {
     name: "TabBar",
-    data(){
+    data() {
       return {
-        active:0,
-      }
+        active: getStoregeItem(key) ? getStoregeItem(key) : 0,
+        tabBars: [
+          {
+            name: "home",
+            title: "首页",
+            icon:'wap-home'
+          },
+          {
+            name: "shopping-mall",
+            title: "商城",
+            icon:'goods-collect'
+          },
+          {
+            name: "cart",
+            title: "购物车",
+            icon:'wap-home'
+          },
+          {
+            name: "message",
+            title: "消息",
+            icon:"chat"
+          },
+          {
+            name: "my",
+            title: "我的",
+            icon:"manager"
+          }
+        ]
+      };
     },
-    mounted() {
-
-    },
-    methods:{
-      onchange(index) {
+    methods: {
+      tab(index, val) {
+        setStoregeItem(key, index);
         this.active = index;
+        this.$router.push(val);
       }
     }
-  }
+  };
 </script>
 
+<!-- 样式 -->
 <style scoped>
 
 </style>

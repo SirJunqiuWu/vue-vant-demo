@@ -173,6 +173,14 @@ export let isAndroid = function() {
   else return false;
 };
 
+export function getStoregeItem(name) {
+  return JSON.parse(localStorage.getItem(name))
+}
+
+export  function setStoregeItem(name, val) {
+  localStorage.setItem(name, JSON.stringify(val))
+}
+
 
 // 页面交互toast提示
 function showToast(msg, duration, minWidth) {

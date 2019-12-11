@@ -16,10 +16,11 @@
 
 <script>
 import NavBar from './components/NavBar.vue';
-import {isWeChat} from "./utils/utils";
+import {isWeChat, setStoregeItem} from "./utils/utils";
+import {tabTitles} from './router/router'
 import Vue from 'vue';
-import {Toast} from 'vant';
-Vue.use(Toast);
+import {Toast, Dialog} from 'vant';
+Vue.use(Toast).use(Dialog);
 
 export default {
   name: 'app',
@@ -49,18 +50,21 @@ export default {
       window.console.log('to:', to);
       window.console.log('from:', from);
       // 仅登录时导航不显示返回按钮 其他都显示
-      this.showLeft = to.name !== '登录';
       this.title = to.name;
 
-      // Tab界面都需要显示TabBar
-      let tabBarTitiles = ['首页', '购物车', '商城', '我的'];
-      if (tabBarTitiles.indexOf(to.name === -1)) {
-        this.showTabBar = false;
-        this.showLeft = false;
-      } else {
-        this.showTabBar = true;
+      // 网页标题更改
+      document.title = this.title;
+
+      if (to.path === '/login') {
+        setStoregeItem('tabIndex', 0);
       }
 
+      // Tab界面不需要显示导航
+      if (tabTitles.indexOf(this.title) == -1 && this.title !== '登录') {
+        this.showLeft = true;
+      } else {
+        this.showLeft = false;
+      }
 
       let toDepth = to.path.split("/").length;
       let fromDepth = from.path.split("/").length;
@@ -86,7 +90,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 0;
 }

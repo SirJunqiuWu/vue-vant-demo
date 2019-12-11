@@ -1,31 +1,31 @@
 <template>
   <div class="content">
-    <p>首页</p>
-    <TabBar id="0" />
+    <p>shopping-mall</p>
+    <TabBar id="1" />
   </div>
 </template>
 
 <script>
   import TabBar from '../../components/TabBar.vue';
   export default {
-    name: "HomePage",
-    components:{
+    name: "ShoppingMallPage",
+    components: {
       TabBar,
     },
-    data(){
+    props: {
+
+    },
+    data() {
       return {
-        resultDic:{},
+
       }
+    },
+    methods: {
+
     }
   }
 </script>
 
 <style scoped>
-  .content {
-    height: calc(100% - 49px);
-  }
 
-  .content p {
-    font-size: 30px;
-  }
 </style>
