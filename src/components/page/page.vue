@@ -164,7 +164,7 @@
       /*height: px2rem(50);*/
       background: white;
       /*overflow: hidden;*/
-      // box-shadow: 0 px2rem(1) px2rem(6) rgba(85, 85, 85, 0.65);
+      box-shadow: 0 px2rem(1) px2rem(2) rgba(85, 85, 85, 0.65);
     }
 
     .footer {

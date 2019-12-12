@@ -1,5 +1,9 @@
 <template>
-  <page :has-header="showNav" :has-footer="true">
+  <page
+    class="page"
+    :has-header="showNav"
+    :has-footer="true"
+  >
 
     <!-- 头部 -->
     <template slot="header">
@@ -34,8 +38,11 @@
           </van-swipe-item>
         </van-swipe>
 
+        <div class="gap">最新商品</div>
+
         <!-- 列表 -->
         <van-list
+          class="list"
           v-model="isLoading"
           :finished="finished"
           :offset="400"
@@ -46,6 +53,7 @@
             class="list-cell"
             v-for="(item, index) in dataArray"
             :key="index"
+            @click="cellClicked(index, item)"
           >
             <van-image
               class="goods-image"
@@ -59,7 +67,8 @@
             </van-image>
           </li>
 
-        </van-list>
+        </van-list
+                >
       </van-pull-refresh>
 
     </template>
@@ -89,18 +98,18 @@
     data(){
       return {
         showNav:!isWeChat(),
-        bannerHeight:window.document.documentElement.clientWidth * 360 / 802,
+        bannerHeight:window.document.documentElement.clientWidth * 844 / 1500,
         banners:[
           {
-            image:'https://img12.360buyimg.com/da/jfs/t1/96135/2/5916/125798/5df0ac8bEff4965d6/50652d43920450c7.jpg!q80.webp',
+            image:'http://formyself.oss-cn-hangzhou.aliyuncs.com/root/c591089f68164716bb988d3537517567.jpg',
             clickUrl:''
           },
           {
-            image:'https://img11.360buyimg.com/da/jfs/t1/85756/33/6145/98805/5df18cecE5573006d/c1f5655b21b9f357.jpg!q95.webp',
+            image:'http://formyself.oss-cn-hangzhou.aliyuncs.com/root/6e82220336d94323ad75a7fe7013c51a.jpg',
             clickUrl:'',
           },
           {
-            image:'https://img13.360buyimg.com/da/jfs/t1/103381/1/4446/143275/5de77c22E0054e6d2/67fda44fc74d9325.jpg!q95.webp',
+            image:'http://formyself.oss-cn-hangzhou.aliyuncs.com/root/02a601ff31724f51801d5d6211534e9e.jpg',
             clickUrl:''
           }
         ],
@@ -136,9 +145,8 @@
         setTimeout(() => {
           for (let i = 0; i < 10; i++) {
             let temp = {};
-            temp.name = '张三' + i;
-            // temp.image = 'https://gw.alicdn.com/bao/uploaded/i1/369128276/TB1z8hDdLfM8KJjSZPfXXbklXXa_!!0-item_pic.jpg_400x400q90.jpg';
-            temp.image = '';
+            temp.goodsName =  '夏季凉爽裙';
+            temp.image = 'https://gw.alicdn.com/bao/uploaded/i1/369128276/TB1z8hDdLfM8KJjSZPfXXbklXXa_!!0-item_pic.jpg_400x400q90.jpg';
             this.dataArray.push(temp);
           }
           // 加载状态结束
@@ -149,6 +157,11 @@
             this.finished = true;
           }
         }, 1500);
+      },
+
+      // 列表点击
+      cellClicked(index, item) {
+        Toast('当前点击' + index + '行');
       }
     }
   }
@@ -157,6 +170,22 @@
 <!-- 样式 -->
 <style scoped lang="less">
   @import "../../styles/px2rem.less";
+  .page {
+    background: rebeccapurple;
+  }
+
+  .gap {
+    background-color: #E8E8E8;
+    height: 1rem;
+    line-height: 1rem;
+    font-size: 0.3rem;
+    padding: 0 0.3rem;
+    box-sizing: border-box;
+  }
+
+  .list {
+
+  }
 
   .list-cell {
     display: flex;

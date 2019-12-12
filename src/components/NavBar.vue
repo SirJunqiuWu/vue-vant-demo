@@ -2,6 +2,7 @@
 <template>
    <van-nav-bar
      id="navBar"
+     border
      :title="title"
      :left-arrow="showLeft"
      @click-left="onClickLeft"
