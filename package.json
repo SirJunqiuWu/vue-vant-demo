@@ -1,43 +1,92 @@
 {
-  "name": "wjq-vue-vant",
-  "version": "0.1.0",
-  "private": true,
+  "name": "h5-page-template",
+  "version": "1.0.0",
+  "description": "麦吉丽",
+  "author": "ihome",
+  "license": "MIT",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "vue-cli-service serve",
+    "build:prod": "vue-cli-service build",
+    "build:test": "vue-cli-service build --mode test",
+    "preview": "node build/index.js --preview",
+    "test:unit": "jest --clearCache && vue-cli-service test:unit",
+    "test:ci": "npm run lint && npm run test:unit",
+    "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
+    "lint": "eslint --ext .js,.vue src",
+    "precommit-msg": "echo 'Pre-commit checks...'; exit 0"
   },
+  "pre-commit": [
+    "precommit-msg",
+    "lint"
+  ],
   "dependencies": {
-    "core-js": "^3.4.3",
-    "vant": "^2.2.16",
-    "vue": "^2.6.10",
-    "vue-router": "^3.1.3"
+    "@antv/f2": "^3.4.0",
+    "axios": "0.18.0",
+    "js-cookie": "2.2.0",
+    "md5": "^2.2.1",
+    "moment": "^2.24.0",
+    "normalize.css": "7.0.0",
+    "nprogress": "0.2.0",
+    "number-precision": "^1.3.1",
+    "path-to-regexp": "2.4.0",
+    "weixin-js-sdk": "^1.4.0-test",
+    "postcss-pxtorem": "^4.0.1",
+    "lrz": "^4.9.40",
+    "vant": "2.2.10",
+    "vue": "2.6.10",
+    "vue-router": "3.0.6",
+    "vue-skeleton-webpack-plugin": "1.2.2",
+    "vuex": "3.1.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.1.0",
-    "@vue/cli-plugin-eslint": "^4.1.0",
-    "@vue/cli-service": "^4.1.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "@babel/core": "7.0.0",
+    "@babel/register": "7.0.0",
+    "@vue/cli-plugin-babel": "3.6.0",
+    "@vue/cli-plugin-eslint": "3.6.0",
+    "@vue/cli-plugin-unit-jest": "3.6.3",
+    "@vue/cli-service": "3.6.0",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "autoprefixer": "^9.5.1",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "10.0.1",
+    "babel-jest": "23.6.0",
+    "babel-plugin-component": "^1.1.1",
+    "babel-plugin-import": "^1.12.0",
+    "babel-preset-es2015": "^6.24.1",
+    "chalk": "2.4.2",
+    "connect": "3.6.6",
+    "eslint": "5.16.0",
+    "eslint-plugin-vue": "5.2.2",
+    "html-webpack-plugin": "3.2.0",
+    "less": "3.9.0",
+    "less-loader": "5.0.0",
+    "less-plugin-functions": "^1.0.0",
+    "pre-commit": "1.2.2",
+    "px2rem-loader": "^0.1.9",
+    "runjs": "4.3.2",
+    "script-ext-html-webpack-plugin": "2.1.3",
+    "script-loader": "0.7.2",
+    "serve-static": "1.13.2",
+    "svg-sprite-loader": "4.1.3",
+    "svgo": "1.2.2",
+    "vue-template-compiler": "2.6.10"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
+  "engines": {
+    "node": ">=8.9",
+    "npm": ">= 3.0.0"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SirJunqiuWu/vue-vant-demo.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/SirJunqiuWu/vue-vant-demo/issues"
+  },
+  "homepage": "https://github.com/SirJunqiuWu/vue-vant-demo#readme"
 }

@@ -10,13 +10,13 @@ import successLogo from '../assets/success.png'
 let hudBk = null;
 
 // 获取页面跳转时链接传值的信息字符串
-function getUrlAllParmInfo() {
+export function getUrlAllParmInfo() {
     let result = window.location.search.substr(1);
     result = decodeURI(result);
     return result;
 }
 
-function getParamWithObj(obj) {
+export function getParamWithObj(obj) {
   let result = null;
   let paramDic = {};
   if (obj.indexOf('&') == -1) {
@@ -45,7 +45,7 @@ function getParamWithObj(obj) {
 
 
 // 根据指定key和url后拼接的字符串信息获取对应key的值
-function getTargetParamWithKeyAndObj(key, obj) {
+export function getTargetParamWithKeyAndObj(key, obj) {
   let paramDic = getParamWithObj(obj);
   let result = paramDic[key];
   return result;
@@ -53,7 +53,7 @@ function getTargetParamWithKeyAndObj(key, obj) {
 
 
 // 获取跳转连接中指定key对应的value
-function getUrlTargetKeyValueWithKey(key) {
+export function getUrlTargetKeyValueWithKey(key) {
   let obj = getUrlAllParmInfo();
   let paramDic = getParamWithObj(obj);
   let result = paramDic[key];
@@ -61,7 +61,7 @@ function getUrlTargetKeyValueWithKey(key) {
 }
 
 // 根据时间戳和时间格式获取日期描述 eg：2019-11-26 11:37:30
-function getDateByTimestampAndFormatter(timestamp, formatter) {
+export function getDateByTimestampAndFormatter(timestamp, formatter) {
   let date = new Date(timestamp);
   let year = date.getFullYear();
   let month = date.getMonth() + 1;
@@ -92,13 +92,13 @@ function getDateByTimestampAndFormatter(timestamp, formatter) {
 }
 
 // 根据指定日期获取对应日期的时间戳
-function getTimestampByDate(date) {
+export function getTimestampByDate(date) {
   let result = new Date(date);
   return result.getTime();
 }
 
 // 字符串安全处理
-function isNullStr(str) {
+export function isNullStr(str) {
   let result = '';
   if (!str || str === null || str === 'null'  || str === 'NULL') {
     result = '';
@@ -114,7 +114,7 @@ function isNullStr(str) {
  * startIdx: 替换段的第一个字符在目标字符中的索引
  * length: 需要替换的字符长度
  **/
-function maskStrWithStartIdxAndLength(targetStr, startIdx, length) {
+export function maskStrWithStartIdxAndLength(targetStr, startIdx, length) {
   if (targetStr && targetStr.length == 1) {
     return '*';
   }
@@ -173,10 +173,12 @@ export let isAndroid = function() {
   else return false;
 };
 
+// 根据存储key获取本地存储
 export function getStoregeItem(name) {
   return JSON.parse(localStorage.getItem(name))
 }
 
+// 根据存储key和值进行本地存储(存储对象为字符)
 export  function setStoregeItem(name, val) {
   localStorage.setItem(name, JSON.stringify(val))
 }

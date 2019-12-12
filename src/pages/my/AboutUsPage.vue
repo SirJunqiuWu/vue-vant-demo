@@ -1,12 +1,21 @@
 <template>
-  <div class="content">
-    <p>about us</p>
-  </div>
+  <page :has-header="true">
+    <template slot="header">
+      <NavBar  title="关于我们" :show-left="true"></NavBar>
+    </template>
+    <template slot="content">
+      <p>aaa</p>
+    </template>
+  </page>
 </template>
 
 <script>
+  import NavBar from '../../components/NavBar.vue';
   export default {
-    name: "AboutUsPage"
+    name: "AboutUsPage",
+    components:{
+      NavBar
+    }
   }
 </script>
 

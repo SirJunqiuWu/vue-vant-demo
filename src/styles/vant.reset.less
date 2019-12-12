@@ -1,0 +1,367 @@
+@import "px2rem";
+@import "./base/varibles";
+@import "./base/mixin";
+
+.dialog-wrap {
+  width: px2rem(288);
+  border-radius: px2rem(4);
+  .van-dialog__header {
+    color: #333;
+    font-weight: bold;
+    font-size: px2rem(18);
+    padding-top: px2rem(24);
+    padding-left: px2rem(24);
+    padding-right: px2rem(24);
+    text-align: left;
+  }
+  .van-dialog__content {
+    //box-shadow: 0 px2rem(-1) px2rem(3) #000;
+  }
+  .van-dialog__message{
+    color: #4c4c4c;
+    font-size: px2rem(16);
+    padding:px2rem(14) px2rem(24) px2rem(8) px2rem(24);
+    font-weight: normal;
+    text-align: left;
+    border-bottom: none;
+    //border-bottom: px2rem(1) solid #DDDBDA;
+  }
+  .van-dialog__footer{
+    //box-shadow: 0 px2rem(-1) px2rem(3) #999;
+    //background-color: #F3F2F2;
+    padding:px2rem(16) px2rem(29);
+    &:after{
+      content: unset;
+    }
+    .van-button {
+      height: px2rem(33);
+      line-height: px2rem(33);
+      font-size: px2rem(16);
+      border-radius: px2rem(4);
+      box-sizing: border-box;
+    }
+    .van-dialog__cancel {
+      background: white;
+      border: px2rem(1) solid @primary;
+      color: @primary;
+    }
+    .van-dialog__confirm {
+      .bg-liner-lr;
+      color: white;
+    }
+  }
+
+  &.confirm-wrap {
+    .van-dialog__footer {
+      .justify-content(space-between);
+      .van-button {
+        .flex(none);
+        width: calc((100% - px2rem(16)) / 2);
+      }
+    }
+  }
+
+  &.alert-wrap {
+    .van-dialog__footer {
+      .van-button {
+        .flex(1);
+      }
+    }
+  }
+
+}
+
+
+//弹出层居中
+.popup-wrapper {
+  width: 83%;
+  max-height: 80%;
+  padding-top: px2rem(48);
+  border-radius: px2rem(5);
+}
+.pop-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: px2rem(48);
+  line-height: px2rem(48);
+  border-bottom: px2rem(1) solid #E5E5E5;
+  color: #222222;
+  font-size: px2rem(13);
+  .close-icon {
+    display: block;
+    position: absolute;
+    right: px2rem(20);
+    top: 50%;margin-top: px2rem(-10);
+    width: px2rem(20);
+    height: px2rem(20);
+    //background: url("../assets/close_x.svg") no-repeat center;
+    background-size: 60%;
+  }
+}
+.pop-content {
+  width: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: px2rem(30) px2rem(20);
+  .pop-scroll {
+  }
+}
+
+.sep-line {
+  display: block;
+  position: relative;
+  height: px2rem(24);
+  margin: px2rem(13) 0;
+  margin-left: 16.5%;
+  width: px2rem(1);
+  background-color: #E5E5E5;
+}
+
+
+//隐藏上传图片的按钮，以及删除
+.hide-del {
+  .van-uploader__preview-delete {
+    display: none !important;
+  }
+   .van-uploader__upload{
+    display: none !important;
+  }
+}
+
+//checkBox
+
+.ver-child-mid {
+  .van-checkbox>* {
+    display: inline-block;
+    vertical-align: middle;
+    //font-size: px2rem(16);
+  }
+  .van-checkbox__icon{
+    width: px2rem(16);
+    height: px2rem(16);
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+//上传图片的样式更改
+.van-uploader {
+  width: 100%;
+
+  &.no-padding-bottom {
+    .van-uploader__wrapper{
+      padding-bottom: 0;
+    }
+  }
+  .van-icon-plus:before{
+    content: '' !important;
+  }
+
+  .van-uploader__upload-icon{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    //background: url("") no-repeat center center;
+    background-size: 53% 50%;
+  }
+
+  //删除的颜色
+  .van-icon-clear.van-uploader__preview-delete{
+    color: #6d6d72;
+  }
+
+  .van-uploader__wrapper {
+    padding-bottom: px2rem(10);
+    .van-uploader__preview,.van-uploader__upload{
+      margin: unset;
+      position: relative;
+      margin-right: px2rem(10);
+      margin-bottom: px2rem(10);
+      width: calc((100% - px2rem(30)) / 4);
+      height: 0;
+      padding-bottom: calc((100% - px2rem(30)) / 4);
+    }
+    //.van-uploader__preview:nth-child(1),
+    //.van-uploader__preview:nth-child(2),
+    //.van-uploader__preview:nth-child(3){
+    //  margin-bottom: px2rem(0);
+    //}
+
+    //.van-uploader__preview:nth-child(3n+3){
+    //  margin-right: 0;
+    //}
+    &>*:nth-child(4n+4){
+      margin-right: 0;
+    }
+
+    .van-uploader__preview{
+      .van-image.van-uploader__preview-image{
+        position: absolute;
+        left: 0;
+        width: 100%;
+        top: 0;
+        bottom: 0;
+        height: unset;
+        border: 1px solid #E1E1E1;
+      }
+    }
+    .van-uploader__upload{
+      .van-uploader__input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        bottom: 0;
+        height: unset;
+        overflow: hidden;
+        cursor: pointer;
+        opacity: 0;
+      }
+    }
+    .van-uploader__upload-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+  }
+}
+
+.clear-default-radio-icon {
+  &.van-radio__icon--checked.van-icon.van-icon-success{
+    color: @primary !important;
+    background-color:  unset !important;
+    border: none !important;
+  }
+}
+
+  //购物车的加减。偶尔会出现
+///deep/ .van-stepper__plus {
+//  &:before{
+//    height: 1px !important;
+//  }
+//  &:after{
+//    width: 1px !important;
+//  }
+//}
+// .van-stepper__minus::after,
+// .van-stepper__plus::after{
+//  width: 2px !important;
+//   transform: scaleX(0.5);
+//}
+//.van-stepper__minus::before,
+//.van-stepper__plus::before{
+//  height: 2px !important;
+//  transform: scaleY(0.5);
+//}
+
+
+.van-stepper__minus,
+.van-stepper__plus{
+  padding: 0;
+}
+.van-stepper__minus::before,
+.van-stepper__plus::before{
+  content: unset;
+}
+.van-stepper__minus::after {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  //right: 0;
+  width: 100%;
+  bottom: 0;
+  //background: url("a") no-repeat center;
+  background-size: 50%;
+  content: '';
+}
+.van-stepper__plus::after{
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  //right: 0;
+  width: 100%;
+  bottom: 0;
+  //background: url("../assets/shop_add.jpg") no-repeat center;
+  background-size: 50%;
+  content: '';
+}
+.van-stepper__minus.van-stepper__minus--disabled:after,
+.van-stepper__plus.van-stepper__plus--disabled:after{
+  opacity: 0.3;
+}
+
+
+//按钮的配置
+button.van-button--primary {
+  color: #fff;
+  background-color: @primary;
+  border: 0.04274rem solid;
+  border-color: @primary;
+
+  &.van-button--plain{
+    background-color: white;
+    color: @primary;
+  }
+}
+
+//tab nav
+.van-tabs.van-tabs--line {
+  .van-tabs__nav--line {
+    padding-bottom: 0;
+    .van-tabs__line {
+      //bottom: 0.1rem;
+      bottom: 0;
+      background-color: @primary;
+    }
+
+    .van-tab{
+      font-size: px2rem(14);
+      color: #888888;
+    }
+    .van-tab--active {
+      color: @primary;
+      font-weight: 500;
+      font-size: px2rem(16);
+    }
+  }
+}
+.van-tabs.van-tabs--card{
+  padding-top: 0;
+  margin: auto;
+
+  .van-tabs__nav--card{
+    height: px2rem(30);
+    margin: auto;
+    border: px2rem(1) solid @primary;
+    border-radius: px2rem(4);
+    overflow: hidden;
+
+    .van-tab {
+      color: @primary;
+      height: px2rem(28);
+      border-right: px2rem(1) solid @primary;
+      padding: 0;
+    }
+
+    .van-tab:last-child{
+      border-right: none;
+    }
+
+    .van-tab.van-tab--active {
+      color: #fff;
+      background-color: @primary;
+    }
+  }
+}
+
+
+.van-picker__cancel, .van-picker__confirm{
+  color: @primary;
+}

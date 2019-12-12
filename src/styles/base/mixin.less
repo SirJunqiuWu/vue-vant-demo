@@ -1,0 +1,176 @@
+@import "../px2rem";
+
+@lineColor: #e2e2e2;
+
+// flex兼容
+.display-flex {
+  display: -moz-box; /* 老版本语法: Firefox (buggy) */
+  display: -ms-flexbox; /* 混合版本语法: IE 10 */
+  display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+  display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+}
+
+//flex布局值
+.flex(@flexValue:0) {
+  -moz-box-flex: @flexValue; /* Firefox 19- */
+  -ms-flex: @flexValue; /* IE 10 */
+  -webkit-flex: @flexValue; /* Chrome */
+  flex: @flexValue; /* NEW,  Opera 12.1, Firefox 20+ */
+}
+
+
+//flex布局固定像素值
+.flex-pixel-val(@flexPixel:0) {
+  -moz-box-flex: 0 0 @flexPixel; /* Firefox 19- */
+  -ms-flex: 0 0 @flexPixel; /* IE 10 */
+  -webkit-flex: 0 0 @flexPixel; /* Chrome */
+  flex: 0 0 @flexPixel; /* NEW,  Opera 12.1, Firefox 20+ */
+}
+
+
+// flex布局方向
+.flex-direction(@flex-direction:row) {
+  -moz-flex-direction: @flex-direction;
+  -ms-flex-direction: @flex-direction;
+  -o-flex-direction: @flex-direction;
+  -webkit-flex-direction: @flex-direction;
+  flex-direction: @flex-direction;
+}
+
+.flex-wrap(@flex-wrap:wrap) {
+  -moz-flex-wrap: @flex-wrap;
+  -ms-flex-wrap: @flex-wrap;
+  -o-flex-wrap: @flex-wrap;
+  -webkit-flex-wrap: @flex-wrap;
+  flex-wrap: @flex-wrap;
+}
+
+// //flex布局排列方式
+// .flex-wrap(@flex-wrap:wrap){
+//     -moz-flex-wrap: @flex-wrap;
+//     -ms-flex-wrap: @flex-wrap;
+//     -o-flex-wrap: @flex-wrap;
+//     -webkit-flex-wrap: @flex-wrap;
+//     flex-wrap:@flex-wrap;
+// }
+
+.justify-content(@justify-content) {
+  -moz-justify-content: @justify-content;
+  -ms-justify-content: @justify-content;
+  -o-justify-content: @justify-content;
+  -webkit-justify-content: @justify-content;
+  justify-content: @justify-content;
+}
+
+.align-items(@align-items) {
+  -moz-align-items: @align-items;
+  -ms-align-items: @align-items;
+  -o-align-items: @align-items;
+  -webkit-align-items: @align-items;
+  align-items: @align-items;
+}
+
+.align-self(@align-self) {
+  -moz-align-self: @align-self;
+  -ms-align-self: @align-self;
+  -o-align-self: @align-self;
+  -webkit-align-self: @align-self;
+  align-self: @align-self;
+}
+
+// 圆角值
+.border-radius(@radiusValue) {
+  -webkit-border-radius: @radiusValue;
+  border-radius: @radiusValue;
+}
+
+.box-sizing-border-box {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.box-sizing-content-box {
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.bottom-line-custom(@edgTop:0,@edgRight:0,@edgBottom:0,@edgLeft:0) {
+  position: relative;
+  &::after {
+    position: absolute;
+    content: '';
+    left: @edgLeft;
+    right: @edgRight;
+    bottom: @edgBottom;
+    // margin-top: 1px;
+    height: 1px;
+    background-color: @lineColor;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+}
+
+.top-line-custom(@edgTop:0,@edgRight:0,@edgBottom:0,@edgLeft:0) {
+  position: relative;
+  &::before {
+    position: absolute;
+    content: '';
+    left: @edgLeft;
+    right: @edgRight;
+    top: @edgTop;
+    height: 1px;
+    background-color: @lineColor;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+}
+
+.text-overflow-custom(@number){
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;   //设置为弹性盒子模型
+  -webkit-box-orient: vertical;    //内容为竖直排列
+  -webkit-line-clamp: @number;  //显示两行文字
+}
+
+//上右下左
+.bottom-line-zero {
+  .bottom-line-custom(0, 0, 0, 0);
+}
+
+.bottom-line-default {
+  .bottom-line-custom(0, px2rem(15), 0, px2rem(15))
+}
+
+.top-line-zero {
+  .top-line-custom(0, 0, 0, 0);
+}
+
+.right-arrow-custom(@edgRight:0px,@imgSize:px2rem(16)) {
+  position: relative;
+  & > .right-arrow {
+    position: absolute;
+    top: 50%;
+    margin-top: -@imgSize/2;
+    right: @edgRight;
+    //background: url('../assets/arrow-right.png') no-repeat center;
+    background-size: @imgSize;
+    width: @imgSize;
+    height: @imgSize;
+    border: none;
+  }
+}
+
+
+.right-arrow-default {
+  .right-arrow-custom(px2rem(10), px2rem(16))
+}
+
+
+.bg-liner-lr(@leftColor:#7279d5,@rightColor:#a7a8e1) {
+  background: -webkit-linear-gradient(left, @leftColor , @rightColor); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, @leftColor, @rightColor); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, @leftColor, @rightColor); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, @leftColor , @rightColor); /* 标准的语法 */
+}
+

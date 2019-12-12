@@ -1,16 +1,22 @@
 <template>
-  <div class="content">
-    <van-tabbar v-model="active">
+    <van-tabbar
+      id="tabBar"
+      v-model="active"
+      fixed
+    >
       <van-tabbar-item
         v-for="(item, index) in tabBars"
+        replace
+        route
+        :to="item.to"
         :key="index"
         :icon="item.icon"
+        safe-area-inset-bottom
         @click="tab(index, item.name)"
       >
         {{item.title}}
       </van-tabbar-item>
     </van-tabbar>
-  </div>
 </template>
 
 <script>
@@ -56,6 +62,7 @@
     },
     methods: {
       tab(index, val) {
+        window.console.log('val:', val);
         setStoregeItem(key, index);
         this.active = index;
         this.$router.push(val);
@@ -65,6 +72,15 @@
 </script>
 
 <!-- 样式 -->
-<style scoped>
+<style scoped lang="less">
+  @import "../styles/px2rem.less";
+  #tabBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+  }
+
 
 </style>

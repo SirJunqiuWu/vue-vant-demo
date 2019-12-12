@@ -1,12 +1,11 @@
 <!-- 导航栏封装 -->
 <template>
- <div id="navBar">
    <van-nav-bar
+     id="navBar"
      :title="title"
      :left-arrow="showLeft"
-     fixd
-     @click-left="onClickLeft" />
- </div>
+     @click-left="onClickLeft"
+   />
 </template>
 
 <script>
@@ -33,13 +32,14 @@
   }
 </script>
 
-<style scoped>
+<style lang="less">
+  @import "../styles/px2rem.less";
   #navBar {
-    /*position: fixed;*/
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 100;
+    z-index: 10;
   }
 
 </style>

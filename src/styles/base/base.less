@@ -1,0 +1,760 @@
+@import "./mixin";
+@import "./varibles";
+@import "../px2rem";
+
+
+/*清除默认样式*/
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  //font-family: SimHei;
+  font-size: px2rem(13px);
+  user-select: none
+}
+
+//body,body *{-webkit-box-sizing: border-box;box-sizing: border-box;}
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  font-weight: normal
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: px2rem(32px);
+  color: #000
+}
+
+h2 {
+  font-size: px2rem(24px);
+  color: #222
+}
+
+h3 {
+  font-size: px2rem(18px);
+  color: #333
+}
+
+h4 {
+  font-size: px2rem(16px);
+  color: #444
+}
+
+h5 {
+  font-size: px2rem(14px);
+  color: #555
+}
+
+h6 {
+  font-size: px2rem(12px);
+  color: #666
+}
+
+p {
+  font-size: px2rem(12px);
+  color: #999
+}
+
+
+input, button {
+  border-radius: 0;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+//
+//公用样式
+//flex布局 flex值详解：https://segmentfault.com/q/1010000004080910/a-1020000004121373
+//常用布局，左右结构flex布局
+//flex布局子元素设置宽
+.flex-row {.display-flex;.flex-direction(row);.align-items(center);}
+.flex-column {.display-flex;.flex-direction(column);.justify-content(center);}
+.jc-start {.justify-content(flex-start);}
+.jc-center {.justify-content(center);}
+.jc-end {.justify-content(flex-end);}
+.jc-space-around {.justify-content(space-around);}
+.jc-space-between {.justify-content(space-between);}
+.ai-start {.align-items(flex-start);}
+.ai-center {.align-items(center);}
+.ai-end {.align-items(flex-end);}
+.ai-stretch {.align-items(stretch);}
+.ai-self-start {.align-self(flex-start);}
+.ai-self-center {.align-self(center);}
+.ai-self-end {.align-self(flex-end);}
+.ai-self-stretch {.align-self(stretch);}
+.flex-none {-webkit-flex: none;flex: none;}
+.flex-wrap {-webkit-flex-wrap: wrap;flex-wrap: wrap;}
+.flex-nowrap {-webkit-flex-wrap: nowrap;flex-wrap: nowrap;}
+.flex-1 {.flex(1);}
+.flex-1-3 {.flex(1.3);}
+.flex-1-5 {.flex(1.5);}
+.flex-1-8 {.flex(1.8);}
+.flex-2 {.flex(2);}
+.flex-2-5 {.flex(2.5);}
+.flex-3 {.flex(3);}
+a {text-decoration: none;}
+
+//隐藏
+.no-border {border: none !important;}
+.none {display: none !important;}
+.hide {visibility: hidden !important;}
+.over-flow-hide {overflow: hidden !important;}
+.over-flow-visible {overflow: visible !important;}
+.over-flow-auto {overflow: auto !important;}
+.maxW-none {max-width: none !important;}
+.minW-0 {min-width: 0 !important;}
+.maxH-none {max-height: none !important;}
+.minH-0 {min-height: 0 !important;}
+.wrap-normal {white-space: normal !important;}
+.nowrap {white-space: nowrap !important;}
+
+//float
+.fl {float: left;}
+.fr {float: right;}
+
+//字体的粗细
+.fbold {font-weight: bold;}
+.fbold-400 {font-weight: 400;}
+.fbold-500 {font-weight: 500;}
+.fbold-600 {font-weight: 600;}
+.fnormal {font-weight: normal;}
+
+//字体的大小
+.font0 {font-size: 0 !important;}
+.font10 {font-size: px2rem(10px) !important;}
+.font11 {font-size: px2rem(11px) !important;}
+.font12 {font-size: px2rem(12px) !important;}
+.font13 {font-size: px2rem(13px) !important;}
+.font14 {font-size: px2rem(14px) !important;}
+.font15 {font-size: px2rem(15px) !important;}
+.font16 {font-size: px2rem(16px) !important;}
+.font17 {font-size: px2rem(17px) !important;}
+.font18 {font-size: px2rem(18px) !important;}
+.font19 {font-size: px2rem(19px) !important;}
+.font20 {font-size: px2rem(20px) !important;}
+.font25 {font-size: px2rem(25px) !important;}
+.font30 {font-size: px2rem(30px) !important;}
+.font35 {font-size: px2rem(35px) !important;}
+
+.text00{color: #000 !important;}
+.text33{color: #333 !important;}
+.text66{color: #666 !important;}
+.text99{color: #999 !important;}
+.bg{background-color: #f5f5f5;}
+
+//texcolor
+*[color='primary'] {color: color(@primary) !important;}
+*[color='secondary'] {color: color(@secondary) !important;}
+*[color='danger'] {color: color(@danger) !important;}
+*[color='light'] {color: color(@light) !important;}
+*[color='dark'] {color: color(@dark) !important;}
+*[color='favorite'] {color: color(@favorite) !important;}
+*[color='green'] {color: color(@green) !important;}
+*[color='orange'] {color: color(@orange) !important;}
+*[color='blue'] {color: color(@blue) !important;}
+*[color='red'] {color: color(@red) !important;}
+*[color='purple'] {color: color(@purple) !important;}
+*[color='background'] {color: color(@background) !important;}
+*[color='line'] {color: color(@line) !important;}
+*[color='text00'] {color: color(@color-000) !important;}
+*[color='text22'] {color: color(@color-222) !important;}
+*[color='text33'] {color: color(@color-333) !important;}
+*[color='text66'] {color: color(@color-666) !important;}
+*[color='text99'] {color: color(@color-999) !important;}
+*[color='white'] {color: color(@white) !important;}
+*[color='whiteTr'] {color: color(@whiteTr) !important;}
+*[color='yellowGreen'] {color: color(@yellowGreen) !important;}
+*[color='lightYellowGreen'] {color: color(@lightYellowGreen) !important;}
+*[color='clear'] {color: color(@clear) !important;}
+*[color='maskLayer'] {color: color(@maskLayer) !important;}
+*[color='lightBlue'] {color: color(@lightBlue) !important;}
+
+
+//texcolor Class
+.color-primary {color: color(@primary) !important;}
+.color-secondary {color: color(@secondary) !important;}
+.color-danger {color: color(@danger) !important;}
+.color-light {color: color(@light) !important;}
+.color-dark {color: color(@dark) !important;}
+.color-favorite {color: color(@favorite) !important;}
+.color-green {color: color(@green) !important;}
+.color-orange {color: color(@orange) !important;}
+.color-blue {color: color(@blue) !important;}
+.color-red {color: color(@red) !important;}
+.color-purple {color: color(@purple) !important;}
+.color-background {color: color(@background) !important;}
+.color-line {color: color(@line) !important;}
+.color-text00 {color: color(@color-000) !important;}
+.color-text33 {color: color(@color-333) !important;}
+.color-text66 {color: color(@color-666) !important;}
+.color-text99 {color: color(@color-999) !important;}
+.color-white {color: color(@white) !important;}
+.color-whiteTr {color: color(@whiteTr) !important;}
+.color-yellowGreen {color: color(@yellowGreen) !important;}
+.color-lightYellowGreen {color: color(@lightYellowGreen) !important;}
+.color-clear {color: color(@clear) !important;}
+.color-maskLayer {color: color(@maskLayer) !important;}
+.color-lightBlue {color: color(@lightBlue) !important;}
+
+
+//backgroundColor
+*[bg='primary'] {background-color: color(@primary) !important;}
+*[bg='secondary'] {background-color: color(@secondary) !important;}
+*[bg='danger'] {background-color: color(@danger) !important;}
+*[bg='light'] {background-color: color(@light) !important;}
+*[bg='dark'] {background-color: color(@dark) !important;}
+*[bg='favorite'] {background-color: color(@favorite) !important;}
+*[bg='green'] {background-color: color(@green) !important;}
+*[bg='orange'] {background-color: color(@orange) !important;}
+*[bg='blue'] {background-color: color(@blue) !important;}
+*[bg='red'] {background-color: color(@red) !important;}
+*[bg='purple'] {background-color: color(@purple) !important;}
+*[bg='background'] {background-color: color(@background) !important;}
+*[bg='line'] {background-color: color(@line) !important;}
+*[bg='text00'] {background-color: color(@color-000) !important;}
+*[bg='text33'] {background-color: color(@color-333) !important;}
+*[bg='text66'] {background-color: color(@color-666) !important;}
+*[bg='text99'] {background-color: color(@color-999) !important;}
+*[bg='348CEB'] {background-color: color(@color-348CEB) !important;}
+*[bg='white'] {background-color: color(@white) !important;}
+*[bg='yellowGreen'] {background-color: color(@yellowGreen) !important;}
+*[bg='lightYellowGreen'] {background-color: color(@lightYellowGreen) !important;}
+*[bg='clear'] {background-color: color(@clear) !important;}
+*[bg='maskLayer'] {background-color: color(@maskLayer) !important;}
+*[bg='lightBlue'] {background-color: color(@lightBlue) !important;}
+
+//backgroundColor Class
+.bg-primary {background-color: color(@primary) !important;}
+.bg-secondary {background-color: color(@secondary) !important;}
+.bg-danger {background-color: color(@danger) !important;}
+.bg-light {background-color: color(@light) !important;}
+.bg-dark {background-color: color(@dark) !important;}
+.bg-favorite {background-color: color(@favorite) !important;}
+.bg-green {background-color: color(@green) !important;}
+.bg-orange {background-color: color(@orange) !important;}
+.bg-blue {background-color: color(@blue) !important;}
+.bg-red {background-color: color(@red) !important;}
+.bg-purple {background-color: color(@purple) !important;}
+.bg-background {background-color: color(@background) !important;}
+.bg-line {background-color: color(@line) !important;}
+.bg-text00 {background-color: color(@color-000) !important;}
+.bg-text33 {background-color: color(@color-333) !important;}
+.bg-text66 {background-color: color(@color-666) !important;}
+.bg-text99 {background-color: color(@color-999) !important;}
+.bg-white {background-color: color(@white) !important;}
+.bg-yellowGreen {background-color: color(@yellowGreen) !important;}
+.bg-lightYellowGreen {background-color: color(@lightYellowGreen) !important;}
+.bg-clear {background-color: color(@clear) !important;}
+.bg-maskLayer {background-color: color(@maskLayer) !important;}
+.bg-lightBlue {background-color: color(@lightBlue) !important;}
+
+
+//borderRadius的枚举值
+.bRadius0 {border-radius: 0 !important;}
+.bRadius1 {border-radius: px2rem(1px) !important;}
+.bRadius2 {border-radius: px2rem(2px) !important;}
+.bRadius3 {border-radius: px2rem(3px) !important;}
+.bRadius4 {border-radius: px2rem(4px) !important;}
+.bRadius5 {border-radius: px2rem(5px) !important;}
+.bRadius8 {border-radius: px2rem(8px) !important;}
+.bRadius10 {border-radius: px2rem(10px) !important;}
+.bRadius15 {border-radius: px2rem(15px) !important;}
+.bRadius20 {border-radius: px2rem(20px) !important;}
+.no-margin {margin: 0 !important;}
+.no-padding {padding: 0 !important;}
+
+//margin-left的枚举值
+.ml0 {margin-left: 0 !important;}
+.ml3 {margin-left: px2rem(3px) !important;}
+.ml5 {margin-left: px2rem(5px) !important;}
+.ml8 {margin-left: px2rem(8px) !important;}
+.ml10 {margin-left: px2rem(10px) !important;}
+.ml12 {margin-left: px2rem(12px) !important;}
+.ml15 {margin-left: px2rem(15px) !important;}
+.ml16 {margin-left: px2rem(16px) !important;}
+.ml20 {margin-left: px2rem(20px) !important;}
+.ml30 {margin-left: px2rem(30px) !important;}
+.ml40 {margin-left: px2rem(40px) !important;}
+.mlAuto {margin-left: auto !important;}
+.mlbfb20 {margin-left: 20% !important;}
+
+//margin-right的枚举值
+.mr0 {margin-right: 0 !important;}
+.mr3 {margin-right: px2rem(3px) !important;}
+.mr5 {margin-right: px2rem(5px) !important;}
+.mr8 {margin-right: px2rem(8px) !important;}
+.mr10 {margin-right: px2rem(10px) !important;}
+.mr15 {margin-right: px2rem(15px) !important;}
+.mr20 {margin-right: px2rem(20px) !important;}
+.mr30 {margin-right: px2rem(30px) !important;}
+.mr40 {margin-right: px2rem(40px) !important;}
+
+//margin-top的枚举值
+.mt0 {margin-top: 0 !important;}
+.mt3 {margin-top: px2rem(3px) !important;}
+.mt4 {margin-top: px2rem(4px) !important;}
+.mt5 {margin-top: px2rem(5px) !important;}
+.mt8 {margin-top: px2rem(8px) !important;}
+.mt10 {margin-top: px2rem(10px) !important;}
+.mt12 {margin-top: px2rem(12px) !important;}
+.mt15 {margin-top: px2rem(15px) !important;}
+.mt16 {margin-top: px2rem(16px) !important;}
+.mt20 {margin-top: px2rem(20px) !important;}
+.mt23 {margin-top: px2rem(23px) !important;}
+.mt30 {margin-top: px2rem(30px) !important;}
+.mt35 {margin-top: px2rem(35px) !important;}
+.mt37 {margin-top: px2rem(37px) !important;}
+.mt40 {margin-top: px2rem(40px) !important;}
+.mt50 {margin-top: px2rem(50px) !important;}
+.mt60 {margin-top: px2rem(60px) !important;}
+
+//margin-bottom的枚举值
+.mb0 {margin-bottom: 0 !important;}
+.mb3 {margin-bottom: px2rem(3px) !important;}
+.mb5 {margin-bottom: px2rem(5px) !important;}
+.mb8 {margin-bottom: px2rem(8px) !important;}
+.mb10 {margin-bottom: px2rem(10px) !important;}
+.mb12 {margin-bottom: px2rem(12px) !important;}
+.mb15 {margin-bottom: px2rem(15px) !important;}
+.mb16 {margin-bottom: px2rem(16px) !important;}
+.mb20 {margin-bottom: px2rem(20px) !important;}
+.mb30 {margin-bottom: px2rem(30px) !important;}
+.mb40 {margin-bottom: px2rem(40px) !important;}
+.mb50 {margin-bottom: px2rem(50px) !important;}
+.mb60 {margin-bottom: px2rem(60px) !important;}
+
+//margin-horizontal: margin-left,margin-right的枚举值
+.mhz0 {margin-left: 0;margin-right: 0}
+.mhz3 {margin-left: px2rem(3px);margin-right: px2rem(3px);}
+.mhz5 {margin-left: px2rem(5px);margin-right: px2rem(5px);}
+.mhz8 {margin-left: px2rem(8px);margin-right: px2rem(8px);}
+.mhz10 {margin-left: px2rem(10px);margin-right: px2rem(10px);}
+.mhz15 {margin-left: px2rem(15px);margin-right: px2rem(15px);}
+.mhz20 {margin-left: px2rem(20px);margin-right: px2rem(20px);}
+.mhz30 {margin-left: px2rem(30px);margin-right: px2rem(30px);}
+.mhz40 {margin-left: px2rem(40px);margin-right: px2rem(40px);}
+.mhz50 {margin-left: px2rem(50px);margin-right: px2rem(50px);}
+.mhz60 {margin-left: px2rem(60px);margin-right: px2rem(60px);}
+
+//margin-vertical: margin-top,margin-bottom的枚举值
+.mvt0 {margin-top: 0;margin-bottom: 0;}
+.mvt3 {margin-top: px2rem(3px);margin-bottom: px2rem(3px);}
+.mvt5 {margin-top: px2rem(5px);margin-bottom: px2rem(5px);}
+.mvt8 {margin-top: px2rem(8px);margin-bottom: px2rem(8px);}
+.mvt10 {margin-top: px2rem(10px);margin-bottom: px2rem(10px);}
+.mvt15 {margin-top: px2rem(15px);margin-bottom: px2rem(15px);}
+.mvt20 {margin-top: px2rem(20px);margin-bottom: px2rem(20px);}
+.mvt30 {margin-top: px2rem(30px);margin-bottom: px2rem(30px);}
+.mvt40 {margin-top: px2rem(40px);margin-bottom: px2rem(40px);}
+.mvt50 {margin-top: px2rem(50px);margin-bottom: px2rem(50px);}
+.mvt60 {margin-top: px2rem(60px);margin-bottom: px2rem(60px);}
+
+//padding-left的枚举值
+.pl0 {padding-left: 0 !important;}
+.pl3 {padding-left: px2rem(3px) !important;}
+.pl5 {padding-left: px2rem(5px) !important;}
+.pl8 {padding-left: px2rem(8px) !important;}
+.pl10 {padding-left: px2rem(10px) !important;}
+.pl12 {padding-left: px2rem(12px) !important;}
+.pl15 {padding-left: px2rem(15px) !important;}
+.pl20 {padding-left: px2rem(20px) !important;}
+.pl30 {padding-left: px2rem(30px) !important;}
+.pl40 {padding-left: px2rem(40px) !important;}
+.pl50 {padding-left: px2rem(50px) !important;}
+.pl60 {padding-left: px2rem(60px) !important;}
+
+//padding-right的枚举值
+.pr0 {padding-right: 0 !important;}
+.pr3 {padding-right: px2rem(3px) !important;}
+.pr5 {padding-right: px2rem(5px) !important;}
+.pr8 {padding-right: px2rem(8px) !important;}
+.pr10 {padding-right: px2rem(10px) !important;}
+.pr15 {padding-right: px2rem(15px) !important;}
+.pr20 {padding-right: px2rem(20px) !important;}
+.pr30 {padding-right: px2rem(30px) !important;}
+.pr40 {padding-right: px2rem(40px) !important;}
+.pr50 {padding-right: px2rem(50px) !important;}
+.pr60 {padding-right: px2rem(60px) !important;}
+
+//padding-top的枚举值
+.pt0 {padding-top: 0 !important;}
+.pt3 {padding-top: px2rem(3px) !important;}
+.pt5 {padding-top: px2rem(5px) !important;}
+.pt8 {padding-top: px2rem(8px) !important;}
+.pt10 {padding-top: px2rem(10px) !important;}
+.pt12 {padding-top: px2rem(12px) !important;}
+.pt13 {padding-top: px2rem(13px) !important;}
+.pt14 {padding-top: px2rem(14px) !important;}
+.pt15 {padding-top: px2rem(15px) !important;}
+.pt16 {padding-top: px2rem(16px) !important;}
+.pt20 {padding-top: px2rem(20px) !important;}
+.pt30 {padding-top: px2rem(30px) !important;}
+.pt40 {padding-top: px2rem(40px) !important;}
+.pt50 {padding-top: px2rem(50px) !important;}
+.pt60 {padding-top: px2rem(60px) !important;}
+
+//padding-bottom的枚举值
+.pb0 {padding-bottom: 0 !important;}
+.pb3 {padding-bottom: px2rem(3px) !important;}
+.pb5 {padding-bottom: px2rem(5px) !important;}
+.pb8 {padding-bottom: px2rem(8px) !important;}
+.pb10 {padding-bottom: px2rem(10px) !important;}
+.pb12 {padding-bottom: px2rem(12px) !important;}
+.pb13 {padding-bottom: px2rem(13px) !important;}
+.pb14 {padding-bottom: px2rem(14px) !important;}
+.pb15 {padding-bottom: px2rem(15px) !important;}
+.pb20 {padding-bottom: px2rem(20px) !important;}
+.pb30 {padding-bottom: px2rem(30px) !important;}
+.pb40 {padding-bottom: px2rem(40px) !important;}
+.pb50 {padding-bottom: px2rem(50px) !important;}
+.pb60 {padding-bottom: px2rem(60px) !important;}
+
+//padding-horizontal: padding-left,padding-right的枚举值
+.phz0 {padding-left: 0;padding-right: 0}
+.phz3 {padding-left: px2rem(3px);padding-right: px2rem(3px);}
+.phz5 {padding-left: px2rem(5px);padding-right: px2rem(5px);}
+.phz8 {padding-left: px2rem(8px);padding-right: px2rem(8px);}
+.phz10 {padding-left: px2rem(10px);padding-right: px2rem(10px);}
+.phz13 {padding-left: px2rem(13px);padding-right: px2rem(13px);}
+.phz15 {padding-left: px2rem(15px);padding-right: px2rem(15px);}
+.phz16 {padding-left: px2rem(16px);padding-right: px2rem(16px);}
+.phz18 {padding-left: px2rem(18px);padding-right: px2rem(18px);}
+.phz20 {padding-left: px2rem(20px);padding-right: px2rem(20px);}
+.phz30 {padding-left: px2rem(30px);padding-right: px2rem(30px);}
+.phz40 {padding-left: px2rem(40px);padding-right: px2rem(40px);}
+.phz50 {padding-left: px2rem(50px);padding-right: px2rem(50px);}
+.phz60 {padding-left: px2rem(60px);padding-right: px2rem(60px);}
+
+//padding-vertical: padding-top,padding-bottom的枚举值
+.pvt0 {padding-top: 0;padding-bottom: 0;}
+.pvt3 {padding-top: px2rem(3px);padding-bottom: px2rem(3px);}
+.pvt5 {padding-top: px2rem(5px);padding-bottom: px2rem(5px);}
+.pvt8 {padding-top: px2rem(8px);padding-bottom: px2rem(8px);}
+.pvt9 {padding-top: px2rem(9px);padding-bottom: px2rem(9px);}
+.pvt10 {padding-top: px2rem(10px);padding-bottom: px2rem(10px);}
+.pvt12 {padding-top: px2rem(12px);padding-bottom: px2rem(12px);}
+.pvt15 {padding-top: px2rem(15px);padding-bottom: px2rem(15px);}
+.pvt16 {padding-top: px2rem(16px);padding-bottom: px2rem(16px);}
+.pvt18 {padding-top: px2rem(18px);padding-bottom: px2rem(18px);}
+.pvt20 {padding-top: px2rem(20px);padding-bottom: px2rem(20px);}
+.pvt30 {padding-top: px2rem(30px);padding-bottom: px2rem(30px);}
+.pvt40 {padding-top: px2rem(40px);padding-bottom: px2rem(40px);}
+.pvt50 {padding-top: px2rem(50px);padding-bottom: px2rem(50px);}
+.pvt60 {padding-top: px2rem(60px);padding-bottom: px2rem(60px);}
+
+//flex的布局子元素固定宽
+.flex-pixel0 {.flex-pixel-val(0);}
+.flex-pixel5 {.flex-pixel-val(px2rem(5px));}
+.flex-pixel10 {.flex-pixel-val(px2rem(10px));}
+.flex-pixel15 {.flex-pixel-val(px2rem(15px));}
+.flex-pixel20 {.flex-pixel-val(px2rem(20px));}
+.flex-pixel25 {.flex-pixel-val(px2rem(25px));}
+.flex-pixel30 {.flex-pixel-val(px2rem(30px));}
+.flex-pixel40 {.flex-pixel-val(px2rem(40px));}
+.flex-pixel50 {.flex-pixel-val(px2rem(50px));}
+.flex-pixel60 {.flex-pixel-val(px2rem(60px));}
+.flex-pixel70 {.flex-pixel-val(px2rem(70px));}
+.flex-pixel80 {.flex-pixel-val(px2rem(80px));}
+.flex-pixel90 {.flex-pixel-val(px2rem(90px));}
+.flex-pixel100 {.flex-pixel-val(px2rem(100px));}
+
+//width的像素值
+.w0 {width: 0 !important;}
+.w5 {width: px2rem(5px) !important;}
+.w10 {width: px2rem(10px) !important;}
+.w15 {width: px2rem(15px) !important;}
+.w20 {width: px2rem(20px) !important;}
+.w25 {width: px2rem(25px) !important;}
+.w30 {width: px2rem(30px) !important;}
+.w40 {width: px2rem(40px) !important;}
+.w50 {width: px2rem(50px) !important;}
+.w60 {width: px2rem(60px) !important;}
+.w70 { width: px2rem(70px) !important;}
+.w80 {width: px2rem(80px) !important;}
+.w90 {width: px2rem(90px) !important;}
+.w100 {width: px2rem(100px) !important;}
+.w110 {width: px2rem(110px) !important;}
+.wAuto {width: auto !important;}
+
+//height的像素值
+.h0 {height: 0 !important;}
+.h5 {height: px2rem(5px) !important;}
+.h10 {height: px2rem(10px) !important;}
+.h15 {height: px2rem(15px) !important;}
+.h20 {height: px2rem(20px) !important;}
+.h25 {height: px2rem(25px) !important;}
+.h30 {height: px2rem(30px) !important;}
+.h40 {height: px2rem(40px) !important;}
+.h47 {height: px2rem(47px) !important;}
+.h50 {height: px2rem(50px) !important;}
+.h60 {height: px2rem(60px) !important;}
+.h70 {height: px2rem(70px) !important;}
+.h80 {height: px2rem(80px) !important;}
+.h90 {height: px2rem(90px) !important;}
+.h100 {height: px2rem(100px) !important;}
+.hAuto {height: auto !important;}
+
+//width的百分比值
+.wper10 {width: 10% !important;}
+.wper20 {width: 20% !important;}
+.wper50 {width: 50% !important;}
+.wper70 {width: 70% !important;}
+.wper100 {width: 100% !important;}
+
+//height的百分比值
+.hper50 {height: 50% !important;}
+.hper100 {height: 100% !important;}
+
+//boxsizing样式
+.content-box {
+  .box-sizing-content-box;
+}
+
+.border-box {
+  .box-sizing-border-box
+}
+
+//text位置
+.text-left, .text-start {
+  text-align: left !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right, .text-end {
+  text-align: right !important;
+}
+
+//绝对定位布局
+.fixed-full-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+//底部线条
+.b-line {
+  .bottom-line-zero;
+}
+
+.t-line {
+  .top-line-zero;
+}
+
+.b-line-default {
+  .bottom-line-default;
+}
+
+//底部虚线
+.b-dash-line {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: '';
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 0;
+    border-bottom: px2rem(2px) dashed @lineColor;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+}
+
+//顶部虚线
+.t-dash-line {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: '';
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 0;
+    border-top: px2rem(2px) dashed @lineColor;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+}
+
+//阴影  shadow
+//box-shadow: h-shadow v-shadow blur spread color inset;
+.shadow {box-shadow: -px2rem(1px) 1 px2rem(3px) @lineColor}
+.top-shadow {box-shadow: 0 -px2rem(1px) px2rem(3px) @lineColor;}
+.left-shadow {box-shadow: -px2rem(1px) 0 px2rem(3px) @lineColor;}
+.right-shadow {box-shadow: px2rem(1px) 0 px2rem(3px) @lineColor;}
+.bottom-shadow {box-shadow: 0 px2rem(1px) px2rem(3px) @lineColor;}
+
+//下划线
+.under-line {text-decoration: underline !important;}
+//中划线
+.through-line {text-decoration: line-through !important;}
+
+//上划线
+.over-line {text-decoration: overline !important;}
+//自定义input
+
+
+//textarea-border
+.textarea-border {
+  .border-radius(px2rem(3px));
+  border: px2rem(1px) solid #eee;
+  padding: px2rem(5px) px2rem(5px);
+}
+
+/******边框******/
+.border {border: px2rem(1px) solid #CFCFD4;}
+
+.z0 {z-index: 0 !important;}
+.z1 {z-index: 1 !important;}
+.z9 {z-index: 9 !important;}
+.z99 {z-index: 99 !important;}
+.z999 {z-index: 999 !important;}
+.z9999 {z-index: 9999 !important;}
+
+.lh0 {line-height: 1 !important;}
+.lh2 {line-height: 1.2 !important;}
+.lh4 {line-height: 1.4 !important;}
+.lh6 {line-height: 1.6 !important;}
+.lh8 {line-height: 1.8 !important;}
+.lh20 {line-height: 2 !important;}
+
+.full-img {
+  .img-wrap {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+
+    & > img {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+//居中
+.ver-mid {
+  vertical-align: middle;
+}
+
+.ver-child-mid > * {
+  vertical-align: middle;
+}
+
+.line-height20 {
+  line-height: px2rem(20)
+}
+
+//清楚伪元素
+.clear-after:after {
+  content: unset !important;
+}
+
+.clear-before:before {
+  content: unset !important;
+}
+
+.w-h-100{
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+.text-omit{
+  display: inline-block;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+//充满的block
+.gy-full-block {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+//转到中间
+.gy-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+.link {
+  .color-primary;
+  cursor: pointer;
+  //text-decoration: solid @primary underline;
+  border: none;
+  border-radius: unset;
+  background: unset;
+}
+
+//可点击
+.clickable {cursor: pointer;}
+
+//子元素间距
+.child-margin10 {
+  &>*{
+    margin-top: px2rem(10);
+  }
+  &>*:first-child {
+    margin-top: 0;
+  }
+}
+
+//几行1、2、3
+.text-overflow-1{overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+.text-overflow-2{.text-overflow-custom(2);}
+.text-overflow-3{.text-overflow-custom(3);}
+//设置position类型
+.relative {position: relative;}
+.absolute {position: absolute;}
+.static {position: static;}
+.sticky {position: sticky;}
+.fixed {position: fixed;}

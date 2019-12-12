@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from 'vue-router';
 import {getStoregeItem} from "../utils/utils";
 
+// 引入组件
 import LoginPage from '../components/MainList';
 import HomePage from "../pages/home/HomePage";
 import ShoppingMallPage from '../pages/shopping-mall/ShoppingMallPage';
@@ -12,6 +13,7 @@ import AboutUsPage from '../pages/my/AboutUsPage';
 
 Vue.use(VueRouter);
 
+// 数据
 export const tabPages = [HomePage, ShoppingMallPage, Cartpage, MessagePage, MyPage];
 export const tabTitles = ['首页', '商城', '购物车', '消息', '我的'];
 
@@ -84,10 +86,10 @@ let router = new VueRouter({
 });
 
 // 解决两次访问相同路由地址报错
-const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
-};
+// const originalPush = VueRouter.prototype.push;
+// VueRouter.prototype.push = function push(location) {
+//   return originalPush.call(this, location).catch(err => err)
+// };
 
 // 路由守卫: 路由判断登录 根据路由配置文件的参数
 router.beforeEach((to, from, next) => {

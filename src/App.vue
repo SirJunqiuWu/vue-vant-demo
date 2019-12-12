@@ -1,21 +1,48 @@
 <template>
+  <!--<page-->
+    <!--id="app"-->
+    <!--:has-header="true"-->
+    <!--:has-footer="true"-->
+  <!--&gt;-->
+    <!--<template slot="header">-->
+      <!--&lt;!&ndash; 导航 &ndash;&gt;-->
+      <!--<NavBar-->
+        <!--v-show="showNav"-->
+        <!--:title="title"-->
+        <!--:show-left="showLeft"-->
+      <!--/>-->
+    <!--</template>-->
+
+    <!--<template slot="content">-->
+      <!--<transition :name="transitionName">-->
+        <!--<router-view class="router"></router-view>-->
+      <!--</transition>-->
+    <!--</template>-->
+
+    <!--<template slot="footer">-->
+      <!--<TabBar />-->
+    <!--</template>-->
+  <!--</page>-->
+
   <div id="app">
+    <!--&lt;!&ndash; 导航 &ndash;&gt;-->
+    <!--<NavBar-->
+      <!--v-show="showNav"-->
+      <!--:title="title"-->
+      <!--:show-left="showLeft"-->
+    <!--/>-->
 
-    <!-- 导航 -->
-    <NavBar v-show="showNav" :title="title" :show-left="showLeft"></NavBar>
+    <transition :name="transitionName">
+      <router-view class="router"></router-view>
+    </transition>
 
-    <!-- 对应的组件内容渲染到router-view中 -->
-    <div>
-      <transition :name="transitionName">
-        <router-view class="router"></router-view>
-      </transition>
-    </div>
-
+    <!--<TabBar />-->
   </div>
 </template>
 
 <script>
-import NavBar from './components/NavBar.vue';
+// import NavBar from './components/NavBar.vue';
+// import TabBar from './components/TabBar.vue';
 import {isWeChat, setStoregeItem} from "./utils/utils";
 import {tabTitles} from './router/router'
 import Vue from 'vue';
@@ -25,7 +52,8 @@ Vue.use(Toast).use(Dialog);
 export default {
   name: 'app',
   components: {
-    NavBar,
+    // NavBar,
+    // TabBar
   },
   // 数据源 给组件分发数据用
   data() {
@@ -40,7 +68,8 @@ export default {
   mounted() {
     //检测浏览器类型决定是否展示导航栏
     let isWe = isWeChat();
-    this.showNav = !isWe;
+    isWe = true;
+    this.showNav = isWe;
     this.title = this.$route.name;
   },
 
@@ -85,13 +114,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="less">
+  @import "./styles/px2rem.less";
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 0;
+  /*font-size: px2rem(20);*/
+  width: 100%;
+  height: 100%;
 }
 
 .router {
@@ -100,7 +133,7 @@ export default {
   height: 100%;
   background-color: #f5f5f5;
   transition: all 500ms ease;
-  box-shadow: -2px 0 30px rgba(0, 0, 0, 0.1);
+  box-shadow: px2rem(-2)  0 px2rem(30) rgba(0, 0, 0, 0.1);
 }
 
 .slide-left-enter,
@@ -108,15 +141,18 @@ export default {
   transform: translate(100%, 0);
   z-index: 1000;
 }
+
 /*解决页面层级显示在滑动上层问题*/
 .slide-left-leave-active,
 .slide-left-leave-to {
   z-index: 0;
 }
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
 }
+
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
