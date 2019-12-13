@@ -39,7 +39,7 @@
   import Vue from 'vue';
   import TabBar from '../../components/TabBar.vue';
   import NavBar from '../../components/NavBar.vue';
-  import {isWeChat} from "../../utils/utils";
+  import {utils} from "../../utils/utils";
   import {Button, Cell, CellGroup, PullRefresh} from 'vant';
   Vue.use(Button).use(Cell).use(CellGroup).use(PullRefresh);
   export default {
@@ -53,7 +53,7 @@
     },
     data() {
       return {
-        showNav:!isWeChat(),
+        showNav:!utils.isWeChat(),
         curHeight:0,
         isLoading:false,
         dataArray:[

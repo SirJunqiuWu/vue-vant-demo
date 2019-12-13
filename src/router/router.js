@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from 'vue-router';
-import {getStoregeItem} from "../utils/utils";
+import {utils} from "../utils/utils";
 
 // 引入组件
 import LoginPage from '../components/MainList';
@@ -10,6 +10,7 @@ import Cartpage from '../pages/cart/CartPage';
 import MessagePage from '../pages/message/MessagePage';
 import MyPage from "../pages/my/MyPage";
 import AboutUsPage from '../pages/my/AboutUsPage';
+import WebPage from '../pages/web/WebPage'
 
 Vue.use(VueRouter);
 
@@ -18,7 +19,7 @@ export const tabPages = [HomePage, ShoppingMallPage, Cartpage, MessagePage, MyPa
 export const tabTitles = ['首页', '商城', '购物车', '消息', '我的'];
 
 // 是否登录
-const isLogined = getStoregeItem('token') ? true : false;
+const isLogined = utils.getLocalStorage('token') ? true : false;
 
 // 一组路由
 export const routes = [
@@ -70,6 +71,11 @@ export const routes = [
     component:AboutUsPage
   },
   {
+    path:'/web',
+    name:'web',
+    component:WebPage
+  },
+  {
     // 重定向：默认时
     path: '/',
     name: isLogined ? tabTitles[0] : '登录',
@@ -96,7 +102,7 @@ router.beforeEach((to, from, next) => {
   // 判断该路由是否需要登录权限
   if (to.matched.some(record => record.meta.requireAuth)) {
     // 需要登录
-    const token = getStoregeItem('token');
+    const token = utils.getLocalStorage('token');
     if (token) {
       // 判断当前的token是否存在(登录存入的token) 若存在则直接跳转
       next();

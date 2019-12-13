@@ -21,7 +21,7 @@
 
 <script>
   import Vue from 'vue';
-  import {setStoregeItem, getStoregeItem} from "../utils/utils";
+  import {utils} from "../utils/utils";
   import { Tabbar, TabbarItem } from 'vant';
   Vue.use(Tabbar).use(TabbarItem);
 
@@ -30,7 +30,7 @@
     name: "TabBar",
     data() {
       return {
-        active: getStoregeItem(key) ? getStoregeItem(key) : 0,
+        active: utils.getLocalStorage(key) ? utils.getLocalStorage(key) : 0,
         tabBars: [
           {
             name: "home",
@@ -63,7 +63,7 @@
     methods: {
       tab(index, val) {
         window.console.log('val:', val);
-        setStoregeItem(key, index);
+        utils.setLocalStorage(key, index);
         this.active = index;
         this.$router.push(val);
       }

@@ -144,7 +144,7 @@ export function isMobileLegal(mobile) {
 }
 
 // 判断是否在微信中查看
-export let isWeChat = () => {
+const isWeChat = () => {
   const ua = navigator.userAgent.toLowerCase();
   if (/MicroMessenger/i.test(ua)) return true;
   else return false;
@@ -179,13 +179,86 @@ export function getStoregeItem(name) {
 }
 
 // 根据存储key和值进行本地存储(存储对象为字符)
-export  function setStoregeItem(name, val) {
+const setStoregeItem = (name, val) => {
   localStorage.setItem(name, JSON.stringify(val))
 }
 
 
+/**
+ * 判断字符是否是json字符串
+ * @param str
+ * @return {boolean}
+ */
+const isJSONString = (str) => {
+  if (typeof str === 'string') {
+    try {
+      const obj = JSON.parse(str);
+      if (str.indexOf('{') > -1 && obj) {
+        return true;
+      } else {
+        return false;
+      }
+
+    } catch (e) {
+      return false;
+    }
+  }
+  return false;
+};
+
+/**
+ * 根据key获取对象
+ * @param {string}key
+ * @return {any}
+ */
+const getLocalStorage = (key) => {
+  let localStorage = window.localStorage;
+  let valueObject = localStorage.getItem(key);
+  if (typeof valueObject === 'string') {
+    //尝试能否转成对象
+    if (utils.isJSONString(valueObject)) {
+      let parseObject = JSON.parse(valueObject);
+      if (typeof parseObject === 'object') {
+        return parseObject;
+      }
+    }
+    return valueObject;
+  } else {
+    window.console.log('localStorage:无key=' + key + '值可取');
+    return null;
+  }
+};
+
+
+/**
+ * localStorage 数据保存本地
+ * @param {string}key
+ * @param {string | number | object}valueObject
+ */
+const setLocalStorage = (key, valueObject) => {
+  let localStorage = window.localStorage;
+  if (typeof valueObject === 'string' || typeof valueObject === 'number') {
+    localStorage.setItem(key, String(valueObject));
+  } else if (typeof valueObject === 'boolean') {
+    if (valueObject) {
+      localStorage.setItem(key, 'true');
+    } else {
+      localStorage.setItem(key, 'false');
+    }
+  } else if (valueObject === null || typeof valueObject === 'undefined') {
+    localStorage.removeItem(key);
+    window.console.log('LocalStorage:暂不支持存储:key=' + key + '\nvalueObject=' + JSON.stringify(valueObject));
+  } else if (typeof valueObject === 'object') {
+    localStorage.setItem(key, JSON.stringify(valueObject));
+  } else {
+    localStorage.removeItem(key);
+    window.console.log('LocalStorage:暂不支持存储:key=' + key + '\nvalueObject=' + JSON.stringify(valueObject));
+  }
+};
+
+
 // 页面交互toast提示
-function showToast(msg, duration, minWidth) {
+const showToast = (msg, duration, minWidth) => {
   // 显示时长 默认为2s
   duration = isNaN(duration) ? 2 : duration;
 
@@ -280,3 +353,13 @@ function hideHud() {
     }, 0.5 * 1000)
   }
 }
+
+// 导出
+export const utils = {
+  isWeChat,
+  isJSONString,
+  getLocalStorage,
+  setLocalStorage,
+  setStoregeItem,
+  showToast,
+};

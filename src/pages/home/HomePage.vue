@@ -38,6 +38,14 @@
           </van-swipe-item>
         </van-swipe>
 
+        <van-notice-bar
+          color="#383838"
+          background="white"
+          left-icon="volume-o"
+        >
+          重磅来袭，圣诞节前大狂欢，全场八折，尽情享受我们的折扣狂欢吧!
+        </van-notice-bar>
+
         <div class="gap">最新商品</div>
 
         <!-- 列表 -->
@@ -55,20 +63,27 @@
             :key="index"
             @click="cellClicked(index, item)"
           >
-            <van-image
-              class="goods-image"
-              :src="item.image"
-              lazy-load
-            >
-              <template v-slot:loading>
-                <van-loading type="spinner" size="20">加载中...</van-loading>
-              </template>
-              <template v-slot:error>加载失败</template>
-            </van-image>
+            <div>
+              <van-image
+                class="goods-image"
+                :src="item.image"
+                lazy-load
+              >
+                <template v-slot:loading>
+                  <van-loading type="spinner" size="20">加载中...</van-loading>
+                </template>
+                <template v-slot:error>加载失败</template>
+              </van-image>
+            </div>
+
+            <div class="goods-info-des">
+              <div class="goods-title van-multi-ellipsis--l">{{item.goodsName}}</div>
+              <div class="goods-sale-count">{{item.saleCount}}</div>
+              <div class="goods-price">当前售价：<span> ¥ 500.00</span></div>
+            </div>
           </li>
 
-        </van-list
-                >
+        </van-list>
       </van-pull-refresh>
 
     </template>
@@ -84,11 +99,26 @@
 <script>
   import TabBar from '../../components/TabBar.vue';
   import NavBar from '../../components/NavBar.vue';
-  import {isWeChat} from "../../utils/utils";
+  import {utils} from "../../utils/utils";
   import Vue from 'vue';
-  import { Swipe, SwipeItem, Lazyload, PullRefresh, Toast, List, Cell, Image } from 'vant';
-  Vue.use(Swipe).use(SwipeItem).use(Lazyload).use(PullRefresh).use(Toast).use(List).use(Cell).use(Image);
+  import { Swipe, SwipeItem, Lazyload, PullRefresh, Toast, List, Cell, Image, NoticeBar } from 'vant';
+  Vue.use(Swipe).use(SwipeItem).use(Lazyload).use(PullRefresh).use(Toast).use(List).use(Cell).use(Image).use(NoticeBar);
 
+  const result = [
+      {
+        image:'http://formyself.oss-cn-hangzhou.aliyuncs.com/root/c591089f68164716bb988d3537517567.jpg',
+        clickUrl:'https://segmentfault.com/a/1190000012393587'
+      },
+      {
+        image:'http://formyself.oss-cn-hangzhou.aliyuncs.com/root/6e82220336d94323ad75a7fe7013c51a.jpg',
+        clickUrl:'http://www.baidu.com',
+      },
+      {
+        image:'http://formyself.oss-cn-hangzhou.aliyuncs.com/root/02a601ff31724f51801d5d6211534e9e.jpg',
+        clickUrl:'https://cn.vuejs.org/'
+      }
+    ];
+  window.console.log('banners:', utils.getLocalStorage('banners'));
   export default {
     name: "HomePage",
     components:{
@@ -97,29 +127,16 @@
     },
     data(){
       return {
-        showNav:!isWeChat(),
+        showNav:!utils.isWeChat(),
         bannerHeight:window.document.documentElement.clientWidth * 844 / 1500,
-        banners:[
-          {
-            image:'http://formyself.oss-cn-hangzhou.aliyuncs.com/root/c591089f68164716bb988d3537517567.jpg',
-            clickUrl:''
-          },
-          {
-            image:'http://formyself.oss-cn-hangzhou.aliyuncs.com/root/6e82220336d94323ad75a7fe7013c51a.jpg',
-            clickUrl:'',
-          },
-          {
-            image:'http://formyself.oss-cn-hangzhou.aliyuncs.com/root/02a601ff31724f51801d5d6211534e9e.jpg',
-            clickUrl:''
-          }
-        ],
+        banners: utils.getLocalStorage('banners') ? utils.getLocalStorage('banners') : result,
         // 下拉刷新控制符
         isLoading:false,
 
         // 列表控制符
         finished:false,
 
-        dataArray:[],
+        dataArray:utils.getLocalStorage('list') ? utils.getLocalStorage('list') : [],
       }
     },
     methods:{
@@ -138,6 +155,15 @@
       // 轮播图点击事件
       bannerClick(index, item) {
         window.console.log('当前点击banner索引:', index, 'banner数据:', item);
+        if (item.clickUrl) {
+          this.$router.push({
+            path:'web',
+            query:{
+              title:'百度',
+              src:item.clickUrl
+            }
+          });
+        }
       },
 
       // 列表加载
@@ -145,8 +171,9 @@
         setTimeout(() => {
           for (let i = 0; i < 10; i++) {
             let temp = {};
-            temp.goodsName =  '夏季凉爽裙';
+            temp.goodsName =  '正品美特斯邦威夏季凉爽裙女神款魅力十足青春活力';
             temp.image = 'https://gw.alicdn.com/bao/uploaded/i1/369128276/TB1z8hDdLfM8KJjSZPfXXbklXXa_!!0-item_pic.jpg_400x400q90.jpg';
+            temp.saleCount = '销量:800';
             this.dataArray.push(temp);
           }
           // 加载状态结束
@@ -156,6 +183,9 @@
           if (this.dataArray.length >= 10) {
             this.finished = true;
           }
+          utils.setLocalStorage('list', this.dataArray);
+          utils.setLocalStorage('banners', result);
+
         }, 1500);
       },
 
@@ -172,6 +202,10 @@
   @import "../../styles/px2rem.less";
   .page {
     background: rebeccapurple;
+  }
+
+  .notice-bar {
+
   }
 
   .gap {
@@ -194,6 +228,8 @@
     padding: 0.3rem 0.3rem;
     border-bottom: 0.02rem solid #EDEDED;
     box-sizing: border-box;
+    font-size: 0.4rem;
+    color: #383838;
   }
 
   .goods-image {
@@ -201,4 +237,28 @@
     width: 3rem;
     height: 3rem;
   }
+
+  .goods-info-des {
+    margin-left: 0.3rem;
+    position: relative;
+  }
+
+  .goods-title {
+
+  }
+
+  .goods-sale-count {
+    margin-top: 0.3rem;
+  }
+
+  .goods-price {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+
+  .goods-price span {
+    color:red;
+  }
+
 </style>

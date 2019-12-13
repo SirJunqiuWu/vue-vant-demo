@@ -43,7 +43,7 @@
 <script>
 // import NavBar from './components/NavBar.vue';
 // import TabBar from './components/TabBar.vue';
-import {isWeChat, setStoregeItem} from "./utils/utils";
+import {utils} from "./utils/utils";
 import {tabTitles} from './router/router'
 import Vue from 'vue';
 import {Toast, Dialog} from 'vant';
@@ -67,7 +67,7 @@ export default {
   },
   mounted() {
     //检测浏览器类型决定是否展示导航栏
-    let isWe = isWeChat();
+    let isWe = utils.isWeChat();
     isWe = true;
     this.showNav = isWe;
     this.title = this.$route.name;
@@ -85,7 +85,7 @@ export default {
       document.title = this.title;
 
       if (to.path === '/login') {
-        setStoregeItem('tabIndex', 0);
+        utils.setLocalStorage('tabIndex', 0);
       }
 
       // Tab界面不需要显示导航

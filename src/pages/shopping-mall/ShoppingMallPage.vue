@@ -16,7 +16,7 @@
 <script>
   import TabBar from '../../components/TabBar.vue';
   import NavBar from '../../components/NavBar.vue';
-  import {isWeChat} from "../../utils/utils";
+  import {utils} from "../../utils/utils";
   export default {
     name: "ShoppingMallPage",
     components: {
@@ -28,7 +28,7 @@
     },
     data() {
       return {
-        showNav:!isWeChat()
+        showNav:!utils.isWeChat()
       }
     },
     methods: {
