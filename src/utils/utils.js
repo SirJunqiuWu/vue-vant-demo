@@ -207,30 +207,6 @@ const isJSONString = (str) => {
 };
 
 /**
- * 根据key获取对象
- * @param {string}key
- * @return {any}
- */
-const getLocalStorage = (key) => {
-  let localStorage = window.localStorage;
-  let valueObject = localStorage.getItem(key);
-  if (typeof valueObject === 'string') {
-    //尝试能否转成对象
-    if (utils.isJSONString(valueObject)) {
-      let parseObject = JSON.parse(valueObject);
-      if (typeof parseObject === 'object') {
-        return parseObject;
-      }
-    }
-    return valueObject;
-  } else {
-    window.console.log('localStorage:无key=' + key + '值可取');
-    return null;
-  }
-};
-
-
-/**
  * localStorage 数据保存本地
  * @param {string}key
  * @param {string | number | object}valueObject
@@ -238,7 +214,8 @@ const getLocalStorage = (key) => {
 const setLocalStorage = (key, valueObject) => {
   let localStorage = window.localStorage;
   if (typeof valueObject === 'string' || typeof valueObject === 'number') {
-    localStorage.setItem(key, String(valueObject));
+    // 存值为json
+    localStorage.setItem(key, valueObject);
   } else if (typeof valueObject === 'boolean') {
     if (valueObject) {
       localStorage.setItem(key, 'true');
@@ -255,6 +232,31 @@ const setLocalStorage = (key, valueObject) => {
     window.console.log('LocalStorage:暂不支持存储:key=' + key + '\nvalueObject=' + JSON.stringify(valueObject));
   }
 };
+
+/**
+ * 根据key获取对象
+ * @param {string}key
+ * @return {any}
+ */
+const getLocalStorage = (key) => {
+  let localStorage = window.localStorage;
+  let valueObject = localStorage.getItem(key);
+  if (typeof valueObject === 'string') {
+    // valueObject = JSON.parse(valueObject);
+    //尝试能否转成对象
+    if (utils.isJSONString(valueObject)) {
+      let parseObject = JSON.parse(valueObject);
+      if (typeof parseObject === 'object') {
+        return parseObject;
+      }
+    }
+    return valueObject;
+  } else {
+    window.console.log('localStorage:无key=' + key + '值可取');
+    return null;
+  }
+};
+
 
 
 // 页面交互toast提示

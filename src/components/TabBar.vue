@@ -26,11 +26,12 @@
   Vue.use(Tabbar).use(TabbarItem);
 
   const key = 'tabIndex';
+  window.console.log('tabIndex-----------:', utils.getLocalStorage('tabIndex').valueOf());
   export default {
     name: "TabBar",
     data() {
       return {
-        active: utils.getLocalStorage(key) ? utils.getLocalStorage(key) : 0,
+        active: Number(utils.getLocalStorage('tabIndex')),
         tabBars: [
           {
             name: "home",
@@ -62,8 +63,8 @@
     },
     methods: {
       tab(index, val) {
-        window.console.log('val:', val);
-        utils.setLocalStorage(key, index);
+        window.console.log('val:', index);
+        utils.setLocalStorage('tabIndex', index);
         this.active = index;
         this.$router.push(val);
       }
