@@ -50,8 +50,8 @@
         web.width = window.innerWidth;
 
         // 跨域不行 统一域名下可以
-       // let str =  document.getElementById('web').contentDocument.title;
-       // window.console.log('内嵌标题:', str);
+       let str =  document.getElementById('web').contentDocument.title;
+       window.console.log('内嵌标题:', str);
       }
     },
     watch: {

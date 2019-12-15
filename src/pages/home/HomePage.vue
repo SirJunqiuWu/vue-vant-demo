@@ -90,7 +90,7 @@
 
     <!-- 底部 -->
     <template slot="footer">
-      <TabBar />
+      <TabBar :index="0" />
     </template>
 
   </page>
@@ -106,16 +106,19 @@
 
   const result = [
       {
-        image:'http://formyself.oss-cn-hangzhou.aliyuncs.com/root/c591089f68164716bb988d3537517567.jpg',
-        clickUrl:'https://segmentfault.com/a/1190000012393587'
+        image:'https://rentupload.topshopstv.com//2019-12-13//5df360b9b4fd2.jpg',
+        clickUrl:'https://segmentfault.com/a/1190000012393587',
+        title:'路由传值'
       },
       {
-        image:'http://formyself.oss-cn-hangzhou.aliyuncs.com/root/6e82220336d94323ad75a7fe7013c51a.jpg',
-        clickUrl:'http://www.baidu.com',
+        image:'https://rentupload.topshopstv.com//2019-10-19//5daab871029e0.png',
+        clickUrl:'https://rentstatic.topshopstv.com/h5/index8.html',
+        title:'粉丝大回馈'
       },
       {
-        image:'http://formyself.oss-cn-hangzhou.aliyuncs.com/root/02a601ff31724f51801d5d6211534e9e.jpg',
-        clickUrl:'https://cn.vuejs.org/'
+        image:'https://rentupload.topshopstv.com//2019-08-27//5d64d1fe060a8.png',
+        clickUrl:'https://cn.vuejs.org/',
+        title:'vue.js'
       }
     ];
   window.console.log('banners:', utils.getLocalStorage('banners'));
@@ -128,8 +131,8 @@
     data(){
       return {
         showNav:!utils.isWeChat(),
-        bannerHeight:window.document.documentElement.clientWidth * 844 / 1500,
-        banners: utils.getLocalStorage('banners') ? utils.getLocalStorage('banners') : result,
+        bannerHeight:window.document.documentElement.clientWidth * 320.0 / 750.0,
+        banners: utils.getLocalStorage('banners') ? result : result,
         // 下拉刷新控制符
         isLoading:false,
 
@@ -159,7 +162,7 @@
           this.$router.push({
             path:'web',
             query:{
-              title:'百度',
+              title:item.title,
               src:item.clickUrl
             }
           });

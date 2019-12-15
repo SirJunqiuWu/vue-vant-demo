@@ -8,7 +8,7 @@
       <p>消息</p>
     </template>
     <template slot="footer">
-      <TabBar />
+      <TabBar :index="3" />
     </template>
   </page>
 </template>

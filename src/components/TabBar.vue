@@ -12,7 +12,7 @@
         :key="index"
         :icon="item.icon"
         safe-area-inset-bottom
-        @click="tab(index, item.name)"
+        @click="clickTab(index, item)"
       >
         {{item.title}}
       </van-tabbar-item>
@@ -26,35 +26,45 @@
   Vue.use(Tabbar).use(TabbarItem);
 
   const key = 'tabIndex';
-  window.console.log('tabIndex-----------:', utils.getLocalStorage('tabIndex').valueOf());
   export default {
     name: "TabBar",
+    props:{
+      // 数据双向绑定
+      index:{
+        type:Number,
+        require:false,
+        default:0,
+        validator:(value) => {
+          return true;
+        }
+      }
+    },
     data() {
       return {
-        active: Number(utils.getLocalStorage('tabIndex')),
+        active: 0,
         tabBars: [
           {
-            name: "home",
+            routerName: "home",
             title: "首页",
             icon:'wap-home'
           },
           {
-            name: "shopping-mall",
+            routerName: "shopping-mall",
             title: "商城",
             icon:'goods-collect'
           },
           {
-            name: "cart",
+            routerName: "cart",
             title: "购物车",
             icon:'wap-home'
           },
           {
-            name: "message",
+            routerName: "message",
             title: "消息",
             icon:"chat"
           },
           {
-            name: "my",
+            routerName: "my",
             title: "我的",
             icon:"manager"
           }
@@ -62,11 +72,28 @@
       };
     },
     methods: {
-      tab(index, val) {
-        window.console.log('val:', index);
-        utils.setLocalStorage('tabIndex', index);
-        this.active = index;
-        this.$router.push(val);
+      clickTab(index, item) {
+        window.console.log('selectedIndex:', index);
+        this.$forceUpdate();
+        if (item.clickUrl) {
+          // 如果存在点击链接
+          window.location.href = item.clickUrl;
+          return;
+        }
+        if (item.routerName) {
+          // 无点击链接 进路由
+          this.$router.push(item.routerName);
+        }
+      }
+    },
+    watch:{
+      index:{
+        handler:function(val, oldVal) {
+          window.console.log('old:', oldVal, 'new:', val);
+          this.active = this.index;
+        },
+        immediate:true,
+        deep:true
       }
     }
   };

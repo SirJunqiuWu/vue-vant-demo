@@ -28,7 +28,7 @@
 
 
     <template slot="footer">
-      <TabBar />
+      <TabBar :index="4" />
     </template>
 
   </page>

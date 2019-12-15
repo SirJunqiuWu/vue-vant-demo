@@ -8,7 +8,7 @@
       <p>home</p>
     </template>
     <template slot="footer">
-      <TabBar />
+      <TabBar :index="2" />
     </template>
   </page>
 </template>

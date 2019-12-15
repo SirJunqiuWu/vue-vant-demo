@@ -8,7 +8,7 @@
       <p>商城</p>
     </template>
     <template slot="footer">
-      <TabBar />
+      <TabBar :index="1" />
     </template>
   </page>
 </template>

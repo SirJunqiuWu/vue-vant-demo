@@ -65,7 +65,7 @@
   // 本地图标引入
   import appLogo from '../assets/app-logo.png'
   // 工具类方法
-  import {isMobileLegal, showHud, setStoregeItem} from '../utils/utils'
+  import {isMobileLegal, showHud, utils} from '../utils/utils'
   // 使控件作用
   Vue.use(Field).use(CellGroup).use(Button).use(Toast).use(NavBar).use(Loading).use(Image);
 
@@ -136,8 +136,8 @@
         this.loading = true;
         setTimeout(() => {
           showHud('登录成功');
-          setStoregeItem('username', this.username);
-          setStoregeItem('token', this.username);
+          utils.setLocalStorage('username', this.username);
+          utils.setLocalStorage('token', this.username);
           this.loading = false;
           this.$router.push("home");
         }, 1500);
