@@ -61,8 +61,13 @@ export function getUrlTargetKeyValueWithKey(key) {
 }
 
 // 根据时间戳和时间格式获取日期描述 eg：2019-11-26 11:37:30
-export function getDateByTimestampAndFormatter(timestamp, formatter) {
-  let date = new Date(timestamp);
+const getDateByTimestampAndFormatter = (timestamp, formatter) => {
+  let date = '';
+  if (isNullStr(timestamp).length === 0) {
+    date = new Date();
+  } else {
+    date = new Date(timestamp);
+  }
   let year = date.getFullYear();
   let month = date.getMonth() + 1;
   let day = date.getDate();
@@ -87,6 +92,8 @@ export function getDateByTimestampAndFormatter(timestamp, formatter) {
   }
   if (formatter === 'yyyy-MM-dd') {
     return year + '-' + month + '-' + day;
+  } else if (formatter === 'HH:mm') {
+    return hour + ':' + minute;
   }
   return year + '-' + month + '-' + day + '  ' + hour + ':' + minute + ':' + second;
 }
@@ -97,7 +104,22 @@ export function getTimestampByDate(date) {
   return result.getTime();
 }
 
-// 字符串安全处理
+// 获取时间最详细的描述
+const getTimeDetailDes = (timestamp) => {
+  const now = getDateByTimestampAndFormatter('', 'yyyy-MM-dd');
+  const past = getDateByTimestampAndFormatter(timestamp, 'yyyy-MM-dd');
+  let result = '';
+  if (now == past) {
+    // 当天的 返回HH:mm
+    result = getDateByTimestampAndFormatter('', 'HH:mm');
+  } else {
+    // 非当天的 返回日期 yyyy-MM-dd
+    result = past;
+  }
+  return result;
+}
+
+// 字符串安全处理 有问题的一律返回空字符串
 export function isNullStr(str) {
   let result = '';
   if (!str || str === null || str === 'null'  || str === 'NULL') {
@@ -257,6 +279,16 @@ const getLocalStorage = (key) => {
   }
 };
 
+/**
+ * 根据 标题 和 提示文本 控制台输出
+ * @param {string}title 打印标题
+ * * @param {string}text 打印出来的值
+ * @return {window.console.log}
+ */
+const log = (title, value) => {
+  const result = title + ':' + value;
+  window.console.log(result);
+}
 
 
 // 页面交互toast提示
@@ -364,4 +396,7 @@ export const utils = {
   setLocalStorage,
   setStoregeItem,
   showToast,
+  getDateByTimestampAndFormatter,
+  getTimeDetailDes,
+  log,
 };

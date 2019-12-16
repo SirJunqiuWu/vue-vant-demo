@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vant from 'vant';
 import App from './App.vue'
 import router from './router/router'
 import Page from './components/page/page.js';
@@ -9,6 +10,7 @@ import './styles/vant.reset.less';
 import './styles/base/common.less';
 
 Vue.use(Page);
+Vue.use(Vant);
 
 Vue.config.productionTip = false;
 

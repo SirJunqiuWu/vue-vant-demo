@@ -21,11 +21,8 @@
 
 <script>
   import Vue from 'vue';
-  import {utils} from "../utils/utils";
   import { Tabbar, TabbarItem } from 'vant';
   Vue.use(Tabbar).use(TabbarItem);
-
-  const key = 'tabIndex';
   export default {
     name: "TabBar",
     props:{
