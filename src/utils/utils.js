@@ -205,6 +205,11 @@ const setStoregeItem = (name, val) => {
   localStorage.setItem(name, JSON.stringify(val))
 }
 
+// 获取0 ~ 9之间的整数
+const getRandom = () => {
+  return Math.floor(Math.random() * 10);
+}
+
 
 /**
  * 判断字符是否是json字符串
@@ -399,4 +404,5 @@ export const utils = {
   getDateByTimestampAndFormatter,
   getTimeDetailDes,
   log,
+  getRandom,
 };

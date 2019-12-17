@@ -11,6 +11,7 @@
         :to="item.to"
         :key="index"
         :icon="item.icon"
+        :info=" index=== 3 ? msgCount : '' "
         safe-area-inset-bottom
         @click="clickTab(index, item)"
       >
@@ -34,7 +35,8 @@
         validator:(value) => {
           return true;
         }
-      }
+      },
+      msgCount:Number,
     },
     data() {
       return {
