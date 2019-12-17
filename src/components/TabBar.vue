@@ -11,7 +11,7 @@
         :to="item.to"
         :key="index"
         :icon="item.icon"
-        :info=" index=== 3 ? msgCount : '' "
+        :info=" index=== 3 ? msgCount : null "
         safe-area-inset-bottom
         @click="clickTab(index, item)"
       >

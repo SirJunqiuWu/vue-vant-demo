@@ -90,7 +90,7 @@
         // 列表控制符
         finished:false,
         dataArray:[],
-        msgCount:'',
+        msgCount:0,
       }
     },
     created() {
@@ -152,7 +152,7 @@
             })
           }
           if (refresh) {
-            this.$toast.success('加载成功');
+            this.$toast.success('刷新成功');
             this.isRefresh = false;
           } else {
             this.isLoading = false;
@@ -166,7 +166,7 @@
 
       getUnReadMsgCount() {
         let unReadMsgArr = this.dataArray.filter(item => !item.hasRead);
-        this.msgCount = unReadMsgArr.length > 0 ? unReadMsgArr.length : '';
+        this.msgCount = unReadMsgArr.length > 0 ? unReadMsgArr.length : 0;
       }
     }
   }
@@ -193,13 +193,13 @@
 
   // cell-title 标题
   .van-cell--large .van-cell__title {
-    font-size: 0.5rem;
+    font-size: 0.4rem;
     margin-left: 0.2rem;
   }
 
   // cell-label 描述
   .van-cell--large .van-cell__label {
-    font-size: 0.4rem;
+    font-size: 0.3rem;
   }
 
   // cell-value 右侧值

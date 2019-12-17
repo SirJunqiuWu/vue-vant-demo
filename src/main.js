@@ -18,7 +18,7 @@ Vue.config.productionTip = false;
 // vant-ui是按设计稿750来设计的
 // vant-ui适配rem
 function setHtml(designSize, rootValue) {
-  let rootV = rootValue ? rootValue : 100;
+  let rootV = rootValue ? rootValue : 37.5;
   // 窗口宽度
   const winWidth = window.document.documentElement.clientWidth;
   // 如果窗口宽度超过1.5倍设计图了,则不再调整
@@ -26,7 +26,7 @@ function setHtml(designSize, rootValue) {
     return;
   }
   window.console.log(winWidth);
-  const htmlFontSize = winWidth * rootV / designSize / 3;
+  const htmlFontSize = winWidth * rootV / designSize;
   window.document.documentElement.style.fontSize = htmlFontSize + 'px';
 }
 setHtml(375);
