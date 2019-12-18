@@ -34,12 +34,13 @@
               :origin-price="item.originPrice"
               lazy-load
               @click-thumb="imageClicked(item, index)"
+              @click="cellClicked(item, index)"
             >
               <div slot="tags">
                 <van-tag plain type="danger"  v-for="(tag, tagIndex) in item.tags" :key="tagIndex">{{tag}}</van-tag>
               </div>
               <div slot="footer">
-                <van-button size="mini" @click="collectGoods(item, index)">收藏</van-button>
+                <van-button size="mini" @click.stop="collectGoods(item, index)">收藏</van-button>
                 <van-button size="mini" @click="buyGoods(item, index)">购买</van-button>
               </div>
             </van-card>
@@ -109,6 +110,7 @@
           }
           for (let i = 0; i < 5; i += 1) {
             let temp = {};
+            temp.id = i + 1;
             temp.thumb = "https://gw.alicdn.com/bao/uploaded/i2/158929230/TB1pP_bn_nI8KJjy0FfXXcdoVXa_!!0-item_pic.jpg_400x400q90.jpg"
             temp.title = "商品标题"
             temp.desc = "描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息"
@@ -121,6 +123,8 @@
               'https://gd2.alicdn.com/imgextra/i2/1052798159/TB2VMS3aBcHL1JjSZJiXXcKcpXa_!!1052798159.jpg',
               'https://gd4.alicdn.com/imgextra/i4/1052798159/TB2tB1OaC3PL1JjSZFxXXcBBVXa_!!1052798159.jpg'
             ]
+            temp.clickUrl = '';
+            temp.routeName = 'goods-detail';
             this.dataArray.push(temp);
           }
           if (refresh) {
@@ -133,6 +137,17 @@
             }
           }
         }, 1000)
+      },
+
+      cellClicked(item, index) {
+        window.console.log('cell击索引:', index, '信息:', item)
+        if (item.clickUrl && item.clickUrl.length > 0) {
+          window.location.href = item.clickUrl;
+          return;
+        }
+        if (item.routeName && item.routeName.length > 0) {
+          this.$router.push(item.routeName);
+        }
       },
 
       // 商品图点击
@@ -154,6 +169,7 @@
       collectGoods(item, index) {
         window.console.log('收藏商品索引:', index, '信息:', item)
         this.$toast('收藏商品:' + index);
+        stop();
       },
 
       // 购买商品点击

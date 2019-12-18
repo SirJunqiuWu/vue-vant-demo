@@ -11,6 +11,7 @@ import MessagePage from '../pages/message/MessagePage';
 import MyPage from "../pages/my/MyPage";
 import AboutUsPage from '../pages/my/AboutUsPage';
 import WebPage from '../pages/web/WebPage'
+import GoodsDetailPage from '../pages/shopping-mall/GoodsDetailPage'
 
 Vue.use(VueRouter);
 
@@ -74,6 +75,11 @@ export const routes = [
     path:'/web',
     name:'web',
     component:WebPage
+  },
+  {
+    path:'/goods-detail',
+    name:'goods-detail',
+    component:GoodsDetailPage
   },
   {
     // 重定向：默认时
