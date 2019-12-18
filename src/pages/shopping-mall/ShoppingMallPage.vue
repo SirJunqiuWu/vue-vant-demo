@@ -16,30 +16,34 @@
         <van-list
           v-model="isLoading"
           :finished="finished"
-          :offset="100"
           :immediate-check="false"
           finished-text="————— 我是有底线的 ——————"
           @load="onLoad"
         >
-          <van-card
+          <van-cell
             v-for="(item, index) in dataArray"
             :key="index"
-            :thumb="item.thumb"
-            :title="item.title"
-            :desc="item.desc"
-            :num="item.num"
-            :price="item.price"
-            lazy-load
-            @click-thumb="imageClicked(item, index)"
+            style="margin-bottom: 0.2rem;padding: 0"
           >
-            <div slot="tags">
-              <van-tag plain type="danger"  v-for="(tag, tagIndex) in item.tags" :key="tagIndex">{{tag}}</van-tag>
-            </div>
-            <div slot="footer">
-              <van-button size="mini" @click="collectGoods(item, index)">收藏</van-button>
-              <van-button size="mini" @click="buyGoods(item, index)">购买</van-button>
-            </div>
-          </van-card>
+            <van-card
+              :thumb="item.thumb"
+              :title="item.title"
+              :desc="item.desc"
+              :num="item.num"
+              :price="item.price"
+              :origin-price="item.originPrice"
+              lazy-load
+              @click-thumb="imageClicked(item, index)"
+            >
+              <div slot="tags">
+                <van-tag plain type="danger"  v-for="(tag, tagIndex) in item.tags" :key="tagIndex">{{tag}}</van-tag>
+              </div>
+              <div slot="footer">
+                <van-button size="mini" @click="collectGoods(item, index)">收藏</van-button>
+                <van-button size="mini" @click="buyGoods(item, index)">购买</van-button>
+              </div>
+            </van-card>
+          </van-cell>
         </van-list>
       </van-pull-refresh>
     </template>
@@ -82,6 +86,7 @@
     },
     methods: {
       onRefresh() {
+        this.finished = false;
         this.uploadDataReq(true);
       },
 
@@ -105,10 +110,11 @@
           for (let i = 0; i < 5; i += 1) {
             let temp = {};
             temp.thumb = "https://gw.alicdn.com/bao/uploaded/i2/158929230/TB1pP_bn_nI8KJjy0FfXXcdoVXa_!!0-item_pic.jpg_400x400q90.jpg"
-            temp.title = "商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题"
+            temp.title = "商品标题"
             temp.desc = "描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息"
             temp.num = "2"
-            temp.price = "2.00"
+            temp.price = "280.00"
+            temp.originPrice = '350'
             temp.tags = ['满100减10', '满300减50']
             temp.images = [
               'https://gd1.alicdn.com/imgextra/i3/1052798159/TB2gOaFaC3PL1JjSZPcXXcQgpXa_!!1052798159.jpg',
@@ -126,7 +132,7 @@
               this.finished = true;
             }
           }
-        }, 500)
+        }, 1000)
       },
 
       // 商品图点击
@@ -163,7 +169,7 @@
   @import "../../styles/px2rem.less";
   // 卡片
   .van-card {
-    background: white;
+    background-color: white;
     padding: 0.4rem 0.4rem;
   }
 
