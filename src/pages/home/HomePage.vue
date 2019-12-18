@@ -7,7 +7,7 @@
 
     <!-- 头部 -->
     <template slot="header">
-      <NavBar  title="首页" :show-left="false" />
+      <NavBar title="首页" :show-left="false" />
     </template>
 
     <!-- 内容区 -->

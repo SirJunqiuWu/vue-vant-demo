@@ -2,28 +2,46 @@
   <page :has-header="showNav" :has-footer="true">
     <template slot="header">
       <!-- 导航 -->
-      <NavBar  title="商城" :show-left="false"></NavBar>
+      <NavBar title="商城" :show-left="false"></NavBar>
     </template>
 
     <template slot="content">
-      <van-card
-        v-for="(item, index) in dataArray"
-        :key="index"
-        :thumb="item.thumb"
-        :title="item.title"
-        :desc="item.desc"
-        :num="item.num"
-        :price="item.price"
-        lazy-load
+      <van-pull-refresh
+        v-model="isRefresh"
+        pulling-text="下拉刷新"
+        loosing-text="松手即可刷新"
+        loading-text="正在努力的刷新"
+        @refresh="onRefresh"
       >
-        <div slot="tags" v-for="(tag, key) in item.tags" :key="key">
-          <van-tag plain type="danger">{{tag}}</van-tag>
-        </div>
-        <div slot="footer">
-          <van-button size="mini">收藏</van-button>
-          <van-button size="mini">购买</van-button>
-        </div>
-      </van-card>
+        <van-list
+          v-model="isLoading"
+          :finished="finished"
+          :offset="100"
+          :immediate-check="false"
+          finished-text="————— 我是有底线的 ——————"
+          @load="onLoad"
+        >
+          <van-card
+            v-for="(item, index) in dataArray"
+            :key="index"
+            :thumb="item.thumb"
+            :title="item.title"
+            :desc="item.desc"
+            :num="item.num"
+            :price="item.price"
+            lazy-load
+            @click-thumb="imageClicked(item, index)"
+          >
+            <div slot="tags">
+              <van-tag plain type="danger"  v-for="(tag, tagIndex) in item.tags" :key="tagIndex">{{tag}}</van-tag>
+            </div>
+            <div slot="footer">
+              <van-button size="mini" @click="collectGoods(item, index)">收藏</van-button>
+              <van-button size="mini" @click="buyGoods(item, index)">购买</van-button>
+            </div>
+          </van-card>
+        </van-list>
+      </van-pull-refresh>
     </template>
 
     <template slot="footer">
@@ -36,6 +54,9 @@
   import TabBar from '../../components/TabBar.vue';
   import NavBar from '../../components/NavBar.vue';
   import {utils} from "../../utils/utils";
+  import {ImagePreview} from 'vant'; // 函数调用的方式
+  import Vue from 'vue';
+  Vue.use(ImagePreview);
   export default {
     name: "ShoppingMallPage",
     components: {
@@ -49,24 +70,91 @@
       return {
         showNav:!utils.isWeChat(),
         dataArray:[],
+        isRefresh:false,
+        isLoading:false,
+        finished:false,
       }
     },
     created() {
+      // 网页标题更改
+      document.title = '商城';
       this.uploadDataReq();
     },
     methods: {
-      uploadDataReq() {
-        for (let i = 0; i < 10; i += 1) {
-          let temp = {};
-          temp.thumb = "https://gw.alicdn.com/bao/uploaded/i2/158929230/TB1pP_bn_nI8KJjy0FfXXcdoVXa_!!0-item_pic.jpg_400x400q90.jpg"
-          temp.title = "商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题"
-          temp.desc = "描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息"
-          temp.num = "2"
-          temp.price = "2.00"
-          temp.tags = ['满100减10', '满300减50']
-          this.dataArray.push(temp);
+      onRefresh() {
+        this.uploadDataReq(true);
+      },
+
+      onLoad() {
+        this.uploadDataReq(false);
+      },
+
+      uploadDataReq(refresh) {
+        if (this.dataArray.length === 0) {
+          // 自定义加载图标
+          this.$toast.loading({
+            message: '加载中...',
+            forbidClick: true,
+            loadingType: 'spinner'
+          });
         }
-      }
+        setTimeout(() => {
+          if (refresh) {
+            this.dataArray = [];
+          }
+          for (let i = 0; i < 5; i += 1) {
+            let temp = {};
+            temp.thumb = "https://gw.alicdn.com/bao/uploaded/i2/158929230/TB1pP_bn_nI8KJjy0FfXXcdoVXa_!!0-item_pic.jpg_400x400q90.jpg"
+            temp.title = "商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题"
+            temp.desc = "描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息描述信息"
+            temp.num = "2"
+            temp.price = "2.00"
+            temp.tags = ['满100减10', '满300减50']
+            temp.images = [
+              'https://gd1.alicdn.com/imgextra/i3/1052798159/TB2gOaFaC3PL1JjSZPcXXcQgpXa_!!1052798159.jpg',
+              'https://gd2.alicdn.com/imgextra/i2/1052798159/TB2VMS3aBcHL1JjSZJiXXcKcpXa_!!1052798159.jpg',
+              'https://gd4.alicdn.com/imgextra/i4/1052798159/TB2tB1OaC3PL1JjSZFxXXcBBVXa_!!1052798159.jpg'
+            ]
+            this.dataArray.push(temp);
+          }
+          if (refresh) {
+            this.isRefresh = false;
+            this.$toast.success('刷新成功');
+          } else {
+            this.isLoading = false;
+            if (this.dataArray.length >= 20) {
+              this.finished = true;
+            }
+          }
+        }, 500)
+      },
+
+      // 商品图点击
+      imageClicked(item, index) {
+        window.console.log('商品图点击索引:', index, '信息:', item)
+        this.$toast('商品图片:' + index);
+        if (item.images && item.images.length > 0) {
+          // 查看商品图片(如果想组件调用时，可支持自定义显示)
+          ImagePreview({
+            images:item.images,
+            startPosition:0,
+            showIndicators:true,
+            lazyLoad:true
+          });
+        }
+      },
+
+      // 收藏商品点击
+      collectGoods(item, index) {
+        window.console.log('收藏商品索引:', index, '信息:', item)
+        this.$toast('收藏商品:' + index);
+      },
+
+      // 购买商品点击
+      buyGoods(item, index) {
+        window.console.log('购买商品击索引:', index, '信息:', item)
+        this.$toast('购买商品:' + index);
+      },
     }
   }
 </script>
@@ -105,6 +193,7 @@
   // 标签
   .van-tag--danger.van-tag--plain {
     margin-bottom: 0.16rem;
+    margin-right: 0.1rem;
   }
 
   // 按钮
@@ -112,6 +201,11 @@
     border-radius: 0.3rem;
   }
 
+  div-tags {
+    display: flex;
+  }
+
+  // 底下的功能按钮
   .van-button--mini {
     // 使文本垂直居中
     height: 0.6rem;

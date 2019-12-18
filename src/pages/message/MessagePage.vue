@@ -94,6 +94,8 @@
       }
     },
     created() {
+      // 网页标题更改
+      document.title = '消息';
       this.uploadDataReq();
     },
     methods: {

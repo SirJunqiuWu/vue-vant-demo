@@ -32,6 +32,10 @@
         showNav:!utils.isWeChat()
       }
     },
+    created() {
+      // 网页标题更改
+      document.title = '购物车';
+    },
     methods: {
 
     }

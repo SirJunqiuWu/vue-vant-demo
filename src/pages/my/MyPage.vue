@@ -75,6 +75,10 @@
         ]
       }
     },
+    created() {
+      // 网页标题更改
+      document.title = '我的';
+    },
     beforeMount(height) {
       let h = document.documentElement.clientHeight || document.body.clientHeight;
       this.curHeight = h - height; //减去页面上固定高度height

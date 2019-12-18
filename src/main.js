@@ -9,7 +9,9 @@ import './styles/override.less';
 import './styles/vant.reset.less';
 import './styles/base/common.less';
 
+// 自定义组件Page,类似于BaseViewController
 Vue.use(Page);
+// vant-ui组件一次性导入
 Vue.use(Vant);
 
 Vue.config.productionTip = false;
