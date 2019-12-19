@@ -21,22 +21,23 @@
   ],
   "dependencies": {
     "@antv/f2": "^3.4.0",
-    "axios": "0.18.0",
+    "axios": "^0.18.1",
     "js-cookie": "2.2.0",
+    "lrz": "^4.9.40",
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "number-precision": "^1.3.1",
     "path-to-regexp": "2.4.0",
-    "weixin-js-sdk": "^1.4.0-test",
     "postcss-pxtorem": "^4.0.1",
-    "lrz": "^4.9.40",
     "vant": "2.2.10",
     "vue": "2.6.10",
+    "vue-axios": "^2.1.5",
     "vue-router": "3.0.6",
     "vue-skeleton-webpack-plugin": "1.2.2",
-    "vuex": "3.1.0"
+    "vuex": "3.1.0",
+    "weixin-js-sdk": "^1.4.0-test"
   },
   "devDependencies": {
     "@babel/core": "7.0.0",

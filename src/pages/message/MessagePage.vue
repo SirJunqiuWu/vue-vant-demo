@@ -59,7 +59,10 @@
 <script>
   import TabBar from '../../components/TabBar.vue';
   import NavBar from '../../components/NavBar.vue';
+  import Vue from 'vue';
   import {utils} from "../../utils/utils";
+  import {api} from "../../utils/api";
+
   const pageNum = 10;
   export default {
     name: "MessagePage",
@@ -97,6 +100,24 @@
       // 网页标题更改
       document.title = '消息';
       this.uploadDataReq();
+      // api.getReq();
+
+      const _url = 'http://member.formyself.com/honey-vem-member/member/level/all';
+      const token = 'ZpRtqNWsUcsKSVtbKOWFkjHCYlKNwnPK';
+      const _param = {
+        appid:'formyself',
+        nonce:'0581888548',
+        sign:'7C7FB000E00C6F918FE0F2A3C65A6FD8',
+        timestamp:1576755136
+      }
+      this.$axios.get(_url, {
+        headers: {
+          'sso_token': token,
+        },
+        params:_param
+      }).then((response) => {
+        window.console.log('当前网络请求:', response.data);
+      })
     },
     methods: {
       deleteMsg(item, index) {
