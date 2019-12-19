@@ -33,7 +33,7 @@
               :price="item.price"
               :origin-price="item.originPrice"
               lazy-load
-              @click-thumb="imageClicked(item, index)"
+              @click-thumb.stop="imageClicked(item, index)"
               @click="cellClicked(item, index)"
             >
               <div slot="tags">
