@@ -14,8 +14,8 @@
       >
         <van-checkbox v-model="checked">全选</van-checkbox>
         <span slot="tip">
-          你的收货地址不支持同城送,
-          <span>修改地址</span>
+          你的收货地址不支持同城送，
+          <span class="blue-title">修改地址</span>
         </span>
       </van-submit-bar>
     </template>
@@ -59,6 +59,17 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="less">
+  @import "../../styles/px2rem.less";
+  .van-submit-bar {
+    margin-bottom: px2rem(30);
+    border:0.02rem solid #EDEDED;
+  }
+  .van-checkbox {
+    margin-left: 0.2rem;
+  }
 
+  .blue-title {
+    color: #1966FF;
+  }
 </style>

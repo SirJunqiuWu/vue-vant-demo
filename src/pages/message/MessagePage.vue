@@ -59,7 +59,6 @@
 <script>
   import TabBar from '../../components/TabBar.vue';
   import NavBar from '../../components/NavBar.vue';
-  import Vue from 'vue';
   import {utils} from "../../utils/utils";
   import {api} from "../../utils/api";
 
@@ -102,21 +101,39 @@
       this.uploadDataReq();
       // api.getReq();
 
-      const _url = 'http://member.formyself.com/honey-vem-member/member/level/all';
+      const _url = 'http://192.168.3.3:8091/guard/logon';
       const token = 'ZpRtqNWsUcsKSVtbKOWFkjHCYlKNwnPK';
-      const _param = {
-        appid:'formyself',
-        nonce:'0581888548',
-        sign:'7C7FB000E00C6F918FE0F2A3C65A6FD8',
-        timestamp:1576755136
-      }
-      this.$axios.get(_url, {
-        headers: {
-          'sso_token': token,
-        },
-        params:_param
-      }).then((response) => {
+
+      let extendParams = {
+        role: 'Forklift',
+        faceToken: '',
+        employeeId: null,
+        // employeeNo: '01748',
+        employeeNo:'00653',
+        deviceNo: '20:58:6e:e8:13:2a',
+      };
+      let params = {
+        userName: 'wufan',
+        password: '12345678',
+        verification_code: '',
+        extends: JSON.stringify(extendParams),
+      };
+      let data = `params=${JSON.stringify(params)}`;
+      // const _param = {
+      //   appid:'formyself',
+      //   nonce:'0581888548',
+      //   sign:'7C7FB000E00C6F918FE0F2A3C65A6FD8',
+      //   timestamp:1576755136
+      // }
+      this.$axios.post(_url,
+        // headers: {
+        //   'sso_token': token,
+        // },
+        data
+      ).then((response) => {
         window.console.log('当前网络请求:', response.data);
+      }).catch((error) => {
+        window.console.log('错误:', error);
       })
     },
     methods: {
@@ -188,8 +205,9 @@
       },
 
       getUnReadMsgCount() {
+        // 数组根据元素字段过滤拿到新数组
         let unReadMsgArr = this.dataArray.filter(item => !item.hasRead);
-        this.msgCount = unReadMsgArr.length > 0 ? unReadMsgArr.length : 0;
+        this.msgCount = unReadMsgArr.length;
       }
     }
   }
@@ -198,7 +216,7 @@
 <style scoped lang="less">
   @import "../../styles/px2rem.less";
 
-  /* 消除内敛块元素之间因为是取文本间隔道闸按钮之间出现间隔 */
+  /* 消除内敛块元素之间因为是取文本间隔导致按钮之间出现间隔 */
   .van-swipe-cell {
     font-size: 0;
   }
