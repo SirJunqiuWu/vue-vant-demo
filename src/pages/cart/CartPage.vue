@@ -3,10 +3,11 @@
 
     <template slot="header">
       <!-- 导航 -->
-      <NavBar  title="购物车" :show-left="false"></NavBar>
+      <NavBar  title="购物车" :show-left="false" />
     </template>
 
     <template slot="content">
+
       <van-submit-bar
         :price="3050"
         button-text="提交订单"

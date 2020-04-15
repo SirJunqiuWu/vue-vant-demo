@@ -94,7 +94,7 @@ const getDateByTimestampAndFormatter = (timestamp, formatter) => {
     return year + '-' + month + '-' + day;
   } else if (formatter === 'HH:mm') {
     return hour + ':' + minute;
-  }
+  } else
   return year + '-' + month + '-' + day + '  ' + hour + ':' + minute + ':' + second;
 }
 
@@ -110,8 +110,8 @@ const getTimeDetailDes = (timestamp) => {
   const past = getDateByTimestampAndFormatter(timestamp, 'yyyy-MM-dd');
   let result = '';
   if (now == past) {
-    // 当天的 返回HH:mm
     result = getDateByTimestampAndFormatter('', 'HH:mm');
+    // 当天的 返回HH:mm
   } else {
     // 非当天的 返回日期 yyyy-MM-dd
     result = past;
@@ -205,7 +205,7 @@ const setStoregeItem = (name, val) => {
   localStorage.setItem(name, JSON.stringify(val))
 }
 
-// 获取0 ~ 9之间的整数
+// 获取0 ~ 9之间的整数 Math.random()取值范围[0, 1)
 const getRandom = () => {
   return Math.floor(Math.random() * 10);
 }

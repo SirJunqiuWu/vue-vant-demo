@@ -6,6 +6,11 @@ import constants from "vant/lib/sku/constants";
  * 作用: 该文件作为网络请求文件，项目中所有的网络请求都可以直接调用该文件中的方法
 ****************************************************************************/
 
+// 测试环境基地址
+const base_url_dev = '';
+// 生产环境地址
+const base_url_prod = '';
+
 // 请求配置参数
 const reqConfig = {
     async: true, // 是否异步请求
@@ -95,31 +100,53 @@ const getDataReq = (options = {}) => {
     });
 }
 
-const getReq = () => {
-    this.$axios.get(_url, {
-        params:_param
-    })
-      .then(function (response) {
-          window.console.log('当前网络请求成功:', response);
-      })
-      .catch(function (error) {
-          window.console.log('当前网络请求失败:', error);
-      });
+// get请求
+const getReq = (options = {}) => {
+  const { url, param, successd = () => 0, failed = () => 1} = options;
+  let reqURL = getTotalURL(url);
+  this.$axios.get(reqURL, {
+    params:param,
+    headers:{
+      // 这里设置token等
+    }
+  }).then(function (response) {
+      window.console.log('当前网络请求成功:', response);
+      successd(response);
+  }).catch(function (error) {
+      window.console.log('当前网络请求失败:', error);
+      failed(error);
+  });
+}
+
+// post请求
+const postReq = (options = {}) => {
+  const { url, param, successd = () => 0, failed = () => 1} = options;
+  let reqURL = getTotalURL(url);
+  this.$axios.post(reqURL, {
+    params:param
+  }).then(function (response) {
+    window.console.log('当前网络请求成功:', response);
+    successd(response);
+  }).catch(function (error) {
+    window.console.log('当前网络请求失败:', error);
+    failed(error);
+  });
 }
 
 // 获取完整url
 function getTotalURL(url) {
-    let reqURL = '';
-    if (reqConfig.isTestEnv) {
-        // reqURL = baseURL_test + url;
-    } else {
-        // reqURL = baseURL_product + url;
-    }
-    return reqURL;
+  let reqURL = '';
+  if (reqConfig.isTestEnv) {
+    reqURL = base_url_dev + url;
+  } else {
+    reqURL = base_url_prod + url;
+  }
+  return reqURL;
 }
 
-// 导出
+// 导出接口犯法
 export const api = {
-    getDataReq,
-    getReq
+  getDataReq,
+  getReq,
+  postReq
 }

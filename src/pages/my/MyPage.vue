@@ -71,6 +71,11 @@
             title:'客户服务',
             icon:'service',
             to:''
+          },
+          {
+            title:'收获地址',
+            icon:'location',
+            to:'my-adress-list',
           }
         ]
       }
@@ -96,7 +101,12 @@
           // 通过协议调起系统拨打电话提示框
           window.location.href = 'tel://' + '4006069555';
         } else {
-          this.$router.push(item.to);
+          this.$router.push({
+            path:item.to,
+            query:{
+              adressDetail:'上海市浦东新区张江镇青春里2期6#1127室'
+            }
+          });
         }
       }
     }

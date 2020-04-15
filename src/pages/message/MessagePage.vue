@@ -99,42 +99,6 @@
       // 网页标题更改
       document.title = '消息';
       this.uploadDataReq();
-      // api.getReq();
-
-      const _url = 'http://192.168.3.3:8091/guard/logon';
-      const token = 'ZpRtqNWsUcsKSVtbKOWFkjHCYlKNwnPK';
-
-      let extendParams = {
-        role: 'Forklift',
-        faceToken: '',
-        employeeId: null,
-        // employeeNo: '01748',
-        employeeNo:'00653',
-        deviceNo: '20:58:6e:e8:13:2a',
-      };
-      let params = {
-        userName: 'wufan',
-        password: '12345678',
-        verification_code: '',
-        extends: JSON.stringify(extendParams),
-      };
-      let data = `params=${JSON.stringify(params)}`;
-      // const _param = {
-      //   appid:'formyself',
-      //   nonce:'0581888548',
-      //   sign:'7C7FB000E00C6F918FE0F2A3C65A6FD8',
-      //   timestamp:1576755136
-      // }
-      this.$axios.post(_url,
-        // headers: {
-        //   'sso_token': token,
-        // },
-        data
-      ).then((response) => {
-        window.console.log('当前网络请求:', response.data);
-      }).catch((error) => {
-        window.console.log('错误:', error);
-      })
     },
     methods: {
       deleteMsg(item, index) {

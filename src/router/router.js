@@ -10,6 +10,8 @@ import Cartpage from '../pages/cart/CartPage';
 import MessagePage from '../pages/message/MessagePage';
 import MyPage from "../pages/my/MyPage";
 import AboutUsPage from '../pages/my/AboutUsPage';
+import MyAdressPage from '../pages/my/MyAdressPage';
+import MyAdressListPage from '../pages/my/MyAdressListPage.vue';
 import WebPage from '../pages/web/WebPage'
 import GoodsDetailPage from '../pages/shopping-mall/GoodsDetailPage'
 
@@ -70,6 +72,16 @@ export const routes = [
     path:'/about-us',
     name:'关于我们',
     component:AboutUsPage
+  },
+  {
+    path:'/my-adress',
+    name:'我的位置',
+    component:MyAdressPage
+  },
+  {
+    path:'/my-adress-list',
+    name:'收获列表',
+    component:MyAdressListPage
   },
   {
     path:'/web',
