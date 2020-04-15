@@ -81,6 +81,7 @@
     mounted() {
       const query = this.$route.query;
       utils.log('页面获取的参数集合:', query);
+      this.AddressInfo = query.param;
     },
     created(){
 
