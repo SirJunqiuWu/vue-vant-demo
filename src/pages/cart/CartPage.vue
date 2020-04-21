@@ -3,10 +3,11 @@
 
     <template slot="header">
       <!-- 导航 -->
-      <NavBar  title="购物车" :show-left="false"></NavBar>
+      <NavBar  title="购物车" :show-left="false" />
     </template>
 
     <template slot="content">
+
       <van-submit-bar
         loding
         :price="3050"
@@ -15,8 +16,8 @@
       >
         <van-checkbox v-model="checked">全选</van-checkbox>
         <span slot="tip">
-          你的收货地址不支持同城送,
-          <span>修改地址</span>
+          你的收货地址不支持同城送，
+          <span class="blue-title">修改地址</span>
         </span>
       </van-submit-bar>
     </template>
@@ -71,5 +72,9 @@
   // 全选 checkbox
   .van-checkbox {
     margin-left: px2rem(10);
+  }
+  
+  .blue-title {
+    color: #1966FF;
   }
 </style>
