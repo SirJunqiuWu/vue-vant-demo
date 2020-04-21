@@ -5,9 +5,10 @@ import constants from "vant/lib/sku/constants";
  * 作者：吴俊秋
  * 作用: 该文件作为网络请求文件，项目中所有的网络请求都可以直接调用该文件中的方法
 ****************************************************************************/
+import axios from 'axios';
 
 // 测试环境基地址
-const base_url_dev = '';
+const base_url_dev = 'http://dev.formyself.com/honey-vem-member/';
 // 生产环境地址
 const base_url_prod = '';
 
@@ -28,6 +29,40 @@ const codeEnum = {
     // 请求成功
     SUCCESSED: 200,
 };
+
+/* 网络请求配置类 */
+export class Http {
+  static http = axios.create({
+    baseURL: base_url_dev,
+    timeout: 60000,
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  });
+
+  static jsonHttp = axios.create({
+    baseURL: base_url_dev,
+    timeout: 60000,
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  // get
+  static get(url, params = {}) {
+    return Http.http.get(url, {
+      params: params
+    }).then(res => {
+      window.console.log('请求结果:', res);
+      return res;
+    }).catch(error => {
+      window.console.log('请求出错:', error);
+      throw error;
+    })
+  }
+}
 
 const _url = 'http://member.formyself.com/honey-vem-member/member/level/all';
 const token = 'ZpRtqNWsUcsKSVtbKOWFkjHCYlKNwnPK';
@@ -148,5 +183,5 @@ function getTotalURL(url) {
 export const api = {
   getDataReq,
   getReq,
-  postReq
+  postReq,
 }

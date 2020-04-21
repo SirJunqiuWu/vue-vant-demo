@@ -40,6 +40,7 @@
   import TabBar from '../../components/TabBar.vue';
   import NavBar from '../../components/NavBar.vue';
   import {utils} from "../../utils/utils";
+  import {Http} from "../../utils/api";
   import {Button, Cell, CellGroup, PullRefresh} from 'vant';
   Vue.use(Button).use(Cell).use(CellGroup).use(PullRefresh);
   export default {
@@ -94,6 +95,11 @@
         setTimeout(() => {
           this.isLoading = false;
           this.$toast('刷新成功');
+          Http.get('sysConfig/getSysConfigValue', {configKey: 1}).then(res => {
+            window.console.log('res：', res);
+          }).catch(err => {
+            window.console.log('err：', err);
+          });
         }, 2000);
       },
       cellClick(item, index) {

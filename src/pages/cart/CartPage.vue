@@ -73,7 +73,7 @@
   .van-checkbox {
     margin-left: px2rem(10);
   }
-  
+
   .blue-title {
     color: #1966FF;
   }
