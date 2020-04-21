@@ -8,6 +8,7 @@
 
     <template slot="content">
       <van-submit-bar
+        loding
         :price="3050"
         button-text="提交订单"
         @submit="onSubmit"
@@ -44,7 +45,8 @@
     data() {
       return {
         showNav:!utils.isWeChat(),
-        checked:false
+        checked:false, // 是否全选
+        isCommitting:true  // 是否提交中
       }
     },
     created() {
@@ -59,6 +61,15 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="less">
+  @import "../../styles/px2rem.less";
+  // 整个提交订单视图
+  .van-submit-bar {
+    bottom: px2rem(31);
+  }
 
+  // 全选 checkbox
+  .van-checkbox {
+    margin-left: px2rem(10);
+  }
 </style>
