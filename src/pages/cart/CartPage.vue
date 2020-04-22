@@ -66,7 +66,7 @@
   @import "../../styles/px2rem.less";
   // 整个提交订单视图
   .van-submit-bar {
-    bottom: px2rem(31);
+    bottom: px2rem(58);
   }
 
   // 全选 checkbox

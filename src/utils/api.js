@@ -9,7 +9,6 @@ import constants from "vant/lib/sku/constants";
 // 引入网络请求类
 import axios from 'axios';
 import {utils} from "./utils";
-import {ToastUtil} from "./toastUtil";
 
 // 测试环境基地址
 const base_url_dev = 'http://dev.formyself.com/honey-vem-member/';
