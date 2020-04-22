@@ -116,7 +116,6 @@
     right:0;
     bottom:px2rem(22.5);
     left:0;
-
   }
 
 </style>

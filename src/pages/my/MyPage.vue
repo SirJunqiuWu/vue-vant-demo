@@ -66,7 +66,7 @@
           {
             title:'系统设置',
             icon:'setting',
-            to:''
+            to:'system-setting'
           },
           {
             title:'客户服务',

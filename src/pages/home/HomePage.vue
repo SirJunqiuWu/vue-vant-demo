@@ -46,6 +46,16 @@
           重磅来袭，圣诞节前大狂欢，全场八折，尽情享受我们的折扣狂欢吧!
         </van-notice-bar>
 
+        <van-grid square gutter="10" :column-num="3">
+          <van-grid-item
+                  v-for="(item, index) in girdArray"
+                  :key="index"
+                  :icon="item.icon"
+                  :text="item.title"
+                  @click="girdItemClick(index, item)"
+          />
+        </van-grid>
+
         <div class="gap">最新商品</div>
 
         <!-- 列表 -->
@@ -99,6 +109,7 @@
 <script>
   import TabBar from '../../components/TabBar.vue';
   import NavBar from '../../components/NavBar.vue';
+  import logo from '../../assets/app-logo.png';
   import {utils} from "../../utils/utils";
   import Vue from 'vue';
   import { Swipe, SwipeItem, Lazyload, PullRefresh, Toast, List, Cell, Image, NoticeBar } from 'vant';
@@ -135,10 +146,40 @@
         banners: utils.getLocalStorage('banners') ? result : result,
         // 下拉刷新控制符
         isLoading:false,
-
         // 列表控制符
         finished:false,
-
+        girdArray:[
+          {
+            icon:logo,
+            title:'时尚秒杀',
+            url:''
+          },
+          {
+            icon:'photo-o',
+            title:'今日最新',
+            url:''
+          },
+          {
+            icon:'photo-o',
+            title:'最佳爆款',
+            url:''
+          },
+          {
+            icon:'photo-o',
+            title:'女神推荐',
+            url:''
+          },
+          {
+            icon:'photo-o',
+            title:'男神推荐',
+            url:''
+          },
+          {
+            icon:'gift-card-o',
+            title:'今日有礼',
+            url:''
+          },
+        ],
         dataArray:utils.getLocalStorage('list') ? utils.getLocalStorage('list') : [],
       }
     },
@@ -167,6 +208,11 @@
             }
           });
         }
+      },
+
+      // 宫格按钮点击事件
+      girdItemClick(index, item) {
+        window.console.log('当前点击宫格索引:', index, '宫格:', item);
       },
 
       // 列表加载
@@ -262,6 +308,10 @@
 
   .goods-price span {
     color:red;
+  }
+
+  .van-grid {
+    margin-top: px2rem(10);
   }
 
 </style>

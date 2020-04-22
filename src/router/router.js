@@ -12,6 +12,7 @@ import MyPage from "../pages/my/MyPage";
 import AboutUsPage from '../pages/my/AboutUsPage';
 import MyAdressPage from '../pages/my/MyAdressPage';
 import MyAdressListPage from '../pages/my/MyAdressListPage.vue';
+import SystemSettingPage from "../pages/my/SystemSettingPage";
 import WebPage from '../pages/web/WebPage'
 import GoodsDetailPage from '../pages/shopping-mall/GoodsDetailPage'
 
@@ -74,13 +75,18 @@ export const routes = [
     component:AboutUsPage
   },
   {
+    path:'/system-setting',
+    name:'系统设置',
+    component:SystemSettingPage
+  },
+  {
     path:'/my-adress',
     name:'我的位置',
     component:MyAdressPage
   },
   {
     path:'/my-adress-list',
-    name:'收获列表',
+    name:'收货列表',
     component:MyAdressListPage
   },
   {

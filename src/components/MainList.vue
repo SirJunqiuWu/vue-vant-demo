@@ -46,7 +46,7 @@
           left-icon="lock"
           @input="changeValue(2)"
         >
-          <van-button slot="button" size="small" type="info">发送验证码</van-button>
+          <van-button slot="button" size="small" type="info" @click="sendSmsCode">{{sendCodeBtnTitle}}</van-button>
         </van-field>
       </van-cell-group>
 
@@ -82,12 +82,15 @@
         username:'18321567392', // 绑定为手机号输入框值
         password:'', // 绑定为密码输入框值
         sms:'', // 绑定为验证码输入框值
+        sendCodeBtnTitle:'发送验证码',
+        duration:60, // 倒计时时长60s
         loginDisable: false, // 登录按钮是否可点 true不能点 反之可以
         mobileError:'', // 手机错误提示信息 直接在输入框下方提示
         pwdFiledType:'password', // 显示或者隐藏密码 隐藏密码时为password 反之tel
         loading:false,
         zIndex:888,
         logo:appLogo,
+        timer:null, // 定时器
       }
     },
     // 组件内部方法,可通过$emit方法向父视图传递方法名和参数,父视图实现该方法名对应的方法,即为传递事件
@@ -119,6 +122,22 @@
         }
       },
 
+      sendSmsCode() {
+        Toast('发送验证码成功');
+        this.timer = setInterval(() => {
+          // 箭头函数 指向最外层
+          this.duration --;
+          window.console.log('duration:', this.duration);
+          if (this.duration === 0) {
+            this.sendCodeBtnTitle = '发送验证码';
+            this.duration = 10;
+            clearInterval(this.timer);
+          } else {
+            this.sendCodeBtnTitle = this.duration + 's';
+          }
+        }, 1000);
+      },
+
       // 登录
       login() {
         if (this.username.length === 0) {
@@ -127,6 +146,16 @@
         }
         if (this.username.length > 11 || !isMobileLegal(this.username)) {
           this.mobileError = '请输入正确的手机号';
+          return;
+        }
+
+        if (this.password.length === 0) {
+          Toast('请填写密码');
+          return;
+        }
+
+        if (this.sms.length === 0) {
+          Toast('请输入验证码');
           return;
         }
         // 向父视图传递名为login的事件并传参  父视图实现该login对应的方法即可
@@ -140,6 +169,10 @@
           utils.setLocalStorage('token', this.username);
           this.loading = false;
           this.$router.push("home");
+          // 销毁定时器
+          if (this.timer) {
+            clearInterval(this.timer);
+          }
         }, 1500);
       }
     }
