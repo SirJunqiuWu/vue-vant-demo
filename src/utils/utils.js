@@ -9,8 +9,11 @@ import successLogo from '../assets/success.png'
   // 当前显示的hubBk，只能显示一个,showHud时先移除hud
 let hudBk = null;
 
-// 获取页面跳转时链接传值的信息字符串
-export function getUrlAllParmInfo() {
+/** 获取页面跳转时链接传值的信息字符串
+ *
+ * @returns {string}
+ */
+export function getUrlAllParamInfo() {
     let result = window.location.search.substr(1);
     result = decodeURI(result);
     return result;
@@ -393,6 +396,91 @@ function hideHud() {
   }
 }
 
+
+/**
+ * 根据object对象拼接成&链接起来的参数，形式：a=1&b=2
+ * @param {Object | string} param
+ * @param { Boolean } isEncodeUrl
+ * @return {string}
+ */
+const addQueryParamByObj = (param, isEncodeUrl) => {
+  let paramStr = '';
+  if (typeof param === 'object') {
+    let firstIndex = true;
+    for (const p in param) {
+      if (param.hasOwnProperty(p) && p != 'stringArrayKeys') {
+        if (utils.isArray(param[p])) {
+          if (param['stringArrayKeys'] && param['stringArrayKeys'].indexOf(p) != -1) {
+            paramStr += (firstIndex ? '' : '&') + String(p) + '=' + param[p].toString();
+          } else {
+            paramStr += (firstIndex ? '' : '&') + String(p) + '=' + JSON.stringify(param[p]);
+          }
+          firstIndex = false;
+        } else {
+          let pValue = typeof param[p] == 'undefined' ? '' : param[p];
+          paramStr += (firstIndex ? '' : '&') + String(p) + '=' + String(pValue);
+          firstIndex = false;
+        }
+      }
+    }
+  }
+  if(isEncodeUrl) {
+    return encodeURI(paramStr);
+  } else {
+    return paramStr;
+  }
+};
+
+/**
+ * 清除对象中的空值属性
+ * @param {Object} obj
+ * @return {Object}
+ */
+const clearNullObject = (obj) => {
+  let newObj = {};
+  for (let p in obj) {
+    let value = obj[p];
+    if (!utils.isEmptyString(value)) {
+      newObj[p] = value;
+    }
+  }
+  return newObj;
+};
+
+/**
+ * 检测字符串是否为空,也不是undefined
+ * @param {string} str
+ * @return {boolean}
+ */
+const isEmptyString = (str) => {
+  if (typeof str == 'number') {
+    str = String(str);
+  }
+  if (typeof str == 'boolean') {
+    str = String(str);
+  }
+  return (str === null || typeof str === 'undefined' || str == 'undefined' || str === '' || utils.trimString(str) === '');
+};
+
+/**
+ * 去除字符串首尾空格
+ * @param {string|number} str
+ * @return {string}
+ */
+const trimString = (str) => {
+  if (typeof str === 'string') {
+    return str.replace(/(^\s*)|(\s*$)/g, '');
+  }
+  return String(str);
+};
+
+/**
+ * 是否是数组
+ */
+const isArray = (array) => {
+  return Object.prototype.toString.call(array) == '[object Array]';
+};
+
 // 导出
 export const utils = {
   isWeChat,
@@ -405,4 +493,9 @@ export const utils = {
   getTimeDetailDes,
   log,
   getRandom,
+  addQueryParamByObj,
+  clearNullObject,
+  isEmptyString,
+  trimString,
+  isArray,
 };

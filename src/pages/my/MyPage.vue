@@ -95,10 +95,10 @@
         setTimeout(() => {
           this.isLoading = false;
           this.$toast('刷新成功');
-          Http.get('sysConfig/getSysConfigValue', {configKey: 1}).then(res => {
-            window.console.log('res：', res);
+          Http.post('sysConfig/getSysConfigValue', {configKey: 1}).then(res => {
+
           }).catch(err => {
-            window.console.log('err：', err);
+            this.$toast(err);
           });
         }, 2000);
       },

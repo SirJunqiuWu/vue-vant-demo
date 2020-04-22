@@ -3,8 +3,6 @@ import Vant from 'vant';
 import App from './App.vue'
 import router from './router/router'
 import Page from './components/page/page.js';
-import axios from 'axios';
-import VueAxios from 'vue-axios';
 
 import './styles/index.less';
 import './styles/override.less';
@@ -15,11 +13,6 @@ import './styles/base/common.less';
 Vue.use(Page);
 // vant-ui组件一次性导入
 Vue.use(Vant);
-// 请求类
-// Vue.use(VueAxios);
-// Vue.use(axios);
-Vue.prototype.$axios = axios;
-Vue.config.productionTip = false;
 
 // designSize:设计图尺寸(传@1x倍图尺寸,例如设计图是750px,2倍图,那么传375),rootValue:比例,默认100
 // vant-ui是按设计稿750来设计的
@@ -37,7 +30,6 @@ function setHtml(designSize, rootValue) {
   window.document.documentElement.style.fontSize = htmlFontSize + 'px';
 }
 setHtml(375);
-
 
 // 根实例
 new Vue({

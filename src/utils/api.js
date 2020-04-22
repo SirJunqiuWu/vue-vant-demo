@@ -3,185 +3,237 @@ import constants from "vant/lib/sku/constants";
 
 /***************************************************************************
  * 作者：吴俊秋
- * 作用: 该文件作为网络请求文件，项目中所有的网络请求都可以直接调用该文件中的方法
+ * 作用: 该文件作为网络请求文件，项目中所有的网络请求都可以直接调用该文件中的静态类方法
 ****************************************************************************/
+
+// 引入网络请求类
 import axios from 'axios';
+import {utils} from "./utils";
+import {ToastUtil} from "./toastUtil";
 
 // 测试环境基地址
 const base_url_dev = 'http://dev.formyself.com/honey-vem-member/';
-// 生产环境地址
+// 生产环境基地址
 const base_url_prod = '';
 
 // 请求配置参数
 const reqConfig = {
     async: true, // 是否异步请求
-    timeout: 60 * 1000, // 超时时间默认60s
+    timeout: 6000, // 超时时间默认60s
     type: 'get', // 默认post请求
     withCredentials: true, // 允许跨域请求
     isTestEnv: true, // 是否测试环境(上线时更改该值为false切换到正式环境)
 };
 
 
-// 错误code值
+// 请求返回错误code值
 const codeEnum = {
     // 未登录
-    UNLOGIN: 100,
+    UNLOGIN: 99,
     // 请求成功
-    SUCCESSED: 200,
+    SUCCESSED: 1,
 };
 
-/* 网络请求配置类 */
+/* 网络请求配置静态类 */
 export class Http {
+  //  直接传obj
   static http = axios.create({
-    baseURL: base_url_dev,
-    timeout: 60000,
-    withCredentials: true,
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
+      baseURL: Http.getBaseUrl(),
+      timeout: reqConfig.timeout,
+      withCredentials: reqConfig.withCredentials,
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+      }
   });
 
+  // 传json字符串
   static jsonHttp = axios.create({
-    baseURL: base_url_dev,
-    timeout: 60000,
-    withCredentials: true,
-    headers: {
-      'Content-Type': 'application/json'
-    }
+      baseURL: Http.getBaseUrl(),
+      timeout: reqConfig.timeout,
+      withCredentials: reqConfig.withCredentials,
+      headers: {
+          'Content-Type': 'application/json'
+      }
   });
 
-  // get
-  static get(url, params = {}) {
-    return Http.http.get(url, {
-      params: params
-    }).then(res => {
-      window.console.log('请求结果:', res);
-      return res;
-    }).catch(error => {
-      window.console.log('请求出错:', error);
-      throw error;
-    })
+  static uploadHttp = axios.create({
+      baseURL: Http.getBaseUrl(),
+      timeout: reqConfig.timeout,
+      withCredentials: reqConfig.withCredentials,
+      headers: {}
+  });
+
+    /**
+     * get请求
+     * @param url 请求url
+     * @param params 请求参数字典
+     * @returns {Promise<AxiosResponse<any>>} 回调
+     */
+  static get(url, data = {}) {
+      window.console.log(isLocalhost());
+      return Http.http.get(url, {
+          params: injectParam(data)
+      }).then(res => {
+          window.console.log('get请求结果:', res);
+          // 转化下res
+          const data = Http.dealDataWithResult(res.data);
+          // 校验是否条件符合
+          Http.publicVerify(data);
+          return data;
+      }).catch(error => {
+          window.console.log('get请求出错:', error);
+          if (error) {
+              const err = Http.catchError(error);
+              throw err;
+          }
+      })
+  }
+
+    /** post请求
+     *
+     * @param url 请求链接
+     * @param param 请求参数
+     * @param isEncodeUrl 是否需要对参数拼接字符串编码 ture为需要
+     * @returns {Promise<AxiosResponse<any>>} 回调
+     */
+  static post(url, data = {}, isEncodeUrl) {
+      let params = utils.addQueryParamByObj(utils.clearNullObject(injectParam(data)), isEncodeUrl);
+      window.console.log("params:", params);
+      return Http.http.post(url, params).then(res => {
+          window.console.log('post请求结果:', res);
+          const data = Http.dealDataWithResult(res.data);
+          Http.publicVerify(data);
+          return data;
+      }).catch(error => {
+          window.console.log('post请求出错:', error);
+          if (error) {
+              const err = Http.catchError(error);
+              throw err;
+          }
+      });
+  }
+
+  static uploadFile() {
+      return new Promise((resolve, reject) => {
+
+      }).catch(error => {
+
+      })
+  }
+
+    /**
+     * 请求参数为json字符串
+     * @param url 请求url
+     * @param data 请求参数字典
+     * @returns {Promise<AxiosResponse<any>>} 回调
+     */
+  static postJson(url, data = {}) {
+      const params = JSON.stringify(injectParam(data));
+      return Http.jsonHttp.post(url, params).then(res => {
+          const data = Http.dealDataWithResult(res.data);
+          Http.publicVerify(data);
+          return data;
+      }).catch(error => {
+          window.console.log('postJson请求出错:', error);
+          if (error) {
+              const err = Http.catchError(error);
+              throw err;
+          }
+      });
+  }
+
+
+    /**
+     * 获取完整的请求url
+     * @param url 方法部分的url
+     * @returns {string}
+     */
+  static getTotalUrl(url) {
+      let reqURL = '';
+      if (reqConfig.isTestEnv) {
+          reqURL = base_url_dev + url;
+      } else {
+          reqURL = base_url_prod + url;
+      }
+      return reqURL
+  }
+
+    /**
+     *  是否是测试环境
+     * @returns {boolean} true是 反之不是
+     */
+  static isTestEnv () {
+      return reqConfig.isTestEnv;
+  }
+
+    /**
+     * 获取请求基地址
+     * @returns {string}
+     */
+  static getBaseUrl () {
+      return reqConfig.isTestEnv ? base_url_dev : base_url_prod;
+  }
+
+    /**
+     * 请求成功时做校验是否是目标成功 可能有条件不符合
+     * @param data 请求返回的数据
+     */
+  static publicVerify (data) {
+      data = data ? data : {};
+      const code = data.status || (data.success ? 1 : 0);
+      // code不为1 抛出异常消息
+      if (code != codeEnum.SUCCESSED) {
+          throw data.detail ? data.detail : '网络异常，请稍后重试';
+      }
+  }
+
+
+    /**
+     * 请求失败错误处理
+     * @param error 请求出错error
+     * @returns {string}
+     */
+   static catchError (error) {
+      if (typeof error === 'object') {
+          error = '';
+      }
+      error = typeof error == 'string' ? error : '网络异常，请稍后重试';
+      return error;
+   }
+
+    /**
+     * 将请求返回的数据作处理
+     * @param res 请求成功返回的数据
+     * @returns {*}
+     */
+  static dealDataWithResult = (res) => {
+      const data = res;
+      return data;
   }
 }
 
-const _url = 'http://member.formyself.com/honey-vem-member/member/level/all';
-const token = 'ZpRtqNWsUcsKSVtbKOWFkjHCYlKNwnPK';
-const _param = {
-    appid:'formyself',
-    nonce:'0581888548',
-    sign:'7C7FB000E00C6F918FE0F2A3C65A6FD8',
-    timestamp:1576755136
+/**
+ * 注入请求参数字典:可做安全处理等
+ * @param param
+ * @returns {{}}
+ */
+export const injectParam = (param) => {
+    param = param ? param : {};
+    return param;
 }
 
 
-// 根据url 和 请求参数获取值
-// success函数 和 faile函数用于回调请求结果
-// xhr：用于创建 XMLHttpRequest 对象的函数。
-// 和后台约定好返回数据解构(固定, 切记随意改变外层结构)
-// 返回数据结构eg：result = {code:'0', msg:'', data:{(前端展示的数据都在里面，想给什么都可以随意扩充)}};
-// 请求失败时 或者 请求有其他异常问题时才有failed函数回调, 前端只需要将回调的错误提示展示出来就可以
-// 请求成功时, 回调函数successd直接将页面需要的数据源回调
-// status: success failed
-const getDataReq = (options = {}) => {
-    console.log('options:', options);
-    const { url, param, successd = () => 0, failed = () => 1} = options;
-    let reqURL = getTotalURL(url);
-    $.ajax({
-        async: reqConfig.async,
-        url: _url,
-        data: _param,
-        timeout: reqConfig.timeout,
-        type: reqConfig.type,
-        xhrFields: {
-            // 跨域请求设置
-            withCredentials: reqConfig.withCredentials,
-        },
-        beforeSend:function(request) {
-            request.setRequestHeader('sso_token', token);
-        },
-        success: function(result, status, xhr) {
-            // 请求成功
-           window.console.log('请求成功结果:', result, '状态:', status, 'xhr:', xhr);
-            // 请求头返回code === 100时 未登录
-            let errorCode = xhr.getResponseHeader('error_code');
-            if (errorCode === codeEnum.UNLOGIN) {
-                // 未登录 调起登录界面
-                window.console.log('未登录');
-            } else {
-                // 请求成功
-                let msg = result.message;
-                let data = result.data;
-                let code = result.code;
-                // 回调后 成功只管显示出局 failed直接弹出msg(后端将什么无权限数据库错误等异常代码直接转化返回msg,前端无需管代码对应问题)
-                if (code == 0) {
-                    successd(data);
-                } else {
-                    failed(msg);
-                }
-            }
-        },
-        error: (xhr, status, error) => {
-            // 请求失败要运行的函数
-            window.console.log('ajax-error:', xhr, status, error);
-            xhr.abort();
-            failed(error);
-        },
-        complete: (xhr, status) => {
-            // 请求完成时运行的函数（在请求成功或失败之后均调用，即在 success 和 error 函数之后）。
-            window.console.log('请求完成:', xhr, status);
-            // 请求完成 可做请求task个数统计,并发个数控制用 可做加载框隐藏等处理
+/**
+ * 网页链接域名是否是localhost：
+ * @returns {boolean}
+ */
+export const isLocalhost = () => {
+    return location.hostname === 'localhost'
+};
 
-        }
-    });
-}
 
-// get请求
-const getReq = (options = {}) => {
-  const { url, param, successd = () => 0, failed = () => 1} = options;
-  let reqURL = getTotalURL(url);
-  this.$axios.get(reqURL, {
-    params:param,
-    headers:{
-      // 这里设置token等
-    }
-  }).then(function (response) {
-      window.console.log('当前网络请求成功:', response);
-      successd(response);
-  }).catch(function (error) {
-      window.console.log('当前网络请求失败:', error);
-      failed(error);
-  });
-}
 
-// post请求
-const postReq = (options = {}) => {
-  const { url, param, successd = () => 0, failed = () => 1} = options;
-  let reqURL = getTotalURL(url);
-  this.$axios.post(reqURL, {
-    params:param
-  }).then(function (response) {
-    window.console.log('当前网络请求成功:', response);
-    successd(response);
-  }).catch(function (error) {
-    window.console.log('当前网络请求失败:', error);
-    failed(error);
-  });
-}
-
-// 获取完整url
-function getTotalURL(url) {
-  let reqURL = '';
-  if (reqConfig.isTestEnv) {
-    reqURL = base_url_dev + url;
-  } else {
-    reqURL = base_url_prod + url;
-  }
-  return reqURL;
-}
-
-// 导出接口犯法
+// 导出方法
 export const api = {
-  getDataReq,
-  getReq,
-  postReq,
+
 }
