@@ -12,6 +12,20 @@
         loading-text="正在努力的刷新"
         @refresh="onRefresh"
       >
+        <div class="top-bk" @click="toPersonCenter">
+          <div>
+            <van-image
+                    round
+                    lazy-load
+                    :src="avatar"
+                    @click="scanAvatar"
+            />
+            <div class="myName">Jack Wu</div>
+          </div>
+          <div>
+            <van-icon class="top-right-icon" name="arrow" size="20" />
+          </div>
+        </div>
         <van-cell
           class="cell"
           v-for="(item, index) in dataArray"
@@ -36,13 +50,11 @@
 
 <script>
   // 引入 Vue
-  import Vue from 'vue';
+  import { ImagePreview } from 'vant';
   import TabBar from '../../components/TabBar.vue';
   import NavBar from '../../components/NavBar.vue';
   import {utils} from "../../utils/utils";
   import {Http} from "../../utils/api";
-  import {Button, Cell, CellGroup, PullRefresh} from 'vant';
-  Vue.use(Button).use(Cell).use(CellGroup).use(PullRefresh);
   export default {
     name: "MyPage",
     components:{
@@ -78,7 +90,9 @@
             icon:'location',
             to:'my-adress-list',
           }
-        ]
+        ],
+        avatar:'https://img.yzcdn.cn/vant/cat.jpeg',
+        isScanAvatar:false,
       }
     },
     created() {
@@ -114,6 +128,14 @@
             }
           });
         }
+      },
+      scanAvatar() {
+        this.isScanAvatar = true;
+        event.stopPropagation();
+        ImagePreview([this.avatar]);
+      },
+      toPersonCenter() {
+        this.$toast('个人中心');
       }
     }
   }
@@ -122,6 +144,35 @@
 <!-- 样式 -->
 <style scoped lang="less">
   @import "../../styles/px2rem.less";
+  .top-bk {
+    width:100%;
+    height: px2rem(200);
+    background: #7279d5;
+    padding: px2rem(25) px2rem(25);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .myName {
+    text-align: center;
+    font-size: px2rem(28);
+    color: white;
+  }
+
+  .van-image {
+    display: block;
+    margin:auto;
+    height: px2rem(100);
+    width: px2rem(100);
+  }
+
+  .top-right-icon {
+    display: block;
+    margin:auto;
+  }
+
 
   .blank {
     height:px2rem(600);

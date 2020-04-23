@@ -14,6 +14,10 @@ Vue.use(Page);
 // vant-ui组件一次性导入
 Vue.use(Vant);
 
+// 全局注册图片浏览
+import { ImagePreview } from 'vant';
+Vue.use(ImagePreview);
+
 // designSize:设计图尺寸(传@1x倍图尺寸,例如设计图是750px,2倍图,那么传375),rootValue:比例,默认100
 // vant-ui是按设计稿750来设计的
 // vant-ui适配rem

@@ -125,7 +125,7 @@
       sendSmsCode() {
         Toast('发送验证码成功');
         this.timer = setInterval(() => {
-          // 箭头函数 指向最外层
+          // 定时器里的箭头函数 指向最外层
           this.duration --;
           window.console.log('duration:', this.duration);
           if (this.duration === 0) {

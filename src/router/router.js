@@ -13,6 +13,7 @@ import AboutUsPage from '../pages/my/AboutUsPage';
 import MyAdressPage from '../pages/my/MyAdressPage';
 import MyAdressListPage from '../pages/my/MyAdressListPage.vue';
 import SystemSettingPage from "../pages/my/SystemSettingPage";
+import PersonCenterPage from "../pages/my/PersonCenterPage";
 import WebPage from '../pages/web/WebPage'
 import GoodsDetailPage from '../pages/shopping-mall/GoodsDetailPage'
 
@@ -78,6 +79,11 @@ export const routes = [
     path:'/system-setting',
     name:'系统设置',
     component:SystemSettingPage
+  },
+  {
+    path:'/person-center',
+    name:'个人中心',
+    component:PersonCenterPage
   },
   {
     path:'/my-adress',
