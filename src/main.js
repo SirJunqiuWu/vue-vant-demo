@@ -3,6 +3,7 @@ import Vant from 'vant';
 import App from './App.vue'
 import router from './router/router'
 import Page from './components/page/page.js';
+import store from './store/index'
 
 import './styles/index.less';
 import './styles/override.less';
@@ -39,5 +40,6 @@ setHtml(375);
 new Vue({
   // 将router注入根实例
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

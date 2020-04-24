@@ -125,7 +125,7 @@ const getTimeDetailDes = (timestamp) => {
 // 字符串安全处理 有问题的一律返回空字符串
 export function isNullStr(str) {
   let result = '';
-  if (!str || str === null || str === 'null'  || str === 'NULL') {
+  if (!str || str === null || str === 'null'  || str === 'NULL' || str === 'undefined') {
     result = '';
   } else {
     result = str;

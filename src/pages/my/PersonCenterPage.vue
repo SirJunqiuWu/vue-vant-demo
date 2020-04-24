@@ -61,6 +61,7 @@
 <script>
     import NavBar from "../../components/NavBar";
     import {utils} from "../../utils/utils";
+    import {User} from '../my/Model/User'
     export default {
         name: "PersonCenterPage",
         components:{
@@ -146,11 +147,16 @@
         beforeMount() {
 
         },
+        mounted() {
+          const user = new User({userName:'haode'});
+          window.console.log('用户:', user)
+            window.console.log('用户:', User.getUser())
+        },
         created() {
 
         },
         methods:{
-            formatterValue(item, idx) {
+            formatterValue(item) {
                 if (item.title === '头像') return '';
                 return item.des && item.des.length > 0  ? item.des : '完善信息'
             },
