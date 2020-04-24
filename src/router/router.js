@@ -14,6 +14,7 @@ import MyAdressPage from '../pages/my/MyAdressPage';
 import MyAdressListPage from '../pages/my/MyAdressListPage.vue';
 import SystemSettingPage from "../pages/my/SystemSettingPage";
 import PersonCenterPage from "../pages/my/PersonCenterPage";
+import InfoEditPage from "../pages/my/InfoEditPage";
 import WebPage from '../pages/web/WebPage'
 import GoodsDetailPage from '../pages/shopping-mall/GoodsDetailPage'
 
@@ -84,6 +85,11 @@ export const routes = [
     path:'/person-center',
     name:'个人中心',
     component:PersonCenterPage
+  },
+  {
+    path:'/info-edit',
+    name:'编辑个人信息',
+    component:InfoEditPage
   },
   {
     path:'/my-adress',

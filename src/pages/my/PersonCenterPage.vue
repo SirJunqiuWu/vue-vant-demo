@@ -10,10 +10,10 @@
                             is-link
                             v-for="(item, index) in arr"
                             :title="item.title"
-                            :value="item.des"
                             :key="index"
                             @click="cellClicked(item)"
                     >
+                        <!-- 使用插槽自定义cell右侧 -->
                         <template #right-icon v-if="item.icon && item.icon.length > 0">
                             <van-image
                                     round
@@ -22,34 +22,38 @@
                                     :src="item.icon"
                             />
                         </template>
+                        <template #default v-else>
+                            <p :class=" item.des && item.des.length > 0 ? 'cell-right-has-edit' : 'cell-right-no-edit' ">{{formatterValue(item)}}</p>
+                        </template>
                     </van-cell>
                 </van-cell-group>
-                <van-action-sheet
-                        v-model="showSelect"
-                        close-on-popstate
-                        close-on-click-action
-                        :actions="actions"
-                        cancel-text="取消"
-                        cancel-color="#07c160"
-                        :description="selectTitle"
-                        @cancel="onCancel"
-                        @select="onSelect"
-                />
-                <div class="bank-bk"></div>
-                <!-- dataPicker -->
-                <van-popup v-model="showDatePicker" position="bottom" round close-on-popstate>
-                    <van-datetime-picker
-                            v-model="currentDate"
-                            type="date"
-                            title="选择生日"
-                            :min-date="minDate"
-                            :max-date="maxDate"
-                            :formatter="formatter"
-                            @confirm="confirmDateSelect"
-                            @cancel="cancelDateSelect"
-                    />
-                </van-popup>
+                <!-- 空白占位 -->
+                <div class="bank-bk" />
             </van-pull-refresh>
+            <van-action-sheet
+                    v-model="showSelect"
+                    close-on-popstate
+                    close-on-click-action
+                    :actions="actions"
+                    cancel-text="取消"
+                    cancel-color="#07c160"
+                    :description="selectTitle"
+                    @cancel="onCancel"
+                    @select="onSelect"
+            />
+            <!-- dataPicker -->
+            <van-popup v-model="showDatePicker" position="bottom" round close-on-popstate>
+                <van-datetime-picker
+                        v-model="currentDate"
+                        type="date"
+                        title="选择生日"
+                        :min-date="minDate"
+                        :max-date="maxDate"
+                        :formatter="formatter"
+                        @confirm="confirmDateSelect"
+                        @cancel="cancelDateSelect"
+                />
+            </van-popup>
         </template>
     </page>
 </template>
@@ -79,12 +83,16 @@
                         {
                             title: '昵称',
                             des:'Jack',
-                            icon:''
+                            icon:'',
+                            identify:'请输入昵称',
+                            type:'text'
                         },
                         {
                             title: '手机号',
                             des:'18321567392',
-                            icon:''
+                            icon:'',
+                            identify:'请输入手机号',
+                            type:'tel'
                         }
                     ],
                     [
@@ -102,8 +110,10 @@
                     [
                         {
                             title: '兴趣爱好',
-                            des:'跑步跳舞唱歌',
-                            icon:''
+                            des:'',
+                            icon:'',
+                            identify:'请输入兴趣爱好',
+                            type:'textarea'
                         },
                     ]
                 ],
@@ -140,6 +150,10 @@
 
         },
         methods:{
+            formatterValue(item, idx) {
+                if (item.title === '头像') return '';
+                return item.des && item.des.length > 0  ? item.des : '完善信息'
+            },
             onRefresh() {
                 setTimeout(() => {
                     this.isLoading = false;
@@ -148,8 +162,17 @@
             cellClicked(item) {
                 if (item.title === '性别') {
                     this.showSelect = true;
-                } else if (item.title === '生日') {
+                    return;
+                }
+                if (item.title === '生日') {
                     this.showDatePicker = true;
+                    return;
+                }
+                if (item.title !== '头像') {
+                    this.$router.push({
+                        path:'info-edit',
+                        query:item
+                    })
                 }
             },
             onCancel() {
@@ -193,5 +216,11 @@
     }
     .bank-bk {
         height: px2rem(200);
+    }
+    .cell-right-has-edit {
+        color: #969799;
+    }
+    .cell-right-no-edit {
+        color: #07c160;
     }
 </style>
