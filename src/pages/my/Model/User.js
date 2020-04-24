@@ -53,5 +53,13 @@ export class User {
         this.birth = isNullStr(args.birth);
         this.interest = isNullStr(args.interest);
     }
+}
 
+export function Singleton() {
+    this.data = 'singleton';
+}
+
+export function getSingleton () {
+    var instance;
+    return  instance ? instance : new Singleton()
 }

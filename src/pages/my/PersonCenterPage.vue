@@ -61,7 +61,7 @@
 <script>
     import NavBar from "../../components/NavBar";
     import {utils} from "../../utils/utils";
-    import {User} from '../my/Model/User'
+    import {getSingleton, User} from '../my/Model/User'
     export default {
         name: "PersonCenterPage",
         components:{
@@ -148,9 +148,12 @@
 
         },
         mounted() {
-          const user = new User({userName:'haode'});
-          window.console.log('用户:', user)
-            window.console.log('用户:', User.getUser())
+           const user = new User({userName:'haode'});
+            window.console.log('用户:', user)
+           const a = getSingleton();
+            const b = getSingleton();
+            window.console.log('a:', a);
+            window.console.log('b:', b);
         },
         created() {
 
