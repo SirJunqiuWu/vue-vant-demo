@@ -12,6 +12,7 @@
                             :title="item.title"
                             :value="item.des"
                             :key="index"
+                            @click="cellClicked(item)"
                     >
                         <template #right-icon v-if="item.icon && item.icon.length > 0">
                             <van-image
@@ -23,6 +24,17 @@
                         </template>
                     </van-cell>
                 </van-cell-group>
+                <van-action-sheet
+                        v-model="showSelect"
+                        close-on-popstate
+                        close-on-click-action
+                        :actions="actions"
+                        cancel-text="取消"
+                        cancel-color="#07c160"
+                        :description="selectTitle"
+                        @cancel="onCancel"
+                        @select="onSelect"
+                />
             </van-pull-refresh>
         </template>
     </page>
@@ -43,6 +55,8 @@
             return {
                 showNav:!utils.isWeChat(),
                 isLoading:false,
+                showSelect:false,
+                selectTitle:'选择性别',
                 dataArray:[
                     [
                         {
@@ -68,6 +82,18 @@
                             icon:''
                         },
                     ]
+                ],
+                actions:[
+                    {
+                        name:'男',
+                        color:'#07c160',
+                        code:'0'
+                    },
+                    {
+                        name:'女',
+                        color:'#07c160',
+                        code:'1'
+                    }
                 ]
             }
         },
@@ -82,7 +108,22 @@
                 setTimeout(() => {
                     this.isLoading = false;
                 }, 2000)
-            }
+            },
+            cellClicked(item) {
+                if (item.title === '性别') {
+                    this.showSelect = true;
+                }
+            },
+            onCancel() {
+                this.showSelect = false;
+            },
+            onSelect(item) {
+                // 默认情况下点击选项时不会自动收起
+                // 可以通过 close-on-click-action 属性开启自动收起
+                this.show = false;
+                window.console.log('当前选择性别:', item.code)
+                this.dataArray[1][0].des = item.name;
+            },
         }
     }
 </script>
