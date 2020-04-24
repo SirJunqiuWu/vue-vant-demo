@@ -18,7 +18,7 @@
                     round
                     lazy-load
                     :src="avatar"
-                    @click="scanAvatar"
+                    @click.stop="scanAvatar"
             />
             <div class="myName">Jack Wu</div>
           </div>
@@ -131,11 +131,11 @@
       },
       scanAvatar() {
         this.isScanAvatar = true;
-        event.stopPropagation();
         ImagePreview([this.avatar]);
       },
       toPersonCenter() {
         this.$toast('个人中心');
+        this.$router.push('person-center');
       }
     }
   }
