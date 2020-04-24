@@ -35,6 +35,20 @@
                         @cancel="onCancel"
                         @select="onSelect"
                 />
+                <div class="bank-bk"></div>
+                <!-- dataPicker -->
+                <van-popup v-model="showDatePicker" position="bottom" round close-on-popstate>
+                    <van-datetime-picker
+                            v-model="currentDate"
+                            type="date"
+                            title="选择生日"
+                            :min-date="minDate"
+                            :max-date="maxDate"
+                            :formatter="formatter"
+                            @confirm="confirmDateSelect"
+                            @cancel="cancelDateSelect"
+                    />
+                </van-popup>
             </van-pull-refresh>
         </template>
     </page>
@@ -55,8 +69,6 @@
             return {
                 showNav:!utils.isWeChat(),
                 isLoading:false,
-                showSelect:false,
-                selectTitle:'选择性别',
                 dataArray:[
                     [
                         {
@@ -67,6 +79,11 @@
                         {
                             title: '昵称',
                             des:'Jack',
+                            icon:''
+                        },
+                        {
+                            title: '手机号',
+                            des:'18321567392',
                             icon:''
                         }
                     ],
@@ -81,8 +98,20 @@
                             des:'2020-01-01',
                             icon:''
                         },
+                    ],
+                    [
+                        {
+                            title: '兴趣爱好',
+                            des:'跑步跳舞唱歌',
+                            icon:''
+                        },
                     ]
                 ],
+                /**
+                 * 性别选择: actionSheect
+                 */
+                showSelect:false,
+                selectTitle:'选择性别',
                 actions:[
                     {
                         name:'男',
@@ -94,7 +123,14 @@
                         color:'#07c160',
                         code:'1'
                     }
-                ]
+                ],
+                /**
+                 * 日期选择: dataPicker
+                 */
+                showDatePicker:false,
+                minDate: new Date(1920, 0, 1),
+                maxDate: new Date(2025, 10, 1),
+                currentDate: new Date(),
             }
         },
         beforeMount() {
@@ -112,6 +148,8 @@
             cellClicked(item) {
                 if (item.title === '性别') {
                     this.showSelect = true;
+                } else if (item.title === '生日') {
+                    this.showDatePicker = true;
                 }
             },
             onCancel() {
@@ -124,6 +162,23 @@
                 window.console.log('当前选择性别:', item.code)
                 this.dataArray[1][0].des = item.name;
             },
+            formatter(type, val) {
+                if (type === 'year') {
+                    return `${val}年`;
+                } else if (type === 'month') {
+                    return `${val}月`;
+                } else
+                    return `${val}日`;
+            },
+            confirmDateSelect(value) {
+                this.cancelDateSelect();
+                const date = new Date(value);
+                window.console.log('当前选择时间:', utils.getDateByTimestampAndFormatter(date, 'yyyy-MM-dd'));
+                this.dataArray[1][1].des = utils.getDateByTimestampAndFormatter(date, 'yyyy-MM-dd');
+            },
+            cancelDateSelect() {
+                this.showDatePicker = false;
+            }
         }
     }
 </script>
@@ -135,5 +190,8 @@
     }
     .van-cell {
         align-items: center;
+    }
+    .bank-bk {
+        height: px2rem(200);
     }
 </style>

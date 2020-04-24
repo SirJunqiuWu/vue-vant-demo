@@ -63,7 +63,7 @@ export function getUrlTargetKeyValueWithKey(key) {
   return result;
 }
 
-// 根据时间戳和时间格式获取日期描述 eg：2019-11-26 11:37:30
+// 根据时间戳或者日期和时间格式获取日期描述 eg：2019-11-26 11:37:30
 const getDateByTimestampAndFormatter = (timestamp, formatter) => {
   let date = '';
   if (isNullStr(timestamp).length === 0) {
