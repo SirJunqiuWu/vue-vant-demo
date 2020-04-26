@@ -100,7 +100,7 @@
           // 自定义加载图标
           this.$toast.loading({
             message: '加载中...',
-            forbidClick: true,
+            forbidClick: false,
             loadingType: 'spinner'
           });
         }
@@ -136,7 +136,7 @@
               this.finished = true;
             }
           }
-        }, 1000)
+        }, 500)
       },
 
       cellClicked(item, index) {

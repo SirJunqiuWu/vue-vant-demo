@@ -55,6 +55,7 @@
   import NavBar from '../../components/NavBar.vue';
   import {utils} from "../../utils/utils";
   import {Http} from "../../utils/api";
+  import {getCurrentUser, updateUserInfoByKey, updateUserInfoByObj, User} from '../my/Model/User'
   export default {
     name: "MyPage",
     components:{
@@ -98,6 +99,10 @@
     created() {
       // 网页标题更改
       document.title = '我的';
+      const user = new User({userName:'JackWu'});
+      updateUserInfoByKey('sex', '女');
+      updateUserInfoByObj({userName:'吴俊秋', userId:'6', userAvatar:'www.baidu.com', 'nickName':'小甜甜', mobile:'18321567392'});
+      window.console.log('created user:', getCurrentUser());
     },
     beforeMount(height) {
       let h = document.documentElement.clientHeight || document.body.clientHeight;
