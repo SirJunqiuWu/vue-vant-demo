@@ -46,7 +46,7 @@
           left-icon="lock"
           @input="changeValue(2)"
         >
-          <van-button slot="button" size="small" type="info" @click="sendSmsCode">{{sendCodeBtnTitle}}</van-button>
+          <van-button slot="button" size="small" type="info" :disabled="sendCodeBtnDisable" @click="sendSmsCode">{{sendCodeBtnTitle}}</van-button>
         </van-field>
       </van-cell-group>
 
@@ -83,6 +83,7 @@
         password:'', // 绑定为密码输入框值
         sms:'', // 绑定为验证码输入框值
         sendCodeBtnTitle:'发送验证码',
+        sendCodeBtnDisable:false,
         duration:60, // 倒计时时长60s
         loginDisable: false, // 登录按钮是否可点 true不能点 反之可以
         mobileError:'', // 手机错误提示信息 直接在输入框下方提示
@@ -129,11 +130,13 @@
           this.duration --;
           window.console.log('duration:', this.duration);
           if (this.duration === 0) {
+            this.sendCodeBtnDisable = false;
             this.sendCodeBtnTitle = '发送验证码';
             this.duration = 10;
             clearInterval(this.timer);
           } else {
-            this.sendCodeBtnTitle = this.duration + 's';
+            this.sendCodeBtnDisable = true;
+            this.sendCodeBtnTitle = `${this.duration}s后重新发送`;
           }
         }, 1000);
       },
