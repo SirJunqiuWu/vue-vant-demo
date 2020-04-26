@@ -16,18 +16,19 @@
                     @input="inputValueChanged"
             />
             <van-field
-                    v-if="title === '手机号'"
+                    v-if=" title === '手机号' "
                     v-model="sms"
                     center
                     clearable
                     label="短信验证码"
                     placeholder="请输入短信验证码"
             >
-                <template #button>
+                <template slot="button">
                     <van-button size="small" type="primary">发送验证码</van-button>
                 </template>
             </van-field>
             <van-button
+                    class="saveBtn"
                     round
                     type="info"
                     :loading="loading"
@@ -97,6 +98,7 @@
                 setTimeout(() => {
                     this.loading = false;
                     this.$toast.success('保存成功');
+                    this.$router.back();
                 }, 1000)
             }
         }
@@ -105,7 +107,7 @@
 
 <style scoped lang="less">
     @import "../../styles/px2rem.less";
-    .van-button {
+    .saveBtn {
         display: block;
         margin: 50px auto 0;
         width: 290px;
