@@ -61,7 +61,7 @@
 <script>
     import NavBar from "../../components/NavBar";
     import {utils} from "../../utils/utils";
-    import {getSingleton, User} from '../my/Model/User'
+    import {getCurrentUser, getSingleton, User} from '../my/Model/User'
     export default {
         name: "PersonCenterPage",
         components:{
@@ -74,50 +74,7 @@
             return {
                 showNav:!utils.isWeChat(),
                 isLoading:false,
-                dataArray:[
-                    [
-                        {
-                            title:'头像',
-                            des:'',
-                            icon:'https://img.yzcdn.cn/vant/cat.jpeg'
-                        },
-                        {
-                            title: '昵称',
-                            des:'Jack',
-                            icon:'',
-                            identify:'请输入昵称',
-                            type:'text'
-                        },
-                        {
-                            title: '手机号',
-                            des:'18321567392',
-                            icon:'',
-                            identify:'请输入手机号',
-                            type:'tel'
-                        }
-                    ],
-                    [
-                        {
-                            title: '性别',
-                            des:'男',
-                            icon:''
-                        },
-                        {
-                            title: '生日',
-                            des:'2020-01-01',
-                            icon:''
-                        },
-                    ],
-                    [
-                        {
-                            title: '兴趣爱好',
-                            des:'',
-                            icon:'',
-                            identify:'请输入兴趣爱好',
-                            type:'textarea'
-                        },
-                    ]
-                ],
+                dataArray:[],
                 /**
                  * 性别选择: actionSheect
                  */
@@ -148,12 +105,51 @@
 
         },
         mounted() {
-           const user = new User({userName:'haode'});
-            window.console.log('用户:', user)
-           const a = getSingleton();
-            const b = getSingleton();
-            window.console.log('a:', a);
-            window.console.log('b:', b);
+            const currentUser = getCurrentUser();
+            this.dataArray = [
+                [
+                    {
+                        title:'头像',
+                        des:'',
+                        icon:currentUser.userAvatar,
+                    },
+                    {
+                        title: '昵称',
+                        des:currentUser.userName,
+                        icon:'',
+                        identify:'请输入昵称',
+                        type:'text'
+                    },
+                    {
+                        title: '手机号',
+                        des:currentUser.mobile,
+                        icon:'',
+                        identify:'请输入手机号',
+                        type:'tel'
+                    }
+                ],
+                [
+                    {
+                        title: '性别',
+                        des:currentUser.sex,
+                        icon:''
+                    },
+                    {
+                        title: '生日',
+                        des:currentUser.birth,
+                        icon:''
+                    },
+                ],
+                [
+                    {
+                        title: '兴趣爱好',
+                        des:currentUser.interest,
+                        icon:'',
+                        identify:'请输入兴趣爱好',
+                        type:'textarea'
+                    },
+                ]
+            ];
         },
         created() {
 

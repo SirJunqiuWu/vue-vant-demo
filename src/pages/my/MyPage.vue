@@ -17,10 +17,10 @@
             <van-image
                     round
                     lazy-load
-                    :src="avatar"
+                    :src="tempUserInfo.userAvatar"
                     @click.stop="scanAvatar"
             />
-            <div class="myName">Jack Wu</div>
+            <div class="myName">{{ tempUserInfo.userName }}</div>
           </div>
           <div>
             <van-icon class="top-right-icon" name="arrow" size="20" />
@@ -55,7 +55,7 @@
   import NavBar from '../../components/NavBar.vue';
   import {utils} from "../../utils/utils";
   import {Http} from "../../utils/api";
-  import {getCurrentUser, updateUserInfoByKey, updateUserInfoByObj, User} from '../my/Model/User'
+  import {updateUserInfoByObj, User} from '../my/Model/User'
   export default {
     name: "MyPage",
     components:{
@@ -94,15 +94,15 @@
         ],
         avatar:'https://img.yzcdn.cn/vant/cat.jpeg',
         isScanAvatar:false,
+        tempUserInfo:new User(),
       }
     },
     created() {
       // 网页标题更改
       document.title = '我的';
-      const user = new User({userName:'JackWu'});
-      updateUserInfoByKey('sex', '女');
-      updateUserInfoByObj({userName:'吴俊秋', userId:'6', userAvatar:'www.baidu.com', 'nickName':'小甜甜', mobile:'18321567392'});
-      window.console.log('created user:', getCurrentUser());
+      setTimeout(() => {
+        this.getUserInfoReq();
+      }, 500)
     },
     beforeMount(height) {
       let h = document.documentElement.clientHeight || document.body.clientHeight;
@@ -112,14 +112,27 @@
     methods:{
       onRefresh() {
         setTimeout(() => {
+          this.getUserInfoReq();
           this.isLoading = false;
           this.$toast('刷新成功');
-          Http.post('sysConfig/getSysConfigValue', {configKey: 1}).then(res => {
-
-          }).catch(err => {
-            this.$toast(err);
-          });
         }, 2000);
+      },
+      getUserInfoReq() {
+        Http.post('sysConfig/getSysConfigValue', {configKey: 1}).then(res => {
+        }).catch(err => {
+          this.$toast(err);
+          const obj = {
+            userId:'6',
+            userName:'吴俊秋',
+            userAvatar:'https://img.yzcdn.cn/vant/cat.jpeg',
+            nickName:'小甜甜',
+            mobile:'18321567392',
+            sex:'男',
+            birth:'1992-02-07',
+            interest:'跑步唱歌逛街'
+          };
+          this.tempUserInfo = updateUserInfoByObj(obj);
+        });
       },
       cellClick(item, index) {
         if (index === 2) {
