@@ -164,7 +164,7 @@
   @import "../../styles/px2rem.less";
   .top-bk {
     width:100%;
-    height: px2rem(200);
+    height: 5rem;
     background: #7279d5;
     padding: px2rem(25) px2rem(25);
     box-sizing: border-box;
@@ -175,15 +175,15 @@
 
   .myName {
     text-align: center;
-    font-size: px2rem(28);
+    font-size: 0.5rem;
     color: white;
   }
 
   .van-image {
     display: block;
     margin:auto;
-    height: px2rem(100);
-    width: px2rem(100);
+    height: 2rem;
+    width: 2rem;
   }
 
   .top-right-icon {
@@ -193,7 +193,7 @@
 
 
   .blank {
-    height:px2rem(600);
+    height:5rem;
   }
 
   .cell {

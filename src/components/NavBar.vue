@@ -35,12 +35,12 @@
 
 <style lang="less">
   @import "../styles/px2rem.less";
-  #navBar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10;
+  .van-nav-bar {
+     position: relative !important;
+     border: none !important;
+     height: 1.1rem;
+     line-height: 1.1rem;
+     background: white;
   }
 
 </style>

@@ -66,12 +66,12 @@
   @import "../../styles/px2rem.less";
   // 整个提交订单视图
   .van-submit-bar {
-    bottom: px2rem(58);
+    bottom:1.225rem;
   }
 
   // 全选 checkbox
   .van-checkbox {
-    margin-left: px2rem(10);
+    margin-left: 0.3rem;
   }
 
   .blue-title {

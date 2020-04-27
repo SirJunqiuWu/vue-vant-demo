@@ -272,7 +272,6 @@
 
   .list-cell {
     display: flex;
-    font-size: 0.2rem;
     height:3.6rem;
     padding: 0.3rem 0.3rem;
     border-bottom: 0.02rem solid #EDEDED;

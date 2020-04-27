@@ -1,6 +1,6 @@
 <template>
     <van-tabbar
-      id="tabBar"
+      class="tabbar"
       v-model="active"
       fixed
     >
@@ -101,13 +101,11 @@
 <!-- 样式 -->
 <style scoped lang="less">
   @import "../styles/px2rem.less";
-  #tabBar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10;
+  .tabbar{
+      position: relative !important;
+      border: none !important;
+      height: 1.225rem;
+      background: white;
+      /*height: 100% !important;*/
   }
-
-
 </style>
