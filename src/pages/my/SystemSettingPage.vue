@@ -103,14 +103,10 @@
     }
 
     .van-button {
-        width: 15rem;
-        height: 2rem;
-        line-height: 2rem;
-        border-radius: 1rem;
-        position:fixed;
-        margin:auto;
-        right:0;
-        bottom:px2rem(22.5);
-        left:0;
+        display: block;
+        margin: px2rem(50) auto 0;
+        width: px2rem(290);
+        height: px2rem(40);
+        line-height: px2rem(40);
     }
 </style>

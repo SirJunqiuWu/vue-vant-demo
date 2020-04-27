@@ -44,6 +44,7 @@
 <script>
     import {utils} from "../../utils/utils";
     import NavBar from "../../components/NavBar";
+    import {updateUserInfoByKey} from "./Model/User";
     export default {
         name: "InfoEditPage",
         components:{
@@ -58,6 +59,7 @@
                 navTitle:'',
                 title:'',
                 placeholder:'', // 输入框提示文本
+                identify:'', // 修改项标记
                 type:'text',
                 infoText:'', // 输入框输入文本
                 sms:'', // 验证码
@@ -72,8 +74,9 @@
             console.log('传过来的参数:', query);
             this.title = query.title;
             this.navTitle = query.title ? `修改用户${query.title}` : '信息编辑';
-            this.placeholder = query.identify;
+            this.placeholder = query.placeholder;
             this.infoText = query.des;
+            this.identify = query.identify;
             this.type = query.type;
         },
         created() {
@@ -97,6 +100,11 @@
                 this.loading = true;
                 setTimeout(() => {
                     this.loading = false;
+                    if (this.identify === 'nickName') {
+                        updateUserInfoByKey('nickName', this.infoText);
+                    } else if (this.identify === 'interest') {
+                        updateUserInfoByKey('interest', this.infoText)
+                    }
                     this.$toast.success('保存成功');
                     this.$router.back();
                 }, 1000)
@@ -109,7 +117,9 @@
     @import "../../styles/px2rem.less";
     .saveBtn {
         display: block;
-        margin: 50px auto 0;
-        width: 290px;
+        margin: px2rem(50) auto 0;
+        width: px2rem(290);
+        height: px2rem(40);
+        line-height: px2rem(40);
     }
 </style>

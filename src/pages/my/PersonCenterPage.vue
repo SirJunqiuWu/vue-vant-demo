@@ -61,7 +61,7 @@
 <script>
     import NavBar from "../../components/NavBar";
     import {utils} from "../../utils/utils";
-    import {getCurrentUser, getSingleton, User} from '../my/Model/User'
+    import {getCurrentUser, updateUserInfoByKey} from '../my/Model/User'
     export default {
         name: "PersonCenterPage",
         components:{
@@ -80,18 +80,7 @@
                  */
                 showSelect:false,
                 selectTitle:'选择性别',
-                actions:[
-                    {
-                        name:'男',
-                        color:'#07c160',
-                        code:'0'
-                    },
-                    {
-                        name:'女',
-                        color:'#07c160',
-                        code:'1'
-                    }
-                ],
+                actions:[],
                 /**
                  * 日期选择: dataPicker
                  */
@@ -111,45 +100,59 @@
                     {
                         title:'头像',
                         des:'',
-                        icon:currentUser.userAvatar,
+                        icon: currentUser && currentUser.userAvatar,
+                        placeholder:'',
+                        identify:'avatar',
+                        type:'',
                     },
                     {
                         title: '昵称',
-                        des:currentUser.userName,
+                        des:currentUser && currentUser.nickName,
                         icon:'',
-                        identify:'请输入昵称',
+                        placeholder:'请输入昵称',
+                        identify:'nickName',
                         type:'text'
                     },
                     {
                         title: '手机号',
-                        des:currentUser.mobile,
+                        des:currentUser && currentUser.mobile,
                         icon:'',
-                        identify:'请输入手机号',
+                        placeholder:'请输入手机号',
+                        identify:'mobile',
                         type:'tel'
                     }
                 ],
                 [
                     {
                         title: '性别',
-                        des:currentUser.sex,
+                        des:currentUser && currentUser.sex,
+                        placeholder:'',
+                        identify:'sex',
                         icon:''
                     },
                     {
                         title: '生日',
-                        des:currentUser.birth,
+                        des:currentUser && currentUser.birth,
+                        placeholder:'',
+                        identify:'birth',
                         icon:''
                     },
                 ],
                 [
                     {
                         title: '兴趣爱好',
-                        des:currentUser.interest,
+                        des:currentUser && currentUser.interest,
                         icon:'',
-                        identify:'请输入兴趣爱好',
+                        placeholder:'请输入兴趣爱好',
+                        identify:'interest',
                         type:'textarea'
                     },
                 ]
             ];
+            // 更新actions
+            this.updateActions();
+            // 更新日历默认值
+            this.currentDate = new Date(currentUser && currentUser.birth);
         },
         created() {
 
@@ -187,8 +190,12 @@
                 // 默认情况下点击选项时不会自动收起
                 // 可以通过 close-on-click-action 属性开启自动收起
                 this.show = false;
-                window.console.log('当前选择性别:', item.code)
+                window.console.log('当前选择性别:', item.name)
                 this.dataArray[1][0].des = item.name;
+                // 更新User性别
+                updateUserInfoByKey('sex', item.name);
+                // 更新actions
+                this.updateActions();
             },
             formatter(type, val) {
                 if (type === 'year') {
@@ -202,10 +209,36 @@
                 this.cancelDateSelect();
                 const date = new Date(value);
                 window.console.log('当前选择时间:', utils.getDateByTimestampAndFormatter(date, 'yyyy-MM-dd'));
-                this.dataArray[1][1].des = utils.getDateByTimestampAndFormatter(date, 'yyyy-MM-dd');
+                const birth = utils.getDateByTimestampAndFormatter(date, 'yyyy-MM-dd');
+                this.dataArray[1][1].des = birth;
+                this.currentDate = date;
+                updateUserInfoByKey('birth', birth);
             },
             cancelDateSelect() {
                 this.showDatePicker = false;
+            },
+            updateActions() {
+                const sex = this.dataArray[1][0].des;
+                let colorForBoy = '#323232';
+                let colorForGirl = '#323232';
+                if (sex === '男') {
+                    colorForBoy = '#07c160';
+                }
+                if (sex === '女') {
+                    colorForGirl = '#07c160';
+                }
+                this.actions = [
+                    {
+                        name:'男',
+                        color: colorForBoy,
+                        code:'0'
+                    },
+                    {
+                        name:'女',
+                        color: colorForGirl,
+                        code:'1'
+                    }
+                ];
             }
         }
     }

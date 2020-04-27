@@ -481,6 +481,17 @@ const isArray = (array) => {
   return Object.prototype.toString.call(array) == '[object Array]';
 };
 
+/**
+ * 根据分割标记字符串获取数组
+ * @param targetStr 目标字符串
+ * @param separateStr 分割标记字符
+ * @returns {Array|string[]}
+ */
+const getArrayBySeparateStr = (targetStr, separateStr) => {
+  if (isEmptyString(targetStr)) return [];
+  return  targetStr.split(separateStr);
+}
+
 // 导出
 export const utils = {
   isWeChat,
@@ -498,4 +509,5 @@ export const utils = {
   isEmptyString,
   trimString,
   isArray,
+  getArrayBySeparateStr,
 };

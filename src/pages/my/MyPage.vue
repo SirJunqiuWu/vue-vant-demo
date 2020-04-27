@@ -20,7 +20,7 @@
                     :src="tempUserInfo.userAvatar"
                     @click.stop="scanAvatar"
             />
-            <div class="myName">{{ tempUserInfo.userName }}</div>
+            <div class="myName">{{ tempUserInfo.nickName }}</div>
           </div>
           <div>
             <van-icon class="top-right-icon" name="arrow" size="20" />
@@ -55,7 +55,7 @@
   import NavBar from '../../components/NavBar.vue';
   import {utils} from "../../utils/utils";
   import {Http} from "../../utils/api";
-  import {updateUserInfoByObj, User} from '../my/Model/User'
+  import {getCurrentUser, updateUserInfoByObj, User} from '../my/Model/User'
   export default {
     name: "MyPage",
     components:{
@@ -97,17 +97,28 @@
         tempUserInfo:new User(),
       }
     },
+    beforeCreate() {
+      window.console.log('beforeCreate');
+    },
     created() {
       // 网页标题更改
       document.title = '我的';
+      const currentUser = getCurrentUser();
+      window.console.log('created:', currentUser);
       setTimeout(() => {
-        this.getUserInfoReq();
+        if (!currentUser || !currentUser.userId) {
+          this.getUserInfoReq();
+        }
       }, 500)
     },
     beforeMount(height) {
+      window.console.log('beforeMount');
       let h = document.documentElement.clientHeight || document.body.clientHeight;
       this.curHeight = h - height; //减去页面上固定高度height
       window.console.log('height:', height, 'deviceHeight:', h);
+    },
+    mounted() {
+      window.console.log('mounted');
     },
     methods:{
       onRefresh() {
