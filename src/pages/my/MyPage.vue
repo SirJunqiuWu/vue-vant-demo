@@ -199,4 +199,8 @@
   .cell {
     align-items: center;
   }
+
+  .van-cell--large .van-cell__title {
+    font-size: px2rem(16);
+  }
 </style>

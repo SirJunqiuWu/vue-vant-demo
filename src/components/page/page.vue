@@ -99,8 +99,7 @@
         },
         computed: {
             headerStyle: function () {
-                // const height = this.hasHeader ? this.getPx2remVal(this.headerHeight) : 0;
-                const height = `1.1rem`;
+                const height = this.hasHeader ? `1.1rem` : 0;
                 // console.log(this);
                 this.updatePageConfigHeaderHeight(height);
                 // this.$eventsCenter()
@@ -130,8 +129,7 @@
                 }
             },
             footerStyle: function () {
-                // const height = this.hasFooter ? this.getPx2remVal(this.footerHeight) : 0;
-                const height = `1.225rem`
+                const height = this.hasFooter ? `1.225rem` : 0;
                 this.updatePageConfigFooterHeight(height);
                 return {
                     height: height
