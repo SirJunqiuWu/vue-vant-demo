@@ -100,5 +100,5 @@ export function updateUserInfoByObj(obj) {
  * @returns {null}
  */
 export function getCurrentUser() {
-    return currentUser;
+    return currentUser ? currentUser : {};
 }

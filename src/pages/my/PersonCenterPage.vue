@@ -61,7 +61,9 @@
 <script>
     import NavBar from "../../components/NavBar";
     import {utils} from "../../utils/utils";
-    import {getCurrentUser, updateUserInfoByKey} from '../my/Model/User'
+    import {getCurrentUser, updateUserInfoByKey} from '../my/Model/User';
+    import { getTitleSubTitleObj } from "../../Model/WJQTitleSubTitle";
+
     export default {
         name: "PersonCenterPage",
         components:{
@@ -95,60 +97,8 @@
         },
         mounted() {
             const currentUser = getCurrentUser();
-            this.dataArray = [
-                [
-                    {
-                        title:'头像',
-                        des:'',
-                        icon: currentUser && currentUser.userAvatar,
-                        placeholder:'',
-                        identify:'avatar',
-                        type:'',
-                    },
-                    {
-                        title: '昵称',
-                        des:currentUser && currentUser.nickName,
-                        icon:'',
-                        placeholder:'请输入昵称',
-                        identify:'nickName',
-                        type:'text'
-                    },
-                    {
-                        title: '手机号',
-                        des:currentUser && currentUser.mobile,
-                        icon:'',
-                        placeholder:'请输入手机号',
-                        identify:'mobile',
-                        type:'tel'
-                    }
-                ],
-                [
-                    {
-                        title: '性别',
-                        des:currentUser && currentUser.sex,
-                        placeholder:'',
-                        identify:'sex',
-                        icon:''
-                    },
-                    {
-                        title: '生日',
-                        des:currentUser && currentUser.birth,
-                        placeholder:'',
-                        identify:'birth',
-                        icon:''
-                    },
-                ],
-                [
-                    {
-                        title: '兴趣爱好',
-                        des:currentUser && currentUser.interest,
-                        icon:'',
-                        placeholder:'请输入兴趣爱好',
-                        identify:'interest',
-                        type:'textarea'
-                    },
-                ]
-            ];
+            // 更新列表数据源
+            this.updateDataArray(currentUser);
             // 更新actions
             this.updateActions();
             // 更新日历默认值
@@ -216,6 +166,66 @@
             },
             cancelDateSelect() {
                 this.showDatePicker = false;
+            },
+            updateDataArray() {
+                const currentUser = getCurrentUser();
+                const item00 = getTitleSubTitleObj('头像', '', '请上传头像', 'avatar', currentUser.userAvatar);
+                const item01 = getTitleSubTitleObj('昵称', currentUser.nickName, '请输入昵称', 'nickName', '');
+                const item02 = getTitleSubTitleObj('手机号', currentUser.mobile, '请输入手机号', 'mobile', '');
+                this.dataArray = [
+                    [
+                        {
+                            title:'头像',
+                            des:'',
+                            icon: currentUser && currentUser.userAvatar,
+                            placeholder:'',
+                            identify:'avatar',
+                            type:'',
+                        },
+                        {
+                            title: '昵称',
+                            des:currentUser && currentUser.nickName,
+                            icon:'',
+                            placeholder:'请输入昵称',
+                            identify:'nickName',
+                            type:'text'
+                        },
+                        {
+                            title: '手机号',
+                            des:currentUser && currentUser.mobile,
+                            icon:'',
+                            placeholder:'请输入手机号',
+                            identify:'mobile',
+                            type:'tel'
+                        }
+                    ],
+                    [
+                        {
+                            title: '性别',
+                            des:currentUser && currentUser.sex,
+                            placeholder:'',
+                            identify:'sex',
+                            icon:''
+                        },
+                        {
+                            title: '生日',
+                            des:currentUser && currentUser.birth,
+                            placeholder:'',
+                            identify:'birth',
+                            icon:''
+                        },
+                    ],
+                    [
+                        {
+                            title: '兴趣爱好',
+                            des:currentUser && currentUser.interest,
+                            icon:'',
+                            placeholder:'请输入兴趣爱好',
+                            identify:'interest',
+                            type:'textarea'
+                        },
+                    ]
+                ];
             },
             updateActions() {
                 const sex = this.dataArray[1][0].des;

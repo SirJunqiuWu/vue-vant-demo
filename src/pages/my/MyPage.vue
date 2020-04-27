@@ -163,7 +163,6 @@
         ImagePreview([this.avatar]);
       },
       toPersonCenter() {
-        this.$toast('个人中心');
         this.$router.push('person-center');
       }
     }
