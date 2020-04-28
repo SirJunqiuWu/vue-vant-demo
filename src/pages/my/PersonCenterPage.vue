@@ -169,63 +169,14 @@
             },
             updateDataArray() {
                 const currentUser = getCurrentUser();
-                const item00 = getTitleSubTitleObj('头像', '', '请上传头像', 'avatar', currentUser.userAvatar);
-                const item01 = getTitleSubTitleObj('昵称', currentUser.nickName, '请输入昵称', 'nickName', '');
-                const item02 = getTitleSubTitleObj('手机号', currentUser.mobile, '请输入手机号', 'mobile', '');
-                this.dataArray = [
-                    [
-                        {
-                            title:'头像',
-                            des:'',
-                            icon: currentUser && currentUser.userAvatar,
-                            placeholder:'',
-                            identify:'avatar',
-                            type:'',
-                        },
-                        {
-                            title: '昵称',
-                            des:currentUser && currentUser.nickName,
-                            icon:'',
-                            placeholder:'请输入昵称',
-                            identify:'nickName',
-                            type:'text'
-                        },
-                        {
-                            title: '手机号',
-                            des:currentUser && currentUser.mobile,
-                            icon:'',
-                            placeholder:'请输入手机号',
-                            identify:'mobile',
-                            type:'tel'
-                        }
-                    ],
-                    [
-                        {
-                            title: '性别',
-                            des:currentUser && currentUser.sex,
-                            placeholder:'',
-                            identify:'sex',
-                            icon:''
-                        },
-                        {
-                            title: '生日',
-                            des:currentUser && currentUser.birth,
-                            placeholder:'',
-                            identify:'birth',
-                            icon:''
-                        },
-                    ],
-                    [
-                        {
-                            title: '兴趣爱好',
-                            des:currentUser && currentUser.interest,
-                            icon:'',
-                            placeholder:'请输入兴趣爱好',
-                            identify:'interest',
-                            type:'textarea'
-                        },
-                    ]
-                ];
+                const item00 = getTitleSubTitleObj('头像', '', '请上传头像', 'avatar', currentUser.userAvatar, '');
+                const item01 = getTitleSubTitleObj('昵称', currentUser.nickName, '请输入昵称', 'nickName', '', 'text');
+                const item02 = getTitleSubTitleObj('手机号', currentUser.mobile, '请输入手机号', 'mobile', '', 'tel');
+
+                const item10 = getTitleSubTitleObj('性别', currentUser.sex, '请选择性别', 'sex', '', '');
+                const item11 = getTitleSubTitleObj('生日', currentUser.birth, '请选择生日', 'birth', '', '');
+                const item12 = getTitleSubTitleObj('兴趣爱好', currentUser.interest, '请输入兴趣爱好', 'interest', '', 'textarea');
+                this.dataArray = [[item00, item01, item02], [item10, item11, item12]];
             },
             updateActions() {
                 const sex = this.dataArray[1][0].des;
