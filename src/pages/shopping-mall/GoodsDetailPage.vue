@@ -71,6 +71,20 @@
             </div>
           </div>
         </div>
+        <div class="goods-brand-info">
+          <div class="brand-name">品牌</div>
+          <div class="brand-bottom">
+            <van-image
+                    class="brand-image"
+                    lazy-load
+                    src="http://imgsrc.baidu.com/baike/pic/item/0d968f2313167351ac34de46.jpg"
+            />
+            <div class="brand-bottom-right">
+              <div class="right-brand-name">古驰 Gucci</div>
+              <div class="right-sale">1418件商品在售</div>
+            </div>
+          </div>
+        </div>
       </van-pull-refresh>
       <van-goods-action>
         <van-goods-action-icon icon="chat-o" text="客服" dot />
@@ -136,6 +150,9 @@
     background: #efefef;
   }
 
+  /**
+    顶部价格信息
+   */
   .price-top {
     display: flex;
     /*justify-content: space-between;*/
@@ -155,7 +172,7 @@
   }
 
   .price-top-left {
-    border-right: solid #EDEDED px2rem(1);
+    border-right: px2rem(1) solid #EDEDED;
   }
 
   .price-top-left-title {
@@ -215,6 +232,7 @@
     background: white;
     padding: px2rem(12);
     box-sizing: border-box;
+    margin-bottom: px2rem(12);
   }
 
   .goods-identify-title {
@@ -252,5 +270,47 @@
     font-size: px2rem(11);
     color: #8C8F98;
     text-indent:px2rem(6)
+  }
+
+  /**
+   品牌信息
+   */
+  .goods-brand-info {
+    padding: px2rem(12);
+    box-sizing: border-box;
+    background: white;
+  }
+
+  .brand-name {
+    font-size: px2rem(15);
+    font-weight: bold;
+    color: black;
+    margin-bottom: px2rem(12);
+  }
+
+  .brand-bottom {
+    display: flex;
+    align-items: center;
+  }
+
+  .brand-image {
+    width: px2rem(50);
+    height: px2rem(50);
+    border: px2rem(1) solid #383838;
+    margin-right: px2rem(10);
+  }
+
+  .brand-bottom-right {
+
+  }
+
+  .right-brand-name {
+    font-weight: bold;
+    font-size: px2rem(14);
+    color: #383838
+  }
+
+  .right-sale {
+    font-size: px2rem(12);
   }
 </style>
