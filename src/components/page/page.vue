@@ -15,8 +15,8 @@
 
 <script>
     // 这两个值如何设置更精确？？？
-    const defaultHeaderHeight = 27.5;
-    const defaultFooterHeight = 64;
+    const defaultHeaderHeight = 44;
+    const defaultFooterHeight = 49;
     export default {
         name: "Page",
         props: {
@@ -81,7 +81,7 @@
         methods: {
             //计算px2rem的值
             getPx2remVal(pxValue) {
-                return `${pxValue * 320 / 375 / 20}rem`;
+                return `${pxValue / 40}rem`;
             },
             updatePageConfigHeaderHeight($headerHeight){
                 // this.$pageConfig.$headerHeight = $headerHeight;
@@ -99,7 +99,7 @@
         },
         computed: {
             headerStyle: function () {
-                const height = this.hasHeader ? `1.1rem` : 0;
+                const height = this.hasHeader ? this.getPx2remVal(this.headerHeight) : 0;
                 // console.log(this);
                 this.updatePageConfigHeaderHeight(height);
                 // this.$eventsCenter()
@@ -109,10 +109,10 @@
             },
             contentStyle: function () {
                 // console.log('contentStyle')
-                // const realHeaderHeight = this.hasHeader ? this.getPx2remVal(this.headerHeight) : '0rem';
-                const realHeaderHeight = this.hasHeader ? `1.1rem` : '0rem'
-                // const realFooterHeight = this.hasFooter ? this.getPx2remVal(this.footerHeight) : '0rem';
-                const realFooterHeight = this.hasFooter ? `1.225rem` : '0rem'
+                const realHeaderHeight = this.hasHeader ? this.getPx2remVal(this.headerHeight) : '0rem';
+                // const realHeaderHeight = this.hasHeader ? `1.1rem` : '0rem'
+                const realFooterHeight = this.hasFooter ? this.getPx2remVal(this.footerHeight) : '0rem';
+                // const realFooterHeight = this.hasFooter ? `1.225rem` : '0rem'
                 // const realContentMinHeight = `calc(${this.getPx2remVal(this.windowHeight)}${' - '}${realHeaderHeight})`;
                 const realContentMinHeight = `calc(${this.windowHeight + 'px'}${' - '}${realHeaderHeight})`;
                 const realContentHeight = this.fixedContent ? realContentMinHeight : 'unset';
@@ -129,7 +129,7 @@
                 }
             },
             footerStyle: function () {
-                const height = this.hasFooter ? `1.225rem` : 0;
+                const height = this.hasFooter ? this.getPx2remVal(this.footerHeight) : 0;
                 this.updatePageConfigFooterHeight(height);
                 return {
                     height: height

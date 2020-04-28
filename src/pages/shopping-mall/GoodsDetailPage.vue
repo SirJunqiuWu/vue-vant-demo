@@ -1,5 +1,5 @@
 <template>
-  <page :has-header="showNav" :has-footer="false">
+  <page :has-header="showNav" :has-footer="true" :footer-height="52">
     <template slot="header">
       <NavBar title="商品详情" :show-left="true" />
     </template>
@@ -85,36 +85,26 @@
             </div>
           </div>
           <div class="other-goods">
-            <div class="other-goods-item" style="color: black">
-              <van-image
-                      class="brand-image"
-                      lazy-load
-                      src="http://imgsrc.baidu.com/baike/pic/item/0d968f2313167351ac34de46.jpg"
-              />
-            </div>
-            <div class="other-goods-item" style="color: red">
-              <van-image
-                      class="brand-image"
-                      lazy-load
-                      src="http://imgsrc.baidu.com/baike/pic/item/0d968f2313167351ac34de46.jpg"
-              />
-            </div>
-            <div class="other-goods-item" style="color: rebeccapurple">
-              <van-image
-                      class="brand-image"
-                      lazy-load
-                      src="http://imgsrc.baidu.com/baike/pic/item/0d968f2313167351ac34de46.jpg"
-              />
-            </div>
-            <div class="other-goods-item" style="color: #5FB878">
-              <van-image
-                      lazy-load
-                      src="http://imgsrc.baidu.com/baike/pic/item/0d968f2313167351ac34de46.jpg"
-              />
+            <div id="status2_pics">
+              <ul class="pics6_status2">
+                <li>
+                  <img class="status2-pic" src="http://shopimg.weimob.com/100507453/Goods/1701191815042349.png">
+                  <div>11111</div>
+                  <div>22222</div>
+                </li>
+                <li>
+                  <img class="status2-pic" src="http://shopimg.weimob.com/100507453/Goods/1701191815042349.png">
+                  <div>11111</div>
+                  <div>22222</div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </van-pull-refresh>
+    </template>
+
+    <template slot="footer">
       <van-goods-action>
         <van-goods-action-icon icon="chat-o" text="客服" dot />
         <van-goods-action-icon icon="cart-o" text="购物车" badge="5" />
@@ -351,5 +341,21 @@
     width: 25%;
     margin-right: px2rem(12);
     margin-left:0;
+  }
+
+  .pics6_status2 {
+    display: flex;
+    display: -webkit-flex;
+  }
+
+  .pics6_status2 li{
+    width: 50%;
+    height: 100%;
+    text-align: center;
+  }
+
+  .pics6_status2 li .status2-pic {
+    width: 100%;
+    height: 100%;
   }
 </style>
