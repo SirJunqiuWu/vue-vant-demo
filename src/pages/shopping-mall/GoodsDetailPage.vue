@@ -84,6 +84,35 @@
               <div class="right-sale">1418件商品在售</div>
             </div>
           </div>
+          <div class="other-goods">
+            <div class="other-goods-item" style="color: black">
+              <van-image
+                      class="brand-image"
+                      lazy-load
+                      src="http://imgsrc.baidu.com/baike/pic/item/0d968f2313167351ac34de46.jpg"
+              />
+            </div>
+            <div class="other-goods-item" style="color: red">
+              <van-image
+                      class="brand-image"
+                      lazy-load
+                      src="http://imgsrc.baidu.com/baike/pic/item/0d968f2313167351ac34de46.jpg"
+              />
+            </div>
+            <div class="other-goods-item" style="color: rebeccapurple">
+              <van-image
+                      class="brand-image"
+                      lazy-load
+                      src="http://imgsrc.baidu.com/baike/pic/item/0d968f2313167351ac34de46.jpg"
+              />
+            </div>
+            <div class="other-goods-item" style="color: #5FB878">
+              <van-image
+                      lazy-load
+                      src="http://imgsrc.baidu.com/baike/pic/item/0d968f2313167351ac34de46.jpg"
+              />
+            </div>
+          </div>
         </div>
       </van-pull-refresh>
       <van-goods-action>
@@ -311,6 +340,16 @@
   }
 
   .right-sale {
-    font-size: px2rem(12);
+    font-size: px2rem(11);
+  }
+
+  .other-goods {
+    display: flex;
+  }
+
+  .other-goods-item {
+    width: 25%;
+    margin-right: px2rem(12);
+    margin-left:0;
   }
 </style>
