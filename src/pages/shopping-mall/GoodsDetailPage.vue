@@ -5,9 +5,76 @@
     </template>
 
     <template slot="content">
+      <van-pull-refresh
+              v-model="isLoading"
+              pulling-text="下拉刷新"
+              loosing-text="松手即可刷新"
+              loading-text="正在努力的刷新"
+              @refresh="onRefresh"
+      >
+        <!-- 轮播 -->
+        <van-swipe
+                :autoplay="3000"
+                :height="bannerHeight"
+                indicator-color="#F08080"
+                @change="onchange"
+        >
+          <van-swipe-item
+                  v-for="(item, index) in banners"
+                  :key="index"
+                  @click="bannerClick(index, item)"
+          >
+            <img
+                    v-lazy="item.image"
+                    :height="bannerHeight"
+            />
+          </van-swipe-item>
+        </van-swipe>
+        <div class="price-top">
+          <div class="price-top-left">
+            <div class="price-top-left-title">妃鱼售价</div>
+            <div class="price-top-left-des">¥8357</div>
+          </div>
+          <div class="price-top-right">
+            <div class="price-top-right-title">市场销售价</div>
+            <div class="price-top-right-des">¥28888</div>
+          </div>
+        </div>
+        <div class="goods-info">
+          <div class="goods-tag">
+            <van-tag color="#f2826a">性价比高</van-tag>
+            <van-tag color="#f2826a" plain>口感好</van-tag>
+            <van-tag color="#7232dd">补贴价</van-tag>
+          </div>
+          <div class="goods-name">时尚夏季裙</div>
+        </div>
+        <div class="goods-identify">
+          <div class="goods-identify-title">保真  <span>此商品经鉴定师团队鉴定为正品</span></div>
+          <div class="goods-identify-des">
+            <div class="goods-identify-des-item">
+              <div>
+                <van-icon name="passed" color='red' size="0.3rem" />
+              </div>
+              <div class="goods-identify-des-title"> 精致面料</div>
+            </div>
+            <div class="goods-identify-des-item">
+              <div>
+                <van-icon name="passed" color='red' size="0.3rem" />
+              </div>
+              <div class="goods-identify-des-title"> 全场包邮</div>
+            </div>
+            <div class="goods-identify-des-item">
+              <div>
+                <van-icon name="passed" color='red' size="0.3rem" />
+              </div>
+              <div class="goods-identify-des-title"> 假一赔三</div>
+            </div>
+          </div>
+        </div>
+      </van-pull-refresh>
       <van-goods-action>
         <van-goods-action-icon icon="chat-o" text="客服" dot />
-        <van-goods-action-icon icon="cart-o" text="购物车" info="5" />
+        <van-goods-action-icon icon="cart-o" text="购物车" badge="5" />
         <van-goods-action-icon icon="shop-o" text="店铺" badge="12" />
         <van-goods-action-button type="warning" text="加入购物车" />
         <van-goods-action-button type="danger" text="立即购买" />
@@ -20,6 +87,20 @@
 <script>
   import NavBar from '../../components/NavBar.vue';
   import {utils} from "../../utils/utils";
+  const result = [
+    {
+      image:'https://rentupload.topshopstv.com//2019-12-13//5df360b9b4fd2.jpg',
+      title:'路由传值'
+    },
+    {
+      image:'https://rentupload.topshopstv.com//2019-10-19//5daab871029e0.png',
+      title:'粉丝大回馈'
+    },
+    {
+      image:'https://rentupload.topshopstv.com//2019-08-27//5d64d1fe060a8.png',
+      title:'vue.js'
+    }
+  ];
   export default {
     name: "GoodsDetailPage",
     components:{
@@ -30,18 +111,146 @@
     },
     data() {
       return {
-        showNav:!utils.isWeChat()
+        showNav:!utils.isWeChat(),
+        isLoading:false,
+        banners:result,
+        bannerHeight:window.document.documentElement.clientWidth * 320.0 / 750.0,
       }
     },
     created() {
 
     },
     methods:{
-
+      onRefresh() {
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 500)
+      }
     }
   }
 </script>
 
 <style scoped lang="less">
+  @import "../../styles/px2rem.less";
+  body {
+    background: #efefef;
+  }
 
+  .price-top {
+    display: flex;
+    /*justify-content: space-between;*/
+    align-content: center;
+    align-items: center;
+    height: px2rem(80);
+    padding: px2rem(12);
+    box-sizing: border-box;
+    position: relative;
+    background: white;
+  }
+  .price-top-left, .price-top-right {
+    width: 50%;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+  }
+
+  .price-top-left {
+    border-right: solid #EDEDED px2rem(1);
+  }
+
+  .price-top-left-title {
+    color: #DC143C;
+    font-size: px2rem(15);
+    margin-bottom: px2rem(12);
+  }
+
+  .price-top-left-des {
+    color: red;
+    font-size: px2rem(17);
+  }
+
+  .price-top-right-title {
+    font-size: px2rem(15);
+    margin-bottom: px2rem(12);
+  }
+
+  .price-top-right-des {
+    font-size: px2rem(17);
+    text-decoration:line-through;
+  }
+
+  .top-gap-line {
+    position: absolute;
+    width: px2rem(1);
+    height: px2rem(60);
+    top: px2rem(10);
+    margin: 0 auto;
+    display: block;
+    background: #EDEDED;
+  }
+
+  .goods-info {
+    height: px2rem(80);
+    padding: px2rem(12);
+    box-sizing: border-box;
+    align-items: center;
+    background: white;
+    margin-bottom: px2rem(12);
+  }
+
+  .goods-tag {
+    margin-bottom: px2rem(12);
+  }
+
+  .goods-name {
+    font-size: px2rem(15);
+    font-weight: bold;
+    color: black;
+  }
+
+  /**
+    商品鉴定信息
+   */
+  .goods-identify {
+    background: white;
+    padding: px2rem(12);
+    box-sizing: border-box;
+  }
+
+  .goods-identify-title {
+    font-size: px2rem(13);
+    color: black;
+    font-weight: bold;
+    margin-bottom: px2rem(12);
+  }
+
+  .goods-identify span {
+    font-size: px2rem(12);
+    color: #8C8F98;
+  }
+
+  .goods-identify-des {
+    display: flex;
+  }
+
+  .goods-identify-des-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    margin-right: px2rem(30);
+  }
+
+  .van-icon {
+    width: px2rem(12);
+    height: px2rem(12);
+    display: block;
+    margin: 0 auto;
+  }
+
+  .goods-identify-des-title {
+    font-size: px2rem(11);
+    color: #8C8F98;
+    text-indent:px2rem(6)
+  }
 </style>

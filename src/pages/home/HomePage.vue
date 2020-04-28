@@ -116,22 +116,22 @@
   Vue.use(Swipe).use(SwipeItem).use(Lazyload).use(PullRefresh).use(Toast).use(List).use(Cell).use(Image).use(NoticeBar);
 
   const result = [
-      {
-        image:'https://rentupload.topshopstv.com//2019-12-13//5df360b9b4fd2.jpg',
-        clickUrl:'https://segmentfault.com/a/1190000012393587',
-        title:'路由传值'
-      },
-      {
-        image:'https://rentupload.topshopstv.com//2019-10-19//5daab871029e0.png',
-        clickUrl:'https://rentstatic.topshopstv.com/h5/index8.html',
-        title:'粉丝大回馈'
-      },
-      {
-        image:'https://rentupload.topshopstv.com//2019-08-27//5d64d1fe060a8.png',
-        clickUrl:'https://cn.vuejs.org/',
-        title:'vue.js'
-      }
-    ];
+    {
+      image:'https://rentupload.topshopstv.com//2019-12-13//5df360b9b4fd2.jpg',
+      clickUrl:'https://segmentfault.com/a/1190000012393587',
+      title:'路由传值'
+    },
+    {
+      image:'https://rentupload.topshopstv.com//2019-10-19//5daab871029e0.png',
+      clickUrl:'https://rentstatic.topshopstv.com/h5/index8.html',
+      title:'粉丝大回馈'
+    },
+    {
+      image:'https://rentupload.topshopstv.com//2019-08-27//5d64d1fe060a8.png',
+      clickUrl:'https://cn.vuejs.org/',
+      title:'vue.js'
+    }
+  ];
   window.console.log('banners:', utils.getLocalStorage('banners'));
   export default {
     name: "HomePage",
