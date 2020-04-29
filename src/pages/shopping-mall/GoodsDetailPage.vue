@@ -1,7 +1,12 @@
 <template>
   <page :has-header="showNav" :has-footer="true" :footer-height="52">
     <template slot="header">
-      <NavBar title="商品详情" :show-left="true" />
+      <NavBar title="商品详情"
+              :show-left="true"
+              :show-right="true"
+              right-icon="share"
+              @onClickRight="onClickRight"
+      />
     </template>
 
     <template slot="content">
@@ -136,6 +141,13 @@
           </div>
         </div>
       </van-pull-refresh>
+
+      <van-share-sheet
+              v-model="showShare"
+              title="立即分享给好友"
+              :options="options"
+              @select="onSelect"
+      />
     </template>
 
     <template slot="footer">
@@ -211,6 +223,18 @@
           'https://gd1.alicdn.com/imgextra/i1/193502143/O1CN01bp8j3O1RhXMfwCisb_!!0-item_pic.jpg',
           'https://gd1.alicdn.com/imgextra/i1/193502143/O1CN01bp8j3O1RhXMfwCisb_!!0-item_pic.jpg'
         ],
+        showShare: false,
+        options: [
+          [
+            { name: '微信', icon: 'wechat' },
+            { name: '微博', icon: 'weibo' },
+          ],
+          [
+            { name: '复制链接', icon: 'link' },
+            { name: '分享海报', icon: 'poster' },
+            { name: '二维码', icon: 'qrcode' },
+          ]
+        ],
         current:0,
       }
     },
@@ -256,6 +280,14 @@
       },
       onCopy() {
         this.$toast.success('复制成功');
+      },
+      onClickRight() {
+        window.console.log('分享');
+        this.showShare = true;
+      },
+      onSelect(option) {
+        window.console.log('分享:', option);
+        this.$toast(`分享到${option.name}`)
       }
     }
   }
