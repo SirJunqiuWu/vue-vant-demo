@@ -84,23 +84,36 @@
               <div class="right-sale">1418件商品在售</div>
             </div>
           </div>
-          <div class="other-goods">
-            <div id="status2_pics">
-              <ul class="pics6_status2">
-                <li>
-                  <img class="status2-pic" src="http://shopimg.weimob.com/100507453/Goods/1701191815042349.png">
-                  <div>11111</div>
-                  <div>22222</div>
-                </li>
-                <li>
-                  <img class="status2-pic" src="http://shopimg.weimob.com/100507453/Goods/1701191815042349.png">
-                  <div>11111</div>
-                  <div>22222</div>
-                </li>
-              </ul>
-            </div>
-          </div>
         </div>
+        <van-swipe
+                :show-indicators="false"
+                @change="scrollToTargetPage"
+        >
+          <van-swipe-item
+                  v-for="(arr, idx) in otherGoods"
+                  :key="idx"
+         >
+            <div class="other-goods">
+              <div>
+                <ul class="other-goods-item">
+                  <li v-for="(item, index) in arr" :key="index" :style="  index === arr.length - 1 ? 'margin-right:0' : ''  ">
+                    <img class="goods-item-image" :src="item.image">
+                    <div class="goods-item-goods-name">{{item.name}}</div>
+                    <div>{{item.price}}</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </van-swipe-item>
+        </van-swipe>
+
+        <div class="custom-indicator">
+          <div class="custom-indicator-child">
+            <div v-for="(arr, idx) in otherGoods" :key="idx" :class="idx === current ? 'custom-indicator-item-active' : 'custom-indicator-item' "  />
+          </div>
+
+        </div>
+
       </van-pull-refresh>
     </template>
 
@@ -148,16 +161,49 @@
         isLoading:false,
         banners:result,
         bannerHeight:window.document.documentElement.clientWidth * 320.0 / 750.0,
+        otherGoods:[],
+        current:0,
       }
     },
     created() {
-
+      setTimeout(() => {
+        this.getOtherGoods();
+      }, 500)
     },
     methods:{
+      getOtherGoods() {
+        const array0 = [];
+        for (let i = 0; i < 4; i += 1) {
+          const obj = {};
+          obj.name = `商品0${i}`;
+          obj.price = '¥1000';
+          obj.image = 'https://gw.alicdn.com/bao/uploaded/i1/64723694/TB20n0IXU_C11Bjy1zeXXXtGpXa_!!64723694.jpg_400x400q90.jpg';
+          obj.clickUrl = '';
+          array0.push(obj);
+        }
+        const array1 = [];
+        for (let i = 0; i < 4; i += 1) {
+          const obj = {};
+          obj.name = `商品1${i}`;
+          obj.price = '¥1000';
+          obj.image = 'https://gw.alicdn.com/bao/uploaded/i2/113740699/TB2DRluXCPA11Bjy0FaXXbucXXa-113740699.jpg_400x400q90.jpg';
+          obj.clickUrl = '';
+          array1.push(obj);
+        }
+        this.otherGoods = [array0, array1];
+      },
       onRefresh() {
         setTimeout(() => {
           this.isLoading = false;
         }, 500)
+      },
+      // 轮播图滑动事件
+      onchange(index) {
+        window.console.log('当前 Swipe 索引：', index);
+      },
+      scrollToTargetPage(index) {
+        window.console.log('goods当前 Swipe 索引：', index);
+        this.current = index;
       }
     }
   }
@@ -333,29 +379,62 @@
     font-size: px2rem(11);
   }
 
+  /* 其他在售的商品 */
   .other-goods {
     display: flex;
+    background: white;
+    padding: 0 px2rem(12) px2rem(12) px2rem(12);
+    box-sizing: border-box;
   }
 
   .other-goods-item {
-    width: 25%;
-    margin-right: px2rem(12);
-    margin-left:0;
-  }
-
-  .pics6_status2 {
     display: flex;
     display: -webkit-flex;
   }
 
-  .pics6_status2 li{
-    width: 50%;
+  .other-goods-item li {
+    width: 25%;
     height: 100%;
     text-align: center;
+    margin-right: px2rem(12);
   }
 
-  .pics6_status2 li .status2-pic {
+  .other-goods-item li .goods-item-image {
     width: 100%;
     height: 100%;
   }
+
+  .goods-item-goods-name {
+    font-size: px2rem(12);
+    color: #383838;
+  }
+
+  /* 自定义轮播指示器 */
+  .custom-indicator {
+    display: flex;
+    align-content: center;
+    background: white;
+  }
+
+  .custom-indicator-child {
+    margin: 0 auto;
+    display: flex;
+  }
+
+  .custom-indicator-item {
+    text-align: center;
+    width: px2rem(12);
+    height: px2rem(3);
+    background: #8C8F98;
+    margin-right: px2rem(5);
+  }
+
+  .custom-indicator-item-active {
+    text-align: center;
+    width: px2rem(12);
+    height: px2rem(3);
+    background: red;
+    margin-right: px2rem(5);
+  }
+
 </style>
