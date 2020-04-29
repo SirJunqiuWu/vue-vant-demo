@@ -111,9 +111,17 @@
           <div class="custom-indicator-child">
             <div v-for="(arr, idx) in otherGoods" :key="idx" :class="idx === current ? 'custom-indicator-item-active' : 'custom-indicator-item' "  />
           </div>
-
         </div>
 
+        <div class="goods-detail-info">
+          <div class="goods-detail-title">详情</div>
+          <div class="goods-detail-goodsInfo">商品信息</div>
+          <div class="item" v-for="(item, idx) in goodsSkus" :key="idx">
+            <div class="title">{{item.title}}</div>
+            <div class="des">{{item.des}}</div>
+            <div class="copy" v-show="idx === 0" v-clipboard:copy="item.des" v-clipboard:success="onCopy">复制</div>
+          </div>
+        </div>
       </van-pull-refresh>
     </template>
 
@@ -162,6 +170,28 @@
         banners:result,
         bannerHeight:window.document.documentElement.clientWidth * 320.0 / 750.0,
         otherGoods:[],
+        goodsSkus:[
+          {
+            title:'编号',
+            des:'C1345951578',
+          },
+          {
+            title:'成色',
+            des:'98成新',
+          },
+          {
+            title:'尺寸',
+            des:'26*14*18',
+          },
+          {
+            title:'年份',
+            des:'2017',
+          },
+          {
+            title:'材质',
+            des:'牛皮',
+          }
+        ],
         current:0,
       }
     },
@@ -204,6 +234,9 @@
       scrollToTargetPage(index) {
         window.console.log('goods当前 Swipe 索引：', index);
         this.current = index;
+      },
+      onCopy() {
+        this.$toast.success('复制成功');
       }
     }
   }
@@ -414,6 +447,8 @@
     display: flex;
     align-content: center;
     background: white;
+    padding-bottom: px2rem(12);
+    margin-bottom: px2rem(12);
   }
 
   .custom-indicator-child {
@@ -435,6 +470,54 @@
     height: px2rem(3);
     background: red;
     margin-right: px2rem(5);
+  }
+
+  .goods-detail-info {
+    background: white;
+    padding: px2rem(12);
+    box-sizing: border-box;
+  }
+
+  .goods-detail-title, .goods-detail-goodsInfo {
+    text-align: center;
+    font-size: px2rem(15);
+    color: #383838;
+    font-weight: bold;
+  }
+
+  .goods-detail-goodsInfo {
+    text-align: left;
+    margin-bottom: px2rem(15);
+  }
+
+  .goods-detail-info .item {
+    display: flex;
+    margin-bottom: px2rem(12);
+    align-items: center;
+    align-content: center;
+  }
+
+  .goods-detail-info .title {
+    font-size: px2rem(12);
+    color: #8C8F98;
+  }
+
+  .goods-detail-info .des {
+    font-size: px2rem(12);
+    color: #8C8F98;
+    /* 文本前面空出一定的距离 */
+    text-indent: px2rem(50);
+    margin-right: px2rem(12);
+  }
+
+  .goods-detail-info .copy {
+    width: px2rem(40);
+    text-align: center;
+    font-size: px2rem(10);
+    background: white;
+    border: px2rem(1) solid #EDEDED;
+    padding-top: px2rem(2);
+    padding-bottom: px2rem(2);
   }
 
 </style>
