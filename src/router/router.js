@@ -108,7 +108,7 @@ export const routes = [
   },
   {
     path:'/goods-detail',
-    name:'goods-detail',
+    name:'商品详情',
     component:GoodsDetailPage
   },
   {

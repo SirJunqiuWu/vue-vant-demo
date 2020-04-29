@@ -122,6 +122,19 @@
             <div class="copy" v-show="idx === 0" v-clipboard:copy="item.des" v-clipboard:success="onCopy">复制</div>
           </div>
         </div>
+
+        <div class="take-photo">
+          <div class="take-photo-title">实物拍摄</div>
+          <div>
+            <van-image
+                    lazy-load
+                    v-for="(item, idx) in goodsImages"
+                    :key="idx"
+                    :src="item"
+                    :class=" idx !== goodsImages.length - 1 ? 'take-photo-image' : '' "
+            />
+          </div>
+        </div>
       </van-pull-refresh>
     </template>
 
@@ -191,6 +204,12 @@
             title:'材质',
             des:'牛皮',
           }
+        ],
+        goodsImages:[
+          'https://gd1.alicdn.com/imgextra/i1/193502143/O1CN01bp8j3O1RhXMfwCisb_!!0-item_pic.jpg',
+          'https://gd1.alicdn.com/imgextra/i1/193502143/O1CN01bp8j3O1RhXMfwCisb_!!0-item_pic.jpg',
+          'https://gd1.alicdn.com/imgextra/i1/193502143/O1CN01bp8j3O1RhXMfwCisb_!!0-item_pic.jpg',
+          'https://gd1.alicdn.com/imgextra/i1/193502143/O1CN01bp8j3O1RhXMfwCisb_!!0-item_pic.jpg'
         ],
         current:0,
       }
@@ -520,4 +539,19 @@
     padding-bottom: px2rem(2);
   }
 
+  .take-photo {
+    background: white;
+    padding: px2rem(12);
+    box-sizing: border-box;
+  }
+
+  .take-photo-title {
+    font-size: px2rem(15);
+    font-weight: bold;
+    margin-bottom: px2rem(12);
+  }
+
+  .take-photo-image {
+    margin-bottom: px2rem(10);
+  }
 </style>
