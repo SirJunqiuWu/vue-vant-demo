@@ -21,6 +21,7 @@ Vue.use(VueClipboard);
 
 // 全局注册图片浏览
 import { ImagePreview } from 'vant';
+import GoodsDetailPage from "./pages/shopping-mall/GoodsDetailPage";
 Vue.use(ImagePreview);
 
 // designSize:设计图尺寸(传@1x倍图尺寸,例如设计图是750px,2倍图),rootValue:比例,默认40
@@ -45,6 +46,7 @@ setHtml(375);
 // 根实例
 new Vue({
   // 将router注入根实例
+  // 程序的入口界面为App.vue 可以更改
   router,
   store,
   render: h => h(App),
