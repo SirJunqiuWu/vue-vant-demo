@@ -471,6 +471,7 @@
     box-sizing: border-box;
   }
 
+  /* 一行放多个商品 */
   .other-goods-item {
     display: flex;
     display: -webkit-flex;

@@ -238,9 +238,10 @@
         }, 1500);
       },
 
-      // 列表点击
+      // 列表行点击
       cellClicked(index, item) {
         Toast('当前点击' + index + '行');
+        this.$router.push('goods-detail');
       }
     }
   }

@@ -168,6 +168,22 @@ export function isMobileLegal(mobile) {
   return true;
 }
 
+/**
+ * 车牌是否合法
+ * @returns {boolean} true合法 反之不合法
+ */
+export function isLegalPlatNum(str) {
+  // 检验车牌合法性
+  const reg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/;
+  let result = false;
+  if (!reg.test(str)) {
+    result = false;
+  } else {
+    result = true;
+  }
+  return result;
+}
+
 // 判断是否在微信中查看
 const isWeChat = () => {
   const ua = navigator.userAgent.toLowerCase();
@@ -510,4 +526,5 @@ export const utils = {
   trimString,
   isArray,
   getArrayBySeparateStr,
+  isLegalPlatNum,
 };
