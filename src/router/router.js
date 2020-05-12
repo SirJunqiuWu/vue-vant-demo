@@ -15,6 +15,7 @@ import MyAdressListPage from '../pages/my/MyAdressListPage.vue';
 import SystemSettingPage from "../pages/my/SystemSettingPage";
 import PersonCenterPage from "../pages/my/PersonCenterPage";
 import InfoEditPage from "../pages/my/InfoEditPage";
+import TestArray from "../pages/my/TestArray";
 import WebPage from '../pages/web/WebPage'
 import GoodsDetailPage from '../pages/shopping-mall/GoodsDetailPage'
 
@@ -100,6 +101,11 @@ export const routes = [
     path:'/my-adress-list',
     name:'收货列表',
     component:MyAdressListPage
+  },
+  {
+    path:'/test-array',
+    name:'数组测试',
+    component:TestArray
   },
   {
     path:'/web',

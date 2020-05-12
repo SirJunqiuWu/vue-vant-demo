@@ -90,6 +90,11 @@
             title:'收获地址',
             icon:'location',
             to:'my-adress-list',
+          },
+          {
+            title:'数组循环方法',
+            icon:'volume-o',
+            to:'test-array',
           }
         ],
         avatar:'https://img.yzcdn.cn/vant/cat.jpeg',

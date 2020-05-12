@@ -508,7 +508,7 @@ const getArrayBySeparateStr = (targetStr, separateStr) => {
   return  targetStr.split(separateStr);
 }
 
-// 导出
+// 导出 通过文件名调用文件名内的方法
 export const utils = {
   isWeChat,
   isJSONString,
