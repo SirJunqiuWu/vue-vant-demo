@@ -56,6 +56,7 @@
   import {utils} from "../../utils/utils";
   import {Http} from "../../utils/api";
   import {getCurrentUser, updateUserInfoByObj, User} from '../my/Model/User'
+  import {handelString} from "../../utils/handelString";
   export default {
     name: "MyPage",
     components:{

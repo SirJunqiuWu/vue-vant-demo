@@ -1,10 +1,10 @@
-import Vue from 'vue'
+import Vue from 'vue';
 import Vant from 'vant';
-import App from './App.vue'
-import router from './router/router'
+import App from './App.vue';
+import router from './router/router';
 import Page from './components/page/page.js';
-import store from './store/index'
-import VueClipboard from 'vue-clipboard2'
+import store from './store/index';
+import VueClipboard from 'vue-clipboard2';
 
 import './styles/index.less';
 import './styles/override.less';
@@ -21,7 +21,6 @@ Vue.use(VueClipboard);
 
 // 全局注册图片浏览
 import { ImagePreview } from 'vant';
-import GoodsDetailPage from "./pages/shopping-mall/GoodsDetailPage";
 Vue.use(ImagePreview);
 
 // designSize:设计图尺寸(传@1x倍图尺寸,例如设计图是750px,2倍图),rootValue:比例,默认40
