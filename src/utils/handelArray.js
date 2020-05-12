@@ -47,6 +47,20 @@ const replaceObjAtIndex = (idx, obj, arr) => {
     return arr.splice(idx, 1, obj);
 };
 
+/**
+ * 对数组元素根据某一条件进行排序 这里只是个示例  a - b > 0代表是升序排列 (也可是a.count - b.count)
+ * @param arr
+ * @returns {*}
+ */
+const getSortArr = (arr) => {
+    //负值，如果所传递的第一个参数比第二个参数小。
+    //零，如果两个参数相等。
+    //正值，如果第一个参数比第二个参数大。
+    arr.sort(function (a, b) {
+        return a - b;
+    });
+    return arr;
+}
 
 /**
  * 对数组进行增删改的操作类 通过handelArray调用
@@ -57,4 +71,5 @@ export const handelArray = {
     deleteObjAtIndex,
     replaceObjAtIndex,
     insertObjAtIndex,
+    getSortArr,
 };
