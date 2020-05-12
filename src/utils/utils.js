@@ -9,8 +9,8 @@ import successLogo from '../assets/success.png'
   // 当前显示的hubBk，只能显示一个,showHud时先移除hud
 let hudBk = null;
 
-/** 获取页面跳转时链接传值的信息字符串
- *
+/**
+ * 获取页面跳转时链接后面带的传值的信息字符串 eg:http://www.baidu.com/jump?name=jack&sex=boy
  * @returns {string}
  */
 export function getUrlAllParamInfo() {
@@ -57,7 +57,7 @@ export function getTargetParamWithKeyAndObj(key, obj) {
 
 // 获取跳转连接中指定key对应的value
 export function getUrlTargetKeyValueWithKey(key) {
-  let obj = getUrlAllParmInfo();
+  let obj = this.getUrlAllParamInfo();
   let paramDic = getParamWithObj(obj);
   let result = paramDic[key];
   return result;
@@ -148,15 +148,6 @@ export function maskStrWithStartIdxAndLength(targetStr, startIdx, length) {
     return targetStr.substring(0, startIdx) + '****' + targetStr.substring(startIdx + length, targetStr.length);
   }
   return targetStr;
-}
-
-
-// 根据索引和数组源获取对应索引的元素
-export function getObjectAtIndex(idx, datas) {
-  if (idx >= datas.length) {
-    return {};
-  }
-  return datas[idx];
 }
 
 // 手机号是否合法
