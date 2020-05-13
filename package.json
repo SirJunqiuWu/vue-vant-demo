@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "@antv/f2": "^3.6.3",
-    "axios": "^0.18.1",
+    "axios": "^0.19.2",
     "js-cookie": "2.2.0",
     "js-md5": "^0.7.3",
     "js-model": "^1.6.2",
