@@ -68,8 +68,7 @@ export default {
   mounted() {
     //检测浏览器类型决定是否展示导航栏
     let isWe = utils.isWeChat();
-    isWe = true;
-    this.showNav = isWe;
+    this.showNav = !isWe;
     this.title = this.$route.name;
   },
 

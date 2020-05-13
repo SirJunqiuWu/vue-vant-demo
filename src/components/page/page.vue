@@ -110,9 +110,7 @@
             contentStyle: function () {
                 // console.log('contentStyle')
                 const realHeaderHeight = this.hasHeader ? this.getPx2remVal(this.headerHeight) : '0rem';
-                // const realHeaderHeight = this.hasHeader ? `1.1rem` : '0rem'
                 const realFooterHeight = this.hasFooter ? this.getPx2remVal(this.footerHeight) : '0rem';
-                // const realFooterHeight = this.hasFooter ? `1.225rem` : '0rem'
                 // const realContentMinHeight = `calc(${this.getPx2remVal(this.windowHeight)}${' - '}${realHeaderHeight})`;
                 const realContentMinHeight = `calc(${this.windowHeight + 'px'}${' - '}${realHeaderHeight})`;
                 const realContentHeight = this.fixedContent ? realContentMinHeight : 'unset';

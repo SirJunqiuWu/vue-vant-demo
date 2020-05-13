@@ -6,7 +6,12 @@
      :title="title"
      :left-arrow="showLeft"
      @click-left="onClickLeft"
-   />
+     @click-right="onClickRight"
+   >
+      <template #right v-show="showRight">
+         <van-icon :name="rightIcon" size="18" />
+      </template>
+   </van-nav-bar>
 </template>
 
 <script>
@@ -18,6 +23,8 @@
     props:{
       title:String,
       showLeft:Boolean,
+      showRight:Boolean,
+       rightIcon:String,
     },
     data(){
       return {
@@ -28,7 +35,11 @@
       onClickLeft() {
         window.console.log('返回按钮点击');
         this.$router.back();
-      }
+      },
+       onClickRight() {
+          window.console.log('右侧按钮点击');
+         this.$emit('onClickRight');
+       }
     },
   }
 </script>

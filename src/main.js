@@ -1,9 +1,10 @@
-import Vue from 'vue'
+import Vue from 'vue';
 import Vant from 'vant';
-import App from './App.vue'
-import router from './router/router'
+import App from './App.vue';
+import router from './router/router';
 import Page from './components/page/page.js';
-import store from './store/index'
+import store from './store/index';
+import VueClipboard from 'vue-clipboard2';
 
 import './styles/index.less';
 import './styles/override.less';
@@ -15,6 +16,8 @@ import '../postcss.config'
 Vue.use(Page);
 // vant-ui组件一次性导入
 Vue.use(Vant);
+// 粘贴板
+Vue.use(VueClipboard);
 
 // 全局注册图片浏览
 import { ImagePreview } from 'vant';
@@ -42,6 +45,7 @@ setHtml(375);
 // 根实例
 new Vue({
   // 将router注入根实例
+  // 程序的入口界面为App.vue 可以更改
   router,
   store,
   render: h => h(App),

@@ -9,8 +9,8 @@ import successLogo from '../assets/success.png'
   // 当前显示的hubBk，只能显示一个,showHud时先移除hud
 let hudBk = null;
 
-/** 获取页面跳转时链接传值的信息字符串
- *
+/**
+ * 获取页面跳转时链接后面带的传值的信息字符串 eg:http://www.baidu.com/jump?name=jack&sex=boy
  * @returns {string}
  */
 export function getUrlAllParamInfo() {
@@ -57,7 +57,7 @@ export function getTargetParamWithKeyAndObj(key, obj) {
 
 // 获取跳转连接中指定key对应的value
 export function getUrlTargetKeyValueWithKey(key) {
-  let obj = getUrlAllParmInfo();
+  let obj = this.getUrlAllParamInfo();
   let paramDic = getParamWithObj(obj);
   let result = paramDic[key];
   return result;
@@ -150,15 +150,6 @@ export function maskStrWithStartIdxAndLength(targetStr, startIdx, length) {
   return targetStr;
 }
 
-
-// 根据索引和数组源获取对应索引的元素
-export function getObjectAtIndex(idx, datas) {
-  if (idx >= datas.length) {
-    return {};
-  }
-  return datas[idx];
-}
-
 // 手机号是否合法
 export function isMobileLegal(mobile) {
   let reg = /^((13[0-9])|(14[5,7])|15([0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199)\d{8}$/;
@@ -166,6 +157,22 @@ export function isMobileLegal(mobile) {
     return false;
   }
   return true;
+}
+
+/**
+ * 车牌是否合法
+ * @returns {boolean} true合法 反之不合法
+ */
+export function isLegalPlatNum(str) {
+  // 检验车牌合法性
+  const reg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/;
+  let result = false;
+  if (!reg.test(str)) {
+    result = false;
+  } else {
+    result = true;
+  }
+  return result;
 }
 
 // 判断是否在微信中查看
@@ -492,7 +499,7 @@ const getArrayBySeparateStr = (targetStr, separateStr) => {
   return  targetStr.split(separateStr);
 }
 
-// 导出
+// 导出 通过文件名调用文件名内的方法
 export const utils = {
   isWeChat,
   isJSONString,
@@ -510,4 +517,5 @@ export const utils = {
   trimString,
   isArray,
   getArrayBySeparateStr,
+  isLegalPlatNum,
 };

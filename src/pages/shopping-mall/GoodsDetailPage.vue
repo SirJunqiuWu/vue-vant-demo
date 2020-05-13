@@ -1,7 +1,12 @@
 <template>
   <page :has-header="showNav" :has-footer="true" :footer-height="52">
     <template slot="header">
-      <NavBar title="商品详情" :show-left="true" />
+      <NavBar title="商品详情"
+              :show-left="true"
+              :show-right="true"
+              right-icon="share"
+              @onClickRight="onClickRight"
+      />
     </template>
 
     <template slot="content">
@@ -84,24 +89,65 @@
               <div class="right-sale">1418件商品在售</div>
             </div>
           </div>
-          <div class="other-goods">
-            <div id="status2_pics">
-              <ul class="pics6_status2">
-                <li>
-                  <img class="status2-pic" src="http://shopimg.weimob.com/100507453/Goods/1701191815042349.png">
-                  <div>11111</div>
-                  <div>22222</div>
-                </li>
-                <li>
-                  <img class="status2-pic" src="http://shopimg.weimob.com/100507453/Goods/1701191815042349.png">
-                  <div>11111</div>
-                  <div>22222</div>
-                </li>
-              </ul>
+        </div>
+        <van-swipe
+                :show-indicators="false"
+                @change="scrollToTargetPage"
+        >
+          <van-swipe-item
+                  v-for="(arr, idx) in otherGoods"
+                  :key="idx"
+         >
+            <div class="other-goods">
+              <div>
+                <ul class="other-goods-item">
+                  <li v-for="(item, index) in arr" :key="index" :style="  index === arr.length - 1 ? 'margin-right:0' : ''  ">
+                    <img class="goods-item-image" :src="item.image">
+                    <div class="goods-item-goods-name">{{item.name}}</div>
+                    <div>{{item.price}}</div>
+                  </li>
+                </ul>
+              </div>
             </div>
+          </van-swipe-item>
+        </van-swipe>
+
+        <div class="custom-indicator">
+          <div class="custom-indicator-child">
+            <div v-for="(arr, idx) in otherGoods" :key="idx" :class="idx === current ? 'custom-indicator-item-active' : 'custom-indicator-item' "  />
+          </div>
+        </div>
+
+        <div class="goods-detail-info">
+          <div class="goods-detail-title">详情</div>
+          <div class="goods-detail-goodsInfo">商品信息</div>
+          <div class="item" v-for="(item, idx) in goodsSkus" :key="idx">
+            <div class="title">{{item.title}}</div>
+            <div class="des">{{item.des}}</div>
+            <div class="copy" v-show="idx === 0" v-clipboard:copy="item.des" v-clipboard:success="onCopy">复制</div>
+          </div>
+        </div>
+
+        <div class="take-photo">
+          <div class="take-photo-title">实物拍摄</div>
+          <div>
+            <van-image
+                    lazy-load
+                    v-for="(item, idx) in goodsImages"
+                    :key="idx"
+                    :src="item"
+                    :class=" idx !== goodsImages.length - 1 ? 'take-photo-image' : '' "
+            />
           </div>
         </div>
       </van-pull-refresh>
+
+      <van-share-sheet
+              v-model="showShare"
+              title="立即分享给好友"
+              :options="options"
+              @select="onSelect"
+      />
     </template>
 
     <template slot="footer">
@@ -148,16 +194,100 @@
         isLoading:false,
         banners:result,
         bannerHeight:window.document.documentElement.clientWidth * 320.0 / 750.0,
+        otherGoods:[],
+        goodsSkus:[
+          {
+            title:'编号',
+            des:'C1345951578',
+          },
+          {
+            title:'成色',
+            des:'98成新',
+          },
+          {
+            title:'尺寸',
+            des:'26*14*18',
+          },
+          {
+            title:'年份',
+            des:'2017',
+          },
+          {
+            title:'材质',
+            des:'牛皮',
+          }
+        ],
+        goodsImages:[
+          'https://gd1.alicdn.com/imgextra/i1/193502143/O1CN01bp8j3O1RhXMfwCisb_!!0-item_pic.jpg',
+          'https://gd1.alicdn.com/imgextra/i1/193502143/O1CN01bp8j3O1RhXMfwCisb_!!0-item_pic.jpg',
+          'https://gd1.alicdn.com/imgextra/i1/193502143/O1CN01bp8j3O1RhXMfwCisb_!!0-item_pic.jpg',
+          'https://gd1.alicdn.com/imgextra/i1/193502143/O1CN01bp8j3O1RhXMfwCisb_!!0-item_pic.jpg'
+        ],
+        showShare: false,
+        options: [
+          [
+            { name: '微信', icon: 'wechat' },
+            { name: '微博', icon: 'weibo' },
+          ],
+          [
+            { name: '复制链接', icon: 'link' },
+            { name: '分享海报', icon: 'poster' },
+            { name: '二维码', icon: 'qrcode' },
+          ]
+        ],
+        current:0,
       }
     },
     created() {
-
+      setTimeout(() => {
+        this.getOtherGoods();
+      }, 500)
     },
     methods:{
+      getOtherGoods() {
+        const array0 = [];
+        for (let i = 0; i < 4; i += 1) {
+          const obj = {};
+          obj.name = `商品0${i}`;
+          obj.price = '¥1000';
+          obj.image = 'https://gw.alicdn.com/bao/uploaded/i1/64723694/TB20n0IXU_C11Bjy1zeXXXtGpXa_!!64723694.jpg_400x400q90.jpg';
+          obj.clickUrl = '';
+          array0.push(obj);
+        }
+        const array1 = [];
+        for (let i = 0; i < 4; i += 1) {
+          const obj = {};
+          obj.name = `商品1${i}`;
+          obj.price = '¥1000';
+          obj.image = 'https://gw.alicdn.com/bao/uploaded/i2/113740699/TB2DRluXCPA11Bjy0FaXXbucXXa-113740699.jpg_400x400q90.jpg';
+          obj.clickUrl = '';
+          array1.push(obj);
+        }
+        this.otherGoods = [array0, array1];
+      },
       onRefresh() {
         setTimeout(() => {
           this.isLoading = false;
         }, 500)
+      },
+      // 轮播图滑动事件
+      onchange(index) {
+        window.console.log('当前 Swipe 索引：', index);
+      },
+      scrollToTargetPage(index) {
+        window.console.log('goods当前 Swipe 索引：', index);
+        this.current = index;
+      },
+      onCopy() {
+        this.$toast.success('复制成功');
+      },
+      onClickRight() {
+        window.console.log('分享');
+        this.showShare = true;
+      },
+      onSelect(option) {
+        window.console.log('分享:', option);
+        this.$toast(`分享到${option.name}`)
       }
     }
   }
@@ -333,29 +463,128 @@
     font-size: px2rem(11);
   }
 
+  /* 其他在售的商品 */
   .other-goods {
     display: flex;
+    background: white;
+    padding: 0 px2rem(12) px2rem(12) px2rem(12);
+    box-sizing: border-box;
   }
 
+  /* 一行放多个商品 */
   .other-goods-item {
-    width: 25%;
-    margin-right: px2rem(12);
-    margin-left:0;
-  }
-
-  .pics6_status2 {
     display: flex;
     display: -webkit-flex;
   }
 
-  .pics6_status2 li{
-    width: 50%;
+  .other-goods-item li {
+    width: 25%;
     height: 100%;
     text-align: center;
+    margin-right: px2rem(12);
   }
 
-  .pics6_status2 li .status2-pic {
+  .other-goods-item li .goods-item-image {
     width: 100%;
     height: 100%;
+  }
+
+  .goods-item-goods-name {
+    font-size: px2rem(12);
+    color: #383838;
+  }
+
+  /* 自定义轮播指示器 */
+  .custom-indicator {
+    display: flex;
+    align-content: center;
+    background: white;
+    padding-bottom: px2rem(12);
+    margin-bottom: px2rem(12);
+  }
+
+  .custom-indicator-child {
+    margin: 0 auto;
+    display: flex;
+  }
+
+  .custom-indicator-item {
+    text-align: center;
+    width: px2rem(12);
+    height: px2rem(3);
+    background: #8C8F98;
+    margin-right: px2rem(5);
+  }
+
+  .custom-indicator-item-active {
+    text-align: center;
+    width: px2rem(12);
+    height: px2rem(3);
+    background: red;
+    margin-right: px2rem(5);
+  }
+
+  .goods-detail-info {
+    background: white;
+    padding: px2rem(12);
+    box-sizing: border-box;
+  }
+
+  .goods-detail-title, .goods-detail-goodsInfo {
+    text-align: center;
+    font-size: px2rem(15);
+    color: #383838;
+    font-weight: bold;
+  }
+
+  .goods-detail-goodsInfo {
+    text-align: left;
+    margin-bottom: px2rem(15);
+  }
+
+  .goods-detail-info .item {
+    display: flex;
+    margin-bottom: px2rem(12);
+    align-items: center;
+    align-content: center;
+  }
+
+  .goods-detail-info .title {
+    font-size: px2rem(12);
+    color: #8C8F98;
+  }
+
+  .goods-detail-info .des {
+    font-size: px2rem(12);
+    color: #8C8F98;
+    /* 文本前面空出一定的距离 */
+    text-indent: px2rem(50);
+    margin-right: px2rem(12);
+  }
+
+  .goods-detail-info .copy {
+    width: px2rem(40);
+    text-align: center;
+    font-size: px2rem(10);
+    background: white;
+    border: px2rem(1) solid #EDEDED;
+    padding-top: px2rem(2);
+    padding-bottom: px2rem(2);
+  }
+
+  .take-photo {
+    background: white;
+    padding: px2rem(12);
+    box-sizing: border-box;
+  }
+
+  .take-photo-title {
+    font-size: px2rem(15);
+    font-weight: bold;
+    margin-bottom: px2rem(12);
+  }
+
+  .take-photo-image {
+    margin-bottom: px2rem(10);
   }
 </style>

@@ -126,7 +126,7 @@
   .tabbar{
     position: relative !important;
     border: none !important;
-    height: px2rem(56);
+    height: px2rem(49);
     /*height: 100% !important;*/
   }
   .tab-icon {
