@@ -1,5 +1,5 @@
 <template>
-  <van-tabbar class="tabbar" v-model="active" @change="clickTabItem">
+  <van-tabbar safe-area-inset-bottom class="tabbar" v-model="active" @change="clickTabItem">
     <van-tabbar-item v-for="(icon,i) in icons" :key="i">
       <span>{{ icon.title}}</span>
       <img class="tab-icon"

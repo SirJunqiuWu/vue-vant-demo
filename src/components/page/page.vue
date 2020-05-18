@@ -98,6 +98,10 @@
             }
         },
         computed: {
+          /**
+           * 设置头部样式
+           * @returns {{height: *}}
+           */
             headerStyle: function () {
                 const height = this.hasHeader ? this.getPx2remVal(this.headerHeight) : 0;
                 // console.log(this);
@@ -107,6 +111,10 @@
                     height: height
                 }
             },
+          /**
+           * 设置内容区样式
+           * @returns {{width: *, "padding-bottom": *, "margin-top": *, "min-height": *, height: *}}
+           */
             contentStyle: function () {
                 // console.log('contentStyle')
                 const realHeaderHeight = this.hasHeader ? this.getPx2remVal(this.headerHeight) : '0rem';
@@ -149,6 +157,28 @@
 
 <style lang="less">
   @import "../../styles/px2rem.less";
+  body {
+    padding-bottom: constant(safe-area-inset-bottom);
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+
+  /*iphoneX*/
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    .van-tabbar--fixed{
+      padding-bottom: 5px !important;
+      padding-bottom: constant(safe-area-inset-bottom);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+  /*iphoneX Max*/
+  @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
+    .van-tabbar--fixed{
+      padding-bottom: 5px !important;
+      padding-bottom: constant(safe-area-inset-bottom);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+
 
   .page {
     width: 100%;

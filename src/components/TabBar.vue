@@ -104,8 +104,10 @@
   .tabbar{
       position: relative !important;
       border: none !important;
-      height: 1.225rem;
-      background: white;
+      background: white !important;
+      /*height: px2rem(49);*/
       /*height: 100% !important;*/
   }
-</style>
+
+
+  </style>

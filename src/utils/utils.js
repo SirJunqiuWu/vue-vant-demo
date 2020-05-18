@@ -163,7 +163,7 @@ export function isMobileLegal(mobile) {
  * 车牌是否合法
  * @returns {boolean} true合法 反之不合法
  */
-export function isLegalPlatNum(str) {
+const isLegalPlatNum = (str) => {
   // 检验车牌合法性
   const reg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/;
   let result = false;
@@ -499,6 +499,49 @@ const getArrayBySeparateStr = (targetStr, separateStr) => {
   return  targetStr.split(separateStr);
 }
 
+/**
+ * 是否是合法身份证
+ * @param str 目标字符串
+ * @returns {boolean} true 反之不合法
+ */
+const isLegalIDCard = str => {
+  const reg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+  let result = false;
+  if (!reg.test(str)) {
+    result = false;
+  } else {
+    result = true;
+  }
+  return result;
+};
+
+/**
+ * 获取起止时间差描述 注意时间均为毫秒
+ * @param startTime 开始时间
+ * @param endTime 截止时间
+ * @returns {string} 中间持续时长描述字符串 eg:10小时2分钟20秒
+ */
+const calculateTimeLength = (startTime, endTime) => {
+  // 毫秒时间转化为秒取差值
+  let time = endTime / 1000 - startTime / 1000;
+  let result = '';
+  // 小时
+  const hour = time / 60 * 60;
+  if (hour > 0) {
+    time = time - hour * 60 * 60;
+  }
+  // 分钟
+  const minute = time / 60;
+  if (minute > 0) {
+    // 秒数
+    time = time - minute * 60;
+  }
+  if (hour > 0) result += `${hour}小时`;
+  if (minute > 0) result += `${minute}分`;
+  if (time > 0) result += `${time}秒`;
+  return result;
+};
+
 // 导出 通过文件名调用文件名内的方法
 export const utils = {
   isWeChat,
@@ -518,4 +561,6 @@ export const utils = {
   isArray,
   getArrayBySeparateStr,
   isLegalPlatNum,
+  isLegalIDCard,
+  calculateTimeLength,
 };

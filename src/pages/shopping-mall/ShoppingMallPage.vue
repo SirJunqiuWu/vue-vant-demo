@@ -6,6 +6,9 @@
     </template>
 
     <template slot="content">
+      <van-tabs v-model="selectIndex" animated sticky @click="changeMenue">
+        <van-tab v-for="index in 8" :key="index" :title="'标签 ' + index" />
+      </van-tabs>
       <van-pull-refresh
         v-model="isRefresh"
         pulling-text="下拉刷新"
@@ -74,6 +77,7 @@
     data() {
       return {
         showNav:!utils.isWeChat(),
+        selectIndex: 0,
         dataArray:[],
         isRefresh:false,
         isLoading:false,
@@ -138,6 +142,11 @@
           }
         }, 500)
       },
+
+     changeMenue(name, title) {
+          this.selectIndex = name;
+         console.log('name:', name, 'title:', title);
+     },
 
       cellClicked(item, index) {
         window.console.log('cell击索引:', index, '信息:', item)
