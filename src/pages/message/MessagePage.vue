@@ -5,6 +5,16 @@
       <NavBar  title="消息" :show-left="false"></NavBar>
     </template>
     <template slot="content">
+      <van-tabs
+              v-model="selectIndex"
+              animated
+              sticky
+              background="#e8e8e8"
+              type="card"
+              @click="changeMenue"
+      >
+        <van-tab v-for="(item, index) in menueArr" :key="index" :title="item" />
+      </van-tabs>
       <van-pull-refresh
         v-model="isRefresh"
         pulling-text="下拉刷新"
@@ -74,7 +84,9 @@
     },
     data() {
       return {
+        selectIndex:0,
         showNav:!utils.isWeChat(),
+        menueArr:['消息', '申请'],
         avatars:[
           'https://gw.alicdn.com/bao/uploaded/i4/11628018709909080/T1DhkqXalaXXXXXXXX_!!0-item_pic.jpg_400x400q90.jpg',
           'https://gw.alicdn.com/bao/uploaded/i2/718533661/TB2QFK1aHaI.eBjy1XdXXcoqXXa_!!718533661.jpg_400x400q90.jpg',
@@ -99,31 +111,6 @@
       // 网页标题更改
       document.title = '消息';
       this.uploadDataReq();
-
-
-      let arr = [];
-      for(let i = 0; i < 100000; i ++) {
-        arr.push(i);
-      }
-
-      // test 1
-      let str = '';
-      const start = new Date().valueOf();
-      for (let i = 0; i < 100000; i ++) {
-        str += 'Hello Word';
-      }
-      const end = new Date().valueOf();
-      window.console.log('test1耗时:', (end - start) / 1000);
-
-      // test 2
-      let temp = '';
-      const startTime = new Date().valueOf();
-      for (let i in arr) {
-        temp += 'Hello Word';
-      }
-      const endTime = new Date().valueOf();
-      window.console.log('test2耗时:', (endTime - startTime) / 1000);
-
     },
     methods: {
       deleteMsg(item, index) {
@@ -197,7 +184,13 @@
         // 数组根据元素字段过滤拿到新数组
         let unReadMsgArr = this.dataArray.filter(item => !item.hasRead);
         this.msgCount = unReadMsgArr.length;
-      }
+      },
+
+      changeMenue(name, title) {
+        this.selectIndex = name;
+        console.log('name:', name, 'title:', title);
+      },
+
     }
   }
 </script>
@@ -259,5 +252,8 @@
     line-height: 2.64rem;
   }
 
+  .van-tabs.van-tabs--card {
+    padding: px2rem(12);
+  }
 
 </style>
