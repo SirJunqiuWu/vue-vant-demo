@@ -6,7 +6,13 @@
     </template>
 
     <template slot="content">
-      <van-tabs v-model="selectIndex" animated sticky @click="changeMenue">
+      <van-tabs
+              v-model="selectIndex"
+              animated
+              sticky
+              background="#e8e8e8"
+              @click="changeMenue"
+      >
         <van-tab v-for="index in 8" :key="index" :title="'标签 ' + index" />
       </van-tabs>
       <van-pull-refresh
@@ -16,12 +22,24 @@
         loading-text="正在努力的刷新"
         @refresh="onRefresh"
       >
+
+        <div class="other-goods" v-show="selectIndex === 0" v-for="(arr, idx) in otherGoods" :key="idx">
+          <ul class="other-goods-item">
+            <li v-for="(item, index) in arr" :key="index" :style="  index === arr.length - 1 ? 'margin-right:0' : ''  ">
+              <img class="goods-item-image" :src="item.image">
+              <div class="goods-item-goods-name">{{item.name}}</div>
+              <div>{{item.price}}</div>
+            </li>
+          </ul>
+        </div>
+
         <van-list
-          v-model="isLoading"
-          :finished="finished"
-          :immediate-check="false"
-          finished-text="————— 我是有底线的 ——————"
-          @load="onLoad"
+                v-show="selectIndex !== 0"
+                v-model="isLoading"
+                :finished="finished"
+                :immediate-check="false"
+                finished-text="————— 我是有底线的 ——————"
+                @load="onLoad"
         >
           <van-cell
             v-for="(item, index) in dataArray"
@@ -48,7 +66,8 @@
               </div>
             </van-card>
           </van-cell>
-        </van-list>
+        </van-list
+                >
       </van-pull-refresh>
     </template>
 
@@ -82,6 +101,7 @@
         isRefresh:false,
         isLoading:false,
         finished:false,
+        otherGoods:[],
       }
     },
     created() {
@@ -140,7 +160,30 @@
               this.finished = true;
             }
           }
+          this.getOtherGoods();
         }, 500)
+      },
+
+      getOtherGoods() {
+        const array0 = [];
+        for (let i = 0; i < 2; i += 1) {
+          const obj = {};
+          obj.name = `商品0${i}`;
+          obj.price = '¥1000';
+          obj.image = 'https://gw.alicdn.com/bao/uploaded/i1/64723694/TB20n0IXU_C11Bjy1zeXXXtGpXa_!!64723694.jpg_400x400q90.jpg';
+          obj.clickUrl = '';
+          array0.push(obj);
+        }
+        const array1 = [];
+        for (let i = 0; i < 2; i += 1) {
+          const obj = {};
+          obj.name = `商品1${i}`;
+          obj.price = '¥1000';
+          obj.image = 'https://gw.alicdn.com/bao/uploaded/i2/113740699/TB2DRluXCPA11Bjy0FaXXbucXXa-113740699.jpg_400x400q90.jpg';
+          obj.clickUrl = '';
+          array1.push(obj);
+        }
+        this.otherGoods = [array0, array1, array0, array1, array0, array1];
       },
 
      changeMenue(name, title) {
@@ -241,6 +284,33 @@
     // 使文本垂直居中
     height: 0.6rem;
     line-height: 0.6rem;
+  }
+
+  /* 一行放多个商品 */
+  .other-goods-item {
+    display: flex;
+    display: -webkit-flex;
+  }
+
+  .other-goods {
+    padding: px2rem(12) px2rem(12) 0;
+  }
+
+  .other-goods-item li {
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    margin-right: px2rem(12);
+  }
+
+  .other-goods-item li .goods-item-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .goods-item-goods-name {
+    font-size: px2rem(12);
+    color: #383838;
   }
 
 </style>
