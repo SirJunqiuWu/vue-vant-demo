@@ -295,14 +295,18 @@ const getLocalStorage = (key) => {
 };
 
 /**
- * 根据 标题 和 提示文本 控制台输出
+ * 根据 提示文本 和 提示内容 控制台输出
  * @param {string}title 打印标题
  * * @param {string}text 打印出来的值
  * @return {window.console.log}
  */
 const log = (title, value) => {
-  const result = title + ':' + value;
-  window.console.log(result);
+  // 测试环境才能输出 false全局关闭打印
+  const isTestEnv = true;
+  if (isTestEnv) {
+    const result = `${title}:${value}`;
+    window.console.log(result);
+  }
 }
 
 
