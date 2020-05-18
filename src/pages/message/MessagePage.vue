@@ -99,6 +99,31 @@
       // 网页标题更改
       document.title = '消息';
       this.uploadDataReq();
+
+
+      let arr = [];
+      for(let i = 0; i < 100000; i ++) {
+        arr.push(i);
+      }
+
+      // test 1
+      let str = '';
+      const start = new Date().valueOf();
+      for (let i = 0; i < 100000; i ++) {
+        str += 'Hello Word';
+      }
+      const end = new Date().valueOf();
+      window.console.log('test1耗时:', (end - start) / 1000);
+
+      // test 2
+      let temp = '';
+      const startTime = new Date().valueOf();
+      for (let i in arr) {
+        temp += 'Hello Word';
+      }
+      const endTime = new Date().valueOf();
+      window.console.log('test2耗时:', (endTime - startTime) / 1000);
+
     },
     methods: {
       deleteMsg(item, index) {
