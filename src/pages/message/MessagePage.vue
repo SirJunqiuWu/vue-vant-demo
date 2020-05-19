@@ -22,13 +22,15 @@
         loading-text="正在努力的刷新"
         @refresh="onRefresh"
       >
+<!--   消息列表     -->
         <van-list
-          v-model="isLoading"
-          :finished="finished"
-          :offset="100"
-          :immediate-check="false"
-          finished-text="————— 我是有底线的 ——————"
-          @load="onLoad"
+                v-show="selectIndex === 0"
+                v-model="isLoading"
+                :finished="finished"
+                :offset="100"
+                :immediate-check="false"
+                finished-text="————— 我是有底线的 ——————"
+                @load="onLoad"
         >
           <van-swipe-cell
             v-for="(item, index) in dataArray"
@@ -49,7 +51,7 @@
             </van-cell>
             <template slot="right">
               <van-button
-                class="van-button"
+                class="delete-btn"
                 square
                 type="danger"
                 text="删除"
@@ -58,6 +60,28 @@
             </template>
           </van-swipe-cell>
         </van-list>
+
+<!--    申请列表    -->
+        <van-panel
+                v-show="selectIndex === 1"
+                v-for="(item, index) in dataArray"
+                :key="index"
+                title="Lucy"
+                desc="快加我吧,我是你的粉丝"
+                status="待通过"
+        >
+          <div class="apply-content">我们都有一个家 名字叫中国 家里盘着两条龙  是长江和黄河  还有那珠穆朗玛峰 是世界最高坡</div>
+          <template #footer>
+            <div class="apply-btn">
+              <div />
+              <div>
+                <van-button size="small" @click="applyBtnPressed(0, item)">拒绝</van-button>
+                <van-button size="small" type="danger" @click="applyBtnPressed(1, item)">同意</van-button>
+              </div>
+            </div>
+
+          </template>
+        </van-panel>
       </van-pull-refresh>
     </template>
     <template slot="footer">
@@ -104,6 +128,7 @@
         // 列表控制符
         finished:false,
         dataArray:[],
+        applyArray:[],
         msgCount:0,
       }
     },
@@ -133,18 +158,25 @@
         this.getUnReadMsgCount();
       },
 
-      // 下拉刷新
+      /**
+       * 下拉刷新
+       */
       onRefresh() {
         this.finished = false;
         this.uploadDataReq(true);
       },
 
-      // 获取更多
+      /**
+       * 加载更多
+       */
       onLoad() {
         this.uploadDataReq(false);
       },
 
-      // 数据请求
+      /**
+       * 获取数据
+       * @param refresh 是否是刷新 ture是 反之为加载更多
+       */
       uploadDataReq(refresh) {
         if (this.dataArray.length === 0) {
           // 自定义加载图标
@@ -177,9 +209,12 @@
             }
           }
           this.getUnReadMsgCount();
-        }, 1500);
+        }, 1000);
       },
 
+      /**
+       * 获取未读消息数目
+       */
       getUnReadMsgCount() {
         // 数组根据元素字段过滤拿到新数组
         let unReadMsgArr = this.dataArray.filter(item => !item.hasRead);
@@ -191,6 +226,18 @@
         console.log('name:', name, 'title:', title);
       },
 
+      /**
+       * 申请按钮点击事件
+       * @param idx 0拒绝 1同意
+       * @param item 当前点击行数据
+       */
+      applyBtnPressed(idx, item) {
+        if (idx === 0) {
+          this.$toast.success('已拒绝');
+        } else {
+          this.$toast.success('已同意');
+        }
+      },
     }
   }
 </script>
@@ -247,13 +294,24 @@
 
 
   // 滑动按钮
-  .van-button {
+  .delete-btn {
     height: 2.64rem;
     line-height: 2.64rem;
   }
 
   .van-tabs.van-tabs--card {
     padding: px2rem(12);
+  }
+
+  .apply-content {
+    padding: px2rem(12);
+    font-size: px2rem(15);
+    color: #383838;
+  }
+
+  .apply-btn {
+    display: flex;
+    justify-content: space-between;
   }
 
 </style>
