@@ -24,7 +24,7 @@
       >
 <!--   消息列表     -->
         <van-list
-                v-show="selectIndex === 0"
+
                 v-model="isLoading"
                 :finished="finished"
                 :offset="100"
@@ -33,55 +33,55 @@
                 @load="onLoad"
         >
           <van-swipe-cell
-            v-for="(item, index) in dataArray"
-            :key="index">
+                  v-show="selectIndex === 0"
+                  v-for="(item, index) in dataArray"
+                  :key="index">
             <van-cell
-              size="large"
-              :border="true"
-              :title="item.title"
-              :value="item.time"
-              :label="item.des"
-              @click="cellClicked(item, index)"
+                    size="large"
+                    :border="true"
+                    :title="item.title"
+                    :value="item.time"
+                    :label="item.des"
+                    @click="cellClicked(item, index)"
             >
               <van-icon
-                slot="icon"
-                :name="item.avatar"
-                :dot="!item.hasRead"
+                      slot="icon"
+                      :name="item.avatar"
+                      :dot="!item.hasRead"
               />
             </van-cell>
             <template slot="right">
               <van-button
-                class="delete-btn"
-                square
-                type="danger"
-                text="删除"
-                @click="deleteMsg(item, index)"
+                      class="delete-btn"
+                      square
+                      type="danger"
+                      text="删除"
+                      @click="deleteMsg(item, index)"
               />
             </template>
           </van-swipe-cell>
-        </van-list>
-
-<!--    申请列表    -->
-        <van-panel
-                v-show="selectIndex === 1"
-                v-for="(item, index) in dataArray"
-                :key="index"
-                title="Lucy"
-                desc="快加我吧,我是你的粉丝"
-                status="待通过"
-        >
-          <div class="apply-content">我们都有一个家 名字叫中国 家里盘着两条龙  是长江和黄河  还有那珠穆朗玛峰 是世界最高坡</div>
-          <template #footer>
-            <div class="apply-btn">
-              <div />
-              <div>
-                <van-button size="small" @click="applyBtnPressed(0, item)">拒绝</van-button>
-                <van-button size="small" type="danger" @click="applyBtnPressed(1, item)">同意</van-button>
+          <!--    申请列表    -->
+          <van-panel
+                  v-show="selectIndex === 1"
+                  v-for="(item, index) in dataArray"
+                  :key="index"
+                  title="Lucy"
+                  desc="快加我吧,我是你的粉丝"
+                  status="待通过"
+          >
+            <div class="apply-content">我们都有一个家 名字叫中国 家里盘着两条龙  是长江和黄河  还有那珠穆朗玛峰 是世界最高坡</div>
+            <template #footer>
+              <div class="apply-btn">
+                <div />
+                <div>
+                  <van-button size="small" @click="applyBtnPressed(0, item)">拒绝</van-button>
+                  <van-button size="small" type="danger" @click="applyBtnPressed(1, item)">同意</van-button>
+                </div>
               </div>
-            </div>
 
-          </template>
-        </van-panel>
+            </template>
+          </van-panel>
+        </van-list>
       </van-pull-refresh>
     </template>
     <template slot="footer">
@@ -192,6 +192,7 @@
           }
           for (let i = 0; i < 8; i += 1) {
             this.dataArray.push({
+              id: i,
               title:'李四',
               des:'青青河边草 悠悠天不老',
               time:utils.getTimeDetailDes(1576489956000),
@@ -223,7 +224,10 @@
 
       changeMenue(name, title) {
         this.selectIndex = name;
-        console.log('name:', name, 'title:', title);
+        this.dataArray = [];
+        utils.log('name', name);
+        utils.log('title', title);
+        this.onRefresh();
       },
 
       /**
@@ -233,9 +237,9 @@
        */
       applyBtnPressed(idx, item) {
         if (idx === 0) {
-          this.$toast.success('已拒绝');
+          this.$toast.success(`已拒绝${item.id}`);
         } else {
-          this.$toast.success('已同意');
+          this.$toast.success(`已同意${item.id}`);
         }
       },
     }
