@@ -1,4 +1,4 @@
-import {isNullStr, isEmptyString, utils} from "../utils/utils";
+import {isEmptyString, utils} from "../utils/utils";
 
 export class WJQTitleSubTitle {
     /**
@@ -28,22 +28,22 @@ export class WJQTitleSubTitle {
 
     constructor(args) {
         args = args || {};
-        this.title = isNullStr(args.title);
-        this.des = isNullStr(args.des);
-        this.icon = isNullStr(args.icon);
-        this.placeholder = isNullStr(args.placeholder);
-        this.identify = isNullStr(args.identify);
-        this.type = isNullStr(args.type);
+        this.title = utils.nullStr(args.title);
+        this.des = utils.nullStr(args.des);
+        this.icon = utils.nullStr(args.icon);
+        this.placeholder = utils.nullStr(args.placeholder);
+        this.identify = utils.nullStr(args.identify);
+        this.type = utils.nullStr(args.type);
     }
 }
 
 export function getTitleSubTitleObj(title, des, placeholder, identify, icon, type) {
     const obj = {};
-    obj.title = isNullStr(title);
-    obj.des = isNullStr(des);
-    obj.icon = isNullStr(icon);
-    obj.placeholder = isNullStr(placeholder);
-    obj.identify = isNullStr(identify);
-    obj.type = utils.isEmptyString(type) ? isNullStr(type): 'text';
+    obj.title = utils.nullStr(title);
+    obj.des = utils.nullStr(des);
+    obj.icon = utils.nullStr(icon);
+    obj.placeholder = utils.nullStr(placeholder);
+    obj.identify = utils.nullStr(identify);
+    obj.type = utils.isEmptyString(type) ? utils.nullStr(type): 'text';
     return obj;
 }

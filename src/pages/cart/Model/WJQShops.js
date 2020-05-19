@@ -23,19 +23,23 @@ export class WJQShops {
         args = args ? args : {};
         this.shopId = utils.nullStr(args.id);
         this.shopName = utils.nullStr(args.shopName);
+        this.goodsArr = [];
         for (const temp of args.goodsArr) {
+            // 商品对象
             const goods = new WJQGoods(temp);
             this.goodsArr.push(goods);
         }
     }
 }
 
-export function getAllShopsWithObj(obj) {
+export function getAllShopsWithArray(array) {
     allShopArray = allShopArray ? allShopArray : [];
-    obj = obj ? obj : [];
-    for (const temp of obj) {
+    array = array ? array : [];
+    utils.log('array', array)
+    for (const temp of array) {
         // 店铺对象
-        const shop = new WJQShops(obj);
+        const shop = new WJQShops(temp);
         allShopArray.push(shop);
     }
+    return allShopArray;
 }

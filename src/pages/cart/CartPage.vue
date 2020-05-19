@@ -43,11 +43,11 @@
                     <van-image
                             class="goodsIcon"
                             lazy-load
-                            :src="goodsItem.image"
+                            :src="goodsItem.goodsImageUrl"
                     />
                   </div>
                   <div class="contentRight">
-                    <div class="goodsName">{{goodsItem.name}}</div>
+                    <div class="goodsName">{{goodsItem.goodsName}}</div>
                   </div>
                 </div>
 <!--          cell右侧删除按钮      -->
@@ -90,6 +90,7 @@
   import TabBar from '../../components/TabBar.vue';
   import NavBar from '../../components/NavBar.vue';
   import {utils} from "../../utils/utils";
+  import {getAllShopsWithArray} from "./Model/WJQShops";
 
   export default {
     name: "CartPage",
@@ -151,8 +152,9 @@
           if (refresh) {
             this.dataArray = [];
           }
-          for (let i = 0; i < 8; i += 1) {
-            this.dataArray.push({
+          const res = [];
+          for (let i = 0; i < 3; i += 1) {
+            res.push({
               id: i,
               shopName:'美特斯邦威',
               goodsArr:[
@@ -169,12 +171,9 @@
                   image:"https://img.yzcdn.cn/vant/cat.jpeg",
                 }
               ],
-              des:'青青河边草 悠悠天不老',
-              time:utils.getTimeDetailDes(1576489956000),
-              avatar:'',
-              hasRead:false,
             })
           }
+          this.dataArray = getAllShopsWithArray(res);
           if (refresh) {
             this.$toast.success('刷新成功');
             this.isRefresh = false;
