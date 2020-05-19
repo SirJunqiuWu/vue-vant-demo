@@ -1,4 +1,4 @@
-import {isNullStr} from "../../../utils/utils";
+import {isNullStr, utils} from "../../../utils/utils";
 
 /**
  * 当前用户信息:单例获取
@@ -53,14 +53,14 @@ export class User {
             currentUser = this;
         }
         args = args ? args : {};
-        this.userId = isNullStr(args.userId)
-        this.userName = isNullStr(args.userName);
-        this.userAvatar = isNullStr(args.userAvatar);
-        this.nickName = isNullStr(args.nickName);
-        this.mobile = isNullStr(args.mobile);
-        this.sex = isNullStr(args.sex);
-        this.birth = isNullStr(args.birth);
-        this.interest = isNullStr(args.interest);
+        this.userId = utils.nullStr(args.userId)
+        this.userName = utils.nullStr(args.userName);
+        this.userAvatar = utils.nullStr(args.userAvatar);
+        this.nickName = utils.nullStr(args.nickName);
+        this.mobile = utils.nullStr(args.mobile);
+        this.sex = utils.nullStr(args.sex);
+        this.birth = utils.nullStr(args.birth);
+        this.interest = utils.nullStr(args.interest);
         return currentUser;
     }
 }
@@ -84,14 +84,14 @@ export function updateUserInfoByKey(key, value) {
  */
 export function updateUserInfoByObj(obj) {
     obj = obj ? obj : {};
-    currentUser.userId = isNullStr(obj.userId)
-    currentUser.userName = isNullStr(obj.userName);
-    currentUser.userAvatar = isNullStr(obj.userAvatar);
-    currentUser.nickName = isNullStr(obj.nickName);
-    currentUser.mobile = isNullStr(obj.mobile);
-    currentUser.sex = isNullStr(obj.sex);
-    currentUser.birth = isNullStr(obj.birth);
-    currentUser.interest = isNullStr(obj.interest);
+    currentUser.userId = utils.nullStr(obj.userId)
+    currentUser.userName = utils.nullStr(obj.userName);
+    currentUser.userAvatar = utils.nullStr(obj.userAvatar);
+    currentUser.nickName = utils.nullStr(obj.nickName);
+    currentUser.mobile = utils.nullStr(obj.mobile);
+    currentUser.sex = utils.nullStr(obj.sex);
+    currentUser.birth = utils.nullStr(obj.birth);
+    currentUser.interest = utils.nullStr(obj.interest);
     return currentUser;
 }
 

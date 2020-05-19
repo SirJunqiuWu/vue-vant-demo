@@ -20,6 +20,7 @@
     export default {
         name: "Page",
         props: {
+            // 头部高度
             headerHeight: {
                 type: Number,
                 required: false,
@@ -28,6 +29,7 @@
                     return true;
                 }
             },
+            // 底部高度
             footerHeight: {
                 type: Number,
                 required: false,
@@ -36,6 +38,7 @@
                     return true;
                 }
             },
+            // 是否有头部
             hasHeader: {
                 type: Boolean,
                 required: false,
@@ -44,6 +47,7 @@
                     return true;
                 }
             },
+            // 是否有底部
             hasFooter: {
                 type: Boolean,
                 required: false,
@@ -52,6 +56,7 @@
                     return true;
                 }
             },
+            // 是否固定内容区
             fixedContent: {
                 type: Boolean,
                 required: false,

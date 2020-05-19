@@ -122,15 +122,19 @@ const getTimeDetailDes = (timestamp) => {
   return result;
 }
 
-// 字符串安全处理 有问题的一律返回空字符串
-export function isNullStr(str) {
+/**
+ * 字符串安全处理 有问题的一律返回空字符串
+ * @param str 目标字符串
+ * @returns {*} str或者''
+ */
+const nullStr = (str) => {
   let result = '';
   if (!str || str === null || str === 'null'  || str === 'NULL' || str === 'undefined') {
     result = '';
   } else {
     result = str;
   }
-    return result;
+  return result;
 }
 
 /**
@@ -567,4 +571,5 @@ export const utils = {
   isLegalPlatNum,
   isLegalIDCard,
   calculateTimeLength,
+  nullStr,
 };
