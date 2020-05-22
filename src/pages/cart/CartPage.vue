@@ -25,29 +25,34 @@
                   @load="onLoad"
           >
             <div class="goodsCard"
-                 v-for="(item, index) in dataArray"
+                 v-for="(shop, index) in dataArray"
                  :key="index"
             >
               <div class="cardTop">
-                <van-icon class="cardTopSelectIcon" name="circle" />
-                <div class="cardTopTitle">{{item.shopName}}</div>
+                <van-icon class="cardTopSelectIcon"
+                          :name="getIconNameBySelected(shop.isSelected)"
+                          @click="selectShopIconPressed(shop, index)" />
+                <div class="cardTopTitle">{{shop.shopName}}</div>
                 <van-icon name="arrow" />
               </div>
               <van-swipe-cell
-                      v-for="(goodsItem, idx) in item.goodsArr"
+                      v-for="(goods, idx) in shop.goodsArr"
                       :key="idx"
               >
                 <div class="cardContent">
                   <div class="contentLeft">
-                    <van-icon class="cardTopSelectIcon" name="circle" />
+                    <van-icon class="cardTopSelectIcon"
+                              :name="getIconNameBySelected(goods.isSelected)"
+                              @click="selectGoodsIconPressed(index, idx, goods)"
+                    />
                     <van-image
                             class="goodsIcon"
                             lazy-load
-                            :src="goodsItem.goodsImageUrl"
+                            :src="goods.goodsImageUrl"
                     />
                   </div>
                   <div class="contentRight">
-                    <div class="goodsName">{{goodsItem.goodsName}}</div>
+                    <div class="goodsName">{{goods.goodsName}}</div>
                   </div>
                 </div>
 <!--          cell右侧删除按钮      -->
@@ -90,7 +95,7 @@
   import TabBar from '../../components/TabBar.vue';
   import NavBar from '../../components/NavBar.vue';
   import {utils} from "../../utils/utils";
-  import {getAllShopsWithArray} from "./Model/WJQShops";
+  import {getAllShopsWithArray, updateGoodsBySelected, updateShopsBySelected} from "./Model/WJQShops";
 
   export default {
     name: "CartPage",
@@ -133,6 +138,14 @@
        */
       onLoad() {
         this.uploadDataReq(false);
+      },
+
+      /**
+       * 获取是否选中的图标
+       * selected是否选中
+       */
+      getIconNameBySelected(selected) {
+        return selected === true ? 'passed' : 'circle';
       },
 
       /**
@@ -193,6 +206,28 @@
         this.$toast.success('提交成功');
       },
 
+      /**
+       * 店铺选中事件
+       * @param shop
+       * @param idx
+       */
+      selectShopIconPressed(shop, idx) {
+        const isSelected = !shop.isSelected;
+        const res = updateShopsBySelected(isSelected, idx);
+        this.dataArray = res;
+      },
+
+      /**
+       * 商品选中事件
+       * @param shopIdx
+       * @param goodsIdx
+       * @param goods
+       */
+      selectGoodsIconPressed(shopIdx, goodsIdx, goods) {
+        const isSelected = !goods.isSelected;
+        const res = updateGoodsBySelected(isSelected, shopIdx, goodsIdx);
+        this.dataArray = res;
+      },
     }
   }
 </script>
@@ -218,12 +253,6 @@
     color: #1966FF;
   }
 
-  // 商品卡片
-  /*.van-swipe-cell {*/
-  /*  background: white;*/
-  /*  border-radius: px2rem(12);*/
-  /*  margin: px2rem(12)*/
-  /*}*/
 
   // 商品卡片
   .goodsCard {

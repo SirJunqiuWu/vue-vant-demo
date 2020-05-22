@@ -32,7 +32,14 @@ const insertObjAtIndex = (idx, obj, arr) => {
 const deleteObjAtIndex = (idx, arr) => {
     if (idx >= arr.length) return arr;
     // 删除索引为idx的元素 第二个参数为idx索引开始，删除几个元素
-    return arr.splice(idx, 1);
+    // splice方法返回的是被删除的元素组成的新数组
+    const result = [];
+    for(let i = 0; i < arr.length; i += 1) {
+        if (i !== idx) {
+            result.push(arr[i]);
+        }
+    }
+    return result;
 };
 
 /**
@@ -44,7 +51,15 @@ const deleteObjAtIndex = (idx, arr) => {
  */
 const replaceObjAtIndex = (idx, obj, arr) => {
     if (idx >= arr) return arr;
-    return arr.splice(idx, 1, obj);
+    const res = [];
+    for (let i = 0; i < arr.length; i += 1) {
+        if (i === idx) {
+            res.push(obj);
+        } else {
+            res.push(arr[i]);
+        }
+    }
+    return res;
 };
 
 /**
