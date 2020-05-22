@@ -12,6 +12,11 @@ export class WJQGoods {
     goodsName;
 
     /**
+     * 商品数量
+     */
+    goodsNum;
+
+    /**
      * 商品价格
      */
     goodsPrice;
@@ -30,6 +35,7 @@ export class WJQGoods {
         args = args ? args : {};
         this.goodsId = utils.nullStr(args.id);
         this.goodsName = utils.nullStr(args.name);
+        this.goodsNum = args.num ? args.num : 0;
         this.goodsPrice = utils.nullStr(args.price);
         this.goodsImageUrl = utils.nullStr(args.image);
         this.isSelected = false;

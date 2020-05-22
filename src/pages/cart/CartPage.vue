@@ -53,6 +53,7 @@
                   </div>
                   <div class="contentRight">
                     <div class="goodsName">{{goods.goodsName}}</div>
+                    <div class="goodsPrice">¥{{goods.goodsPrice}}.00</div>
                   </div>
                 </div>
 <!--          cell右侧删除按钮      -->
@@ -71,11 +72,11 @@
         </van-pull-refresh>
         <van-submit-bar
                 loding
-                :price="3050"
+                :price="totalPrice"
                 button-text="提交订单"
                 @submit="onSubmit"
         >
-          <van-checkbox v-model="checked">全选</van-checkbox>
+          <van-checkbox v-model="checked" @click="checkedAllBtnPressed">全选</van-checkbox>
           <span slot="tip">
           你的收货地址不支持同城送，
           <span class="blue-title">修改地址</span>
@@ -95,7 +96,12 @@
   import TabBar from '../../components/TabBar.vue';
   import NavBar from '../../components/NavBar.vue';
   import {utils} from "../../utils/utils";
-  import {getAllShopsWithArray, updateGoodsBySelected, updateShopsBySelected} from "./Model/WJQShops";
+  import {
+    getAllShopsWithArray,
+    getSelectGoodsTotalMoney, isAllGoodsSelected, updateAllShopSelected,
+    updateGoodsBySelected,
+    updateShopsBySelected
+  } from "./Model/WJQShops";
 
   export default {
     name: "CartPage",
@@ -115,6 +121,7 @@
         isLoading:false,
         finished:false,
         dataArray:[],
+        totalPrice: 0, // 选中商品总价 单位为分
       }
     },
     created() {
@@ -174,12 +181,14 @@
                 {
                   id:'100',
                   name:'夏季裙子夏季裙子夏季裙子夏季裙子夏季裙子夏季裙子夏季裙子夏季裙子夏季裙子夏季裙子夏季裙子夏季裙子夏季裙子',
+                  num: 3,
                   price:'99',
                   image:"https://img.yzcdn.cn/vant/cat.jpeg",
                 },
                 {
                   id:'101',
                   name:'夏季时尚短裤',
+                  num: 2,
                   price:'299',
                   image:"https://img.yzcdn.cn/vant/cat.jpeg",
                 }
@@ -214,7 +223,7 @@
       selectShopIconPressed(shop, idx) {
         const isSelected = !shop.isSelected;
         const res = updateShopsBySelected(isSelected, idx);
-        this.dataArray = res;
+        this.updateSubmitBar(res);
       },
 
       /**
@@ -226,7 +235,22 @@
       selectGoodsIconPressed(shopIdx, goodsIdx, goods) {
         const isSelected = !goods.isSelected;
         const res = updateGoodsBySelected(isSelected, shopIdx, goodsIdx);
+        this.updateSubmitBar(res);
+      },
+
+      /**
+       * 全选按钮点击
+       */
+      checkedAllBtnPressed() {
+        this.checked = !this.checked;
+        const res = updateAllShopSelected(this.checked);
+        this.updateSubmitBar(res);
+      },
+
+      updateSubmitBar(res) {
+        this.checked = isAllGoodsSelected();
         this.dataArray = res;
+        this.totalPrice = getSelectGoodsTotalMoney();
       },
     }
   }
@@ -241,12 +265,16 @@
 
   // 整个提交订单视图
   .van-submit-bar {
-    bottom:1.225rem;
+    bottom: px2rem(49);
+  }
+
+  .van-submit-bar__button {
+    height: px2rem(40);
   }
 
   // 全选 checkbox
   .van-checkbox {
-    margin-left: 0.3rem;
+    margin-left: px2rem(12);
   }
 
   .blue-title {
@@ -304,6 +332,12 @@
 
   .goodsName {
     text-align: left;
+    margin-left: px2rem(6);
+  }
+
+  .goodsPrice {
+    text-align: left;
+    margin-top: px2rem(10);
     margin-left: px2rem(6);
   }
 

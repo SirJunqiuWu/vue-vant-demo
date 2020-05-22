@@ -81,20 +81,65 @@ export function updateGoodsBySelected(isSelected, shopIdx, goodsIdx) {
     const goodsArr = shop.goodsArr;
     if (goodsIdx >= goodsArr.length) return allShopArray;
     goodsArr[goodsIdx].isSelected = isSelected;
-    shop.isSelected = isAllGoodsSelected(goodsArr);
+    shop.isSelected = isAllGoodsInShopSelected(goodsArr);
     return handelArray.replaceObjAtIndex(shopIdx, shop, allShopArray);
 }
 
 /**
- * 是否这个店铺下的商品全部选中
+ * 购物车全选按钮点击
+ * @param isSelected
+ * @returns {[]}
+ */
+export function updateAllShopSelected(isSelected) {
+    const result = [];
+    for (const shop of allShopArray) {
+       shop.isSelected = isSelected;
+       for (const goods of shop.goodsArr) {
+           goods.isSelected = isSelected;
+       }
+       result.push(shop);
+    }
+    allShopArray = result;
+    return allShopArray;
+}
+
+/**
+ * 获取已经选中商品的总价
+ * @returns {number}
+ */
+export function getSelectGoodsTotalMoney() {
+    let result = 0;
+    for (const shop of allShopArray) {
+        const goodsArr = shop.goodsArr;
+        for (const goods of goodsArr) {
+            result += goods.isSelected ? goods.goodsPrice * goods.goodsNum * 100 : 0;
+        }
+    }
+    return result;
+}
+
+/**
+ * 是否某个店铺下的商品全部选中
  * @param arr
  * @returns {boolean}
  */
-function isAllGoodsSelected(arr) {
-    // 如果商品均选中 店铺也选中
+function isAllGoodsInShopSelected(arr) {
+    // 如果该店铺下商品均选中 该店铺也选中
     let res = (arr.every((item) => {
         return item.isSelected;
     }));
     return res;
 }
 
+/**
+ * 是否所有店铺均选中
+ * @param arr
+ * @returns {boolean}
+ */
+export function isAllGoodsSelected() {
+    // 如果商品均选中 店铺也选中
+    let res = (allShopArray.every((item) => {
+        return item.isSelected;
+    }));
+    return res;
+}
