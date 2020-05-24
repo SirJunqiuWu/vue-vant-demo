@@ -3,8 +3,11 @@
  * @param obj
  * @returns {*}
  */
+import {utils} from "./utils";
+
 const allKeys = (obj) => {
-    return obj.keys();
+    obj = !obj ? {} : obj;
+    return Object.keys(obj);
 };
 
 /**
@@ -13,7 +16,8 @@ const allKeys = (obj) => {
  * @returns {*}
  */
 const allValues = (obj) => {
-    return obj.values();
+    obj = !obj ? {} : obj;
+    return Object.values(obj);
 };
 
 /**
@@ -22,8 +26,9 @@ const allValues = (obj) => {
  * @returns {boolean}
  */
 const isEmptyObj = (obj) => {
-    obj = obj ? obj : {};
-    return obj.keys().length === 0;
+    obj = !obj ? {} : obj;
+    const keys = Object.keys(obj);
+    return !keys|| keys.length === 0;
 };
 
 /**
@@ -33,8 +38,10 @@ const isEmptyObj = (obj) => {
  * @returns {boolean}
  */
 const isHaskey = (key, obj) => {
-    obj = obj ? obj : {};
-    return key in obj.keys();
+    key = !key ? '' : key;
+    obj = !obj ? {} : obj;
+    const has = key in obj || obj.hasOwnProperty(key);
+    return has;
 };
 
 /**
@@ -45,12 +52,15 @@ const isHaskey = (key, obj) => {
  */
 const deleteValueByKey = (key, obj) => {
     key = key ? key : '';
-    obj = obj ? obj : {};
+    obj = !obj ? {} : obj;
     if (isEmptyObj(obj)) {
         return {};
     }
     if (isHaskey(key, obj)) {
-        return delete obj[key];
+        const hasDelete = delete obj[key];
+        if (hasDelete) {
+            return obj;
+        }
     }
     return {};
 };

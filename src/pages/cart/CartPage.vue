@@ -102,6 +102,7 @@
     updateGoodsBySelected,
     updateShopsBySelected
   } from "./Model/WJQShops";
+  import {handelDictionary} from "../../utils/handelDictionary";
 
   export default {
     name: "CartPage",
