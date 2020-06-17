@@ -524,6 +524,23 @@ const isLegalIDCard = str => {
 };
 
 /**
+ * 获取当前界面路径名称
+ * @returns {string}
+ */
+const getPagePathName = () => {
+  // 当前页面链接 eg:http://localhost:8000/#/warehouse-management/storeInfo-list?id=999&name=jack
+  const pageUrl = window.location.href;
+  const arrUrl = pageUrl.split("/");
+  let pathStr = arrUrl[arrUrl.length - 1];
+  if(pathStr.indexOf("?") > -1) {
+    // 如果链接后面带参数 eg:storeInfo-list
+    const pageName = pathStr.split("?");
+    pathStr = pageName[0];
+  }
+  return pathStr;
+}
+
+/**
  * 获取起止时间差描述 注意时间均为毫秒
  * @param startTime 开始时间
  * @param endTime 截止时间
@@ -572,4 +589,5 @@ export const utils = {
   isLegalIDCard,
   calculateTimeLength,
   nullStr,
+  getPagePathName,
 };

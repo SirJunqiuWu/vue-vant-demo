@@ -45,6 +45,23 @@ const isHaskey = (key, obj) => {
 };
 
 /**
+ * 从字典中获取对应key的值
+ * @param obj
+ * @param key
+ * @param defaultValue
+ */
+const getStringWithKey = (obj, key, defaultValue) => {
+    const keys = Object.keys(obj);
+    const defaultStr = !defaultValue ? undefined : defaultValue;
+    if (!keys|| keys.length === 0) {
+        return defaultStr;
+    }
+    const has = key in obj || obj.hasOwnProperty(key);
+    if (has) return obj[key];
+    return defaultStr;
+};
+
+/**
  * 删除字典中某个key对应的值
  * @param key
  * @param obj
@@ -71,4 +88,5 @@ export const handelDictionary = {
     isEmptyObj,
     isHaskey,
     deleteValueByKey,
+    getStringWithKey,
 };
