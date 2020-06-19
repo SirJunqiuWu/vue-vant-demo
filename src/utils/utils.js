@@ -546,25 +546,46 @@ const getPagePathName = () => {
  * @param endTime 截止时间
  * @returns {string} 中间持续时长描述字符串 eg:10小时2分钟20秒
  */
+/**
+ * 获取起止时间差描述 注意时间均为毫秒
+ * @param startTime 开始时间
+ * @param endTime 截止时间
+ * @returns {string} 中间持续时长描述字符串 eg:2天10小时2分钟20秒
+ */
 const calculateTimeLength = (startTime, endTime) => {
-  // 毫秒时间转化为秒取差值
-  let time = endTime / 1000 - startTime / 1000;
-  let result = '';
-  // 小时
-  const hour = time / 60 * 60;
-  if (hour > 0) {
-    time = time - hour * 60 * 60;
+  if (!endTime) {
+    endTime = new Date().getTime();
   }
-  // 分钟
-  const minute = time / 60;
-  if (minute > 0) {
-    // 秒数
-    time = time - minute * 60;
-  }
-  if (hour > 0) result += `${hour}小时`;
-  if (minute > 0) result += `${minute}分`;
-  if (time > 0) result += `${time}秒`;
-  return result;
+  // 时间差的毫秒数
+  let date3 = endTime - startTime;
+
+  // 计算出相差天数
+  let days = Math.floor(Math.abs(date3) / (24 * 3600 * 1000));
+
+  // 根据天数后剩余的毫秒数计算出小时数
+  let leave1 = date3 % (24 * 3600 * 1000);
+  let hours = Math.floor(Math.abs(leave1) / (3600 * 1000));
+
+  // 计算小时结束 看小时候剩余的毫秒数
+  let leave2 = leave1 % (3600 * 1000);
+  // 根据计算出小时后剩余的毫秒数算出分钟
+  let minutes = Math.floor(Math.abs(leave2) / (60 * 1000));
+
+
+  // 计算分钟数后剩余的毫秒数
+  let leave3 = leave2 % (60 * 1000);
+  // 计算相差秒数
+  let seconds = Math.round(Math.abs(leave3) / 1000);
+  return (
+      Math.abs(days) +
+      '天 ' +
+      Math.abs(hours) +
+      '小时 ' +
+      Math.abs(minutes) +
+      ' 分钟' +
+      Math.abs(seconds) +
+      ' 秒'
+  );
 };
 
 // 导出 通过文件名调用文件名内的方法
