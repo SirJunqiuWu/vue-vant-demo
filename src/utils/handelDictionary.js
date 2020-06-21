@@ -3,8 +3,6 @@
  * @param obj
  * @returns {*}
  */
-import {utils} from "./utils";
-
 const allKeys = (obj) => {
     obj = !obj ? {} : obj;
     return Object.keys(obj);

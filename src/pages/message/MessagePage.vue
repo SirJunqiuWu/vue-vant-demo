@@ -164,7 +164,7 @@
       onRefresh() {
         this.finished = false;
         this.uploadDataReq(true);
-      },
+       },
 
       /**
        * 加载更多
