@@ -39,6 +39,11 @@ export class WJQShops {
     }
 }
 
+/**
+ * 获取所有选择过商品的店铺
+ * @param array
+ * @returns {Array}
+ */
 export function getAllShopsWithArray(array) {
     allShopArray = allShopArray ? allShopArray : [];
     array = array ? array : [];

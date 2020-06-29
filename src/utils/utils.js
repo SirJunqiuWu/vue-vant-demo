@@ -66,7 +66,7 @@ export function getUrlTargetKeyValueWithKey(key) {
 // 根据时间戳或者日期和时间格式获取日期描述 eg：2019-11-26 11:37:30
 const getDateByTimestampAndFormatter = (timestamp, formatter) => {
   let date = '';
-  if (isNullStr(timestamp).length === 0) {
+  if (nullStr(timestamp).length === 0) {
     date = new Date();
   } else {
     date = new Date(timestamp);
@@ -303,13 +303,12 @@ const getLocalStorage = (key) => {
  * @param {string}title 打印标题
  * * @param {string}text 打印出来的值
  * @return {window.console.log}
- */
-const log = (title, value) => {
-  // 测试环境才能输出 false全局关闭打印
-  const isTestEnv = true;
-  if (isTestEnv) {
-    const result = `${title}:${value}`;
-    window.console.log(result);
+*/
+  const log = (title, value) => {
+    // 测试环境才能输出 false全局关闭打印
+    const isTestEnv = false;
+    if (isTestEnv) {
+    window.console.log(getPagePathName(), '---' ,title, ':', value);
   }
 }
 
@@ -474,7 +473,7 @@ const isEmptyString = (str) => {
   if (typeof str == 'boolean') {
     str = String(str);
   }
-  return (str === null || typeof str === 'undefined' || str == 'undefined' || str === '' || utils.trimString(str) === '');
+  return (!str || str === 'null' || typeof str === 'undefined' || str == 'undefined' || str === '' || utils.trimString(str) === '');
 };
 
 /**
@@ -523,22 +522,6 @@ const isLegalIDCard = str => {
   return result;
 };
 
-/**
- * 获取当前界面路径名称
- * @returns {string}
- */
-const getPagePathName = () => {
-  // 当前页面链接 eg:http://localhost:8000/#/warehouse-management/storeInfo-list?id=999&name=jack
-  const pageUrl = window.location.href;
-  const arrUrl = pageUrl.split("/");
-  let pathStr = arrUrl[arrUrl.length - 1];
-  if(pathStr.indexOf("?") > -1) {
-    // 如果链接后面带参数 eg:storeInfo-list
-    const pageName = pathStr.split("?");
-    pathStr = pageName[0];
-  }
-  return pathStr;
-}
 
 /**
  * 获取起止时间差描述 注意时间均为毫秒
@@ -588,7 +571,52 @@ const calculateTimeLength = (startTime, endTime) => {
   );
 };
 
-// 导出 通过文件名调用文件名内的方法
+/**
+ * 获取当前界面路径名称
+ * @returns {string}
+ */
+const getPagePathName = () => {
+  // 当前页面链接 eg:http://localhost:8000/#/warehouse-management/storeInfo-list?id=999&name=jack
+  const pageUrl = window.location.href;
+  const arrUrl = pageUrl.split('/');
+  let pathStr = '';
+  if (arrUrl && arrUrl.length > 0) {
+    pathStr = arrUrl[arrUrl.length - 1]
+  }
+  if (pathStr.indexOf('?') > -1) {
+    // 如果链接后面带参数 eg:storeInfo-list
+    const pageName = pathStr.split('?');
+    pathStr = pageName.length > 0 ? pageName[0] : '';
+  }
+  return pathStr;
+};
+
+/**
+ * 将base64图片的token转化为base64图片 token正常为4的倍数
+ * @param token
+ * @returns {string}
+ */
+const getImageWithBase64Token = token => {
+  if (!token) return '';
+  return `data:image/jpg;base64,${token}`;
+};
+
+/**
+ * 根据时间戳转换为hh:mm 时和分的形式 eg：10:30
+ * @param obj
+ */
+const getDateHM = (timeStamp) => {
+  const time = new Date(timeStamp);
+  const h = time.getHours();
+  const mm = time.getMinutes();
+  return `${h < 10 ? `0${h}` : h}:${mm < 10 ? `0${mm}` : mm}`;
+}
+
+
+/**
+ * 导出 通过文件名调用文件名内的方法
+ * @type {{setLocalStorage: *, isJSONString: *, clearNullObject: *, log: *, getDateByTimestampAndFormatter: *, getArrayBySeparateStr: *, isLegalPlatNum: *, getImageWithBase64Token: *, getLocalStorage: *, setStoregeItem: *, isEmptyString: *, trimString: *, isLegalIDCard: *, getTimeDetailDes: *, nullStr: *, getRandom: *, addQueryParamByObj: *, showToast: *, isArray: *, isWeChat: *, calculateTimeLength: *, getPagePathName: *}}
+ */
 export const utils = {
   isWeChat,
   isJSONString,
@@ -611,4 +639,6 @@ export const utils = {
   calculateTimeLength,
   nullStr,
   getPagePathName,
+  getImageWithBase64Token,
+  getDateHM,
 };
