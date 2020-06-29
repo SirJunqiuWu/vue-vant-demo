@@ -116,7 +116,7 @@ export class Http {
       return new Promise((resolve, reject) => {
 
       }).catch(error => {
-
+          utils.log('错误', error);
       })
   }
 
